@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:background="@drawable/radius_drawable_bg"
+              android:padding="10dp">
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+        <ImageView
+                android:id="@+id/acc_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@drawable/paw_code"/>
+
+        <EditText
+                android:id="@+id/input_account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/acc_img"
+                android:background="#00000000"
+                android:hint="@string/account"
+                android:padding="10dp"
+                android:textCursorDrawable="@drawable/cursorcolor"
+                android:textSize="16sp"/>
+
+    </RelativeLayout>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:background="#cfcfcf"/>
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+        <ImageView
+                android:id="@+id/pass_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@drawable/paw_left"/>
+
+        <EditText
+                android:id="@+id/input_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/pass_img"
+                android:background="#00000000"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:padding="10dp"
+                android:textCursorDrawable="@drawable/cursorcolor"
+                android:textSize="16sp"/>
+
+    </RelativeLayout>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:background="#cfcfcf"/>
+
+    <RadioGroup
+            android:id="@+id/identity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="45dp"
+            android:padding="3dp"
+            android:layout_gravity="center_vertical">
+
+        <RadioButton
+                android:id="@+id/check_older"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/older"
+                android:layout_marginEnd="10dp"/>
+
+        <RadioButton
+                android:id="@+id/check_children"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/children"
+                android:layout_marginEnd="10dp"/>
+
+        <RadioButton
+                android:id="@+id/check_escort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/escort"/>
+
+    </RadioGroup>
+
+</LinearLayout>

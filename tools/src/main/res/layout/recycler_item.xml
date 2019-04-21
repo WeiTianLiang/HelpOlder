@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#727272"/>
+
+    <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="张明"
+            android:layout_gravity="center_vertical"
+            android:textSize="20sp"
+            android:textColor="#000"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"/>
+
+    <TextView
+            android:id="@+id/identity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="儿子"
+            android:layout_gravity="center_vertical"
+            android:textSize="20sp"
+            android:textColor="#000"
+            android:layout_marginStart="75dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"/>
+
+    <ImageView
+            android:id="@+id/delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|right"
+            tools:ignore="RtlHardcoded"
+            android:src="@drawable/delete"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"/>
+
+</FrameLayout>

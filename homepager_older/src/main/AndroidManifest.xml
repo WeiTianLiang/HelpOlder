@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.example.homepager_older">
+
+    <application>
+        <activity android:name=".activity.OlderActivity">
+        </activity>
+
+        <meta-data
+                android:name="com.amap.api.v2.apikey"
+                android:value="b7a5bfc8a2ccf9ff80674d82359aa07a"/>
+    </application>
+
+</manifest>
