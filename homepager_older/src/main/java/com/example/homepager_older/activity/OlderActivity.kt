@@ -1,5 +1,6 @@
 package com.example.homepager_older.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.support.v4.app.Fragment
@@ -48,7 +49,8 @@ class OlderActivity : BaseActivity() {
 //        mapView.onSaveInstanceState(outState)
     }
 
-    companion object {
-        const val FRAGMENTNUMBER = 3
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        mineFragment.onActivityResult(requestCode, resultCode, data)
     }
 }

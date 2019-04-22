@@ -188,24 +188,20 @@
                     android:textColor="#000"
                     android:text="服药情况："/>
 
-            <TextView
-                    android:id="@+id/older_medince"
-                    android:layout_width="wrap_content"
+            <android.support.v7.widget.RecyclerView
+                    android:id="@+id/with_medicine_recycler"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:textSize="20sp"
-                    android:textColor="#000"
-                    android:layout_toEndOf="@+id/layout"
-                    android:text="暂无服药情况"/>
+                    android:layout_below="@+id/layout"
+                    android:layout_margin="10dp"/>
 
             <ImageView
-                    android:id="@+id/change_medince"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="10dp"
-                    android:src="@drawable/pen"/>
+                    android:id="@+id/add_medicine"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/add"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/with_medicine_recycler"/>
 
         </RelativeLayout>
 
@@ -254,7 +250,7 @@
                 android:layout_marginTop="10dp"/>
 
         <TextView
-                android:id="@+id/main_login"
+                android:id="@+id/mine_back"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="45dp"

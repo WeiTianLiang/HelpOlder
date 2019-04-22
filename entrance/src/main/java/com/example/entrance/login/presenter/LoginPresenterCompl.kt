@@ -78,5 +78,4 @@ class LoginPresenterCompl(private val context: Context) : ILoginPresenter {
         context.startActivity(intent)
         (context as Activity).overridePendingTransition(R.anim.activity_left_in, R.anim.activity_left_out)
     }
-
 }

@@ -8,7 +8,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.example.homepager_older.R
 import com.example.homepager_older.activity.OlderActivity
-import com.example.homepager_older.fragment.minefragment.presenter.OlderMinePresenetr
+import com.example.homepager_older.fragment.minefragment.presenter.OlderMinePresenter
 import com.example.tools.adapter.MyRecyclerViewAdapter
 import com.example.tools.fragment.BaseFragment
 import com.example.tools.model.ChildrenToOlder
@@ -28,7 +28,7 @@ class MineFragment : BaseFragment() {
     private val list = arrayListOf<ChildrenToOlder>()
     private val adapter by lazy { context?.let { MyRecyclerViewAdapter(list, it) } }
 
-    private val presenetr by lazy { context?.let { OlderMinePresenetr(it) } }
+    private val presenetr by lazy { context?.let { OlderMinePresenter(it) } }
 
     private val recyclerView by lazy { findViewById<RecyclerView>(R.id.with_children_recycler) }
     private var bitmap: Bitmap? = null
@@ -68,7 +68,7 @@ class MineFragment : BaseFragment() {
         }
 
         older_head.setOnClickListener {
-            presenetr?.olderHead()
+            presenetr?.olderHead(this)
         }
 
         change_name.setOnClickListener {
@@ -79,6 +79,10 @@ class MineFragment : BaseFragment() {
             presenetr?.changeBody(older_body)
         }
 
+        mine_back.setOnClickListener {
+            presenetr?.doBack()
+        }
+
     }
 
     override fun getLayoutResId(): Int {
@@ -86,6 +90,7 @@ class MineFragment : BaseFragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         if (123 == requestCode && data != null) {
             try {
                 bitmap = BitmapFactory.decodeStream((context as OlderActivity).contentResolver.openInputStream(data.data))

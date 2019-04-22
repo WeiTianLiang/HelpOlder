@@ -2,6 +2,7 @@ package com.example.homepager_older.fragment.minefragment.presenter
 
 import android.view.View
 import android.widget.TextView
+import com.example.homepager_older.fragment.minefragment.view.MineFragment
 import com.example.tools.adapter.MyRecyclerViewAdapter
 
 /**
@@ -14,10 +15,12 @@ interface OlderMineInterface {
 
     fun changeBirthday(view: View)
 
-    fun olderHead()
+    fun olderHead(fragment: MineFragment)
 
     fun changeName(olderName: TextView)
 
     fun changeBody(olderBody: TextView)
+
+    fun doBack()
 
 }

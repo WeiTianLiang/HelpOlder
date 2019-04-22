@@ -1,12 +1,16 @@
 package com.example.homepager_older.fragment.minefragment.presenter
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
 import android.view.Gravity
 import android.view.View
 import android.widget.TextView
-import com.example.homepager_older.activity.OlderActivity
+import com.example.homepager_older.fragment.minefragment.view.MineFragment
 import com.example.tools.activity.doGetPicture
+import com.example.tools.activity.jumpActivity
 import com.example.tools.adapter.MyRecyclerViewAdapter
 import com.example.tools.dialog.BaseDialog
 import com.example.tools.dialog.createTimerDialog
@@ -20,7 +24,7 @@ import java.util.*
  */
 @SuppressLint("SimpleDateFormat")
 @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-class OlderMinePresenetr(
+class OlderMinePresenter(
     private val context: Context
 ) : OlderMineInterface {
 
@@ -63,8 +67,8 @@ class OlderMinePresenetr(
     /**
      * 改变头像
      */
-    override fun olderHead() {
-        doGetPicture(context as OlderActivity)
+    override fun olderHead(fragment: MineFragment) {
+        doGetPicture(fragment = fragment)
     }
 
     /**
@@ -95,5 +99,12 @@ class OlderMinePresenetr(
         } else {
             "健康"
         }
+    }
+
+    /**
+     * 退出登陆
+     */
+    override fun doBack() {
+        jumpActivity("/login/LoginActivity", context as Activity)
     }
 }

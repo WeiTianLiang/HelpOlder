@@ -1,23 +1,14 @@
 package com.example.tools.activity
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
-import android.widget.ImageView
 import com.alibaba.android.arouter.launcher.ARouter
-import com.ashokvarma.bottomnavigation.BottomNavigationBar
 import com.example.tools.R
-import com.example.tools.picture.getOrientation
-import com.example.tools.picture.rotateImage
-import com.example.tools.view.MyViewPagerAdapter
-import com.example.tools.view.addBottomBar
-import java.io.FileNotFoundException
 
 /**
  * Activity跳转方法
@@ -83,15 +74,19 @@ fun AppCompatActivity.showFragment(fragment: Fragment) {
 /**
  * 从相册获取图片
  */
-fun doGetPicture(activity: Activity) {
+fun doGetPicture(activity: Activity? = null, fragment: Fragment? = null) {
     val intent = Intent()
-    intent.action = Intent.ACTION_GET_CONTENT//Pick an item from the data
-    intent.type = "image/*"//从所有图片中进行选择
-    intent.putExtra("crop", "true")//设置为裁切
-    intent.putExtra("aspectX", 1)//裁切的宽比例
-    intent.putExtra("aspectY", 1)//裁切的高比例
-    intent.putExtra("outputX", 100)//裁切的宽度
-    intent.putExtra("outputY", 100)//裁切的高度
+    intent.action = Intent.ACTION_GET_CONTENT
+    intent.type = "image/*" // 从所有图片中进行选择
+    intent.putExtra("crop", "true") // 设置为裁切
+    intent.putExtra("aspectX", 1) // 裁切的宽比例
+    intent.putExtra("aspectY", 1) // 裁切的高比例
+    intent.putExtra("outputX", 100) // 裁切的宽度
+    intent.putExtra("outputY", 100) // 裁切的高度
     intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString())//裁切成的图片的格式
-    activity.startActivityForResult(intent, 123)
+    if(activity != null) {
+        activity.startActivityForResult(intent, 123)
+    } else {
+        fragment?.startActivityForResult(intent, 123)
+    }
 }
