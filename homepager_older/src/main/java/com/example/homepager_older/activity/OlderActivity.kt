@@ -1,8 +1,5 @@
 package com.example.homepager_older.activity
 
-import android.content.Intent
-import android.os.Bundle
-import android.os.PersistableBundle
 import android.support.v4.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.homepager_older.fragment.escortfragment.view.EscortFragment
@@ -19,7 +16,7 @@ class OlderActivity : BaseActivity() {
     private val fragmentList = arrayListOf<Fragment>()
 
     override fun onBaseCreate() {
-        //        mapView.onCreate(savedInstanceState)
+
     }
 
     override fun getFragmentList(): ArrayList<Fragment> {
@@ -27,30 +24,5 @@ class OlderActivity : BaseActivity() {
         fragmentList.add(escortFragment)
         fragmentList.add(mineFragment)
         return fragmentList
-    }
-
-    override fun onResume() {
-        super.onResume()
-//        mapView.onResume()
-    }
-
-    override fun onPause() {
-        super.onPause()
-//        mapView.onPause()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-//        mapView.onDestroy()
-    }
-
-    override fun onSaveInstanceState(outState: Bundle?, outPersistentState: PersistableBundle?) {
-        super.onSaveInstanceState(outState, outPersistentState)
-//        mapView.onSaveInstanceState(outState)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        mineFragment.onActivityResult(requestCode, resultCode, data)
     }
 }
