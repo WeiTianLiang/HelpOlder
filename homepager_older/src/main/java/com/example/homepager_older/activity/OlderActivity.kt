@@ -6,7 +6,7 @@ import android.os.PersistableBundle
 import android.support.v4.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.homepager_older.fragment.escortfragment.view.EscortFragment
-import com.example.homepager_older.fragment.housefragment.view.Housefragment
+import com.example.homepager_older.fragment.housefragment.view.HouseFragment
 import com.example.homepager_older.fragment.minefragment.view.MineFragment
 import com.example.tools.activity.BaseActivity
 
@@ -14,7 +14,7 @@ import com.example.tools.activity.BaseActivity
 class OlderActivity : BaseActivity() {
 
     private val escortFragment by lazy { EscortFragment() }
-    private val houseFragment by lazy { Housefragment() }
+    private val houseFragment by lazy { HouseFragment() }
     private val mineFragment by lazy { MineFragment() }
     private val fragmentList = arrayListOf<Fragment>()
 
