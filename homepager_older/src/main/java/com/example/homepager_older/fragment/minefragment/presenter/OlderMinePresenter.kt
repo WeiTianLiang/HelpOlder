@@ -6,13 +6,16 @@ import android.content.Context
 import android.view.Gravity
 import android.view.View
 import android.widget.TextView
+import com.example.homepager_older.fragment.minefragment.dialog.MedicineDialog
 import com.example.homepager_older.fragment.minefragment.view.MineFragment
 import com.example.tools.activity.doGetPicture
 import com.example.tools.activity.jumpActivity
+import com.example.tools.adapter.MedicineRecyclerAdapter
 import com.example.tools.adapter.MyRecyclerViewAdapter
 import com.example.tools.dialog.BaseDialog
 import com.example.tools.dialog.createTimerDialog
 import com.example.tools.model.ChildrenToOlder
+import com.example.tools.model.MedicineAndCount
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -30,6 +33,7 @@ class OlderMinePresenter(
     private val changeNameDialog by lazy { BaseDialog(context, "请输入您的姓名") }
     private val calendar by lazy { Calendar.getInstance(Locale.CHINA) }
     private val format by lazy { SimpleDateFormat("yyyy-MM-dd") }
+    private val medicineDialog by lazy { MedicineDialog(context) }
 
     /**
      * 添加关系人
@@ -102,8 +106,23 @@ class OlderMinePresenter(
     /**
      * 添加药物
      */
-    override fun addMedicine() {
+    override fun addMedicine(adapter: MedicineRecyclerAdapter) {
+        medicineDialog.setCanceledOnTouchOutside(false)
+        medicineDialog.window.setGravity(Gravity.CENTER)
+        medicineDialog.show()
+        medicineDialog.setOnClick(object : MedicineDialog.OnClick{
+            override fun cancelClick() {
+                medicineDialog.cancel()
+            }
 
+            override fun sureClick(medicineName: String, medicineTime: String) {
+                medicineDialog.cancel()
+                val medicineAndCount = MedicineAndCount()
+                medicineAndCount.medicineName = medicineName
+                medicineAndCount.medicineCount = medicineTime
+                adapter.addItem(medicineAndCount)
+            }
+        })
     }
 
     /**

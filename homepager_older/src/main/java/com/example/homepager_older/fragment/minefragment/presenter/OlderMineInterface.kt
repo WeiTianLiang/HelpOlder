@@ -3,6 +3,7 @@ package com.example.homepager_older.fragment.minefragment.presenter
 import android.view.View
 import android.widget.TextView
 import com.example.homepager_older.fragment.minefragment.view.MineFragment
+import com.example.tools.adapter.MedicineRecyclerAdapter
 import com.example.tools.adapter.MyRecyclerViewAdapter
 
 /**
@@ -23,6 +24,6 @@ interface OlderMineInterface {
 
     fun doBack()
 
-    fun addMedicine()
+    fun addMedicine(adapter: MedicineRecyclerAdapter)
 
 }

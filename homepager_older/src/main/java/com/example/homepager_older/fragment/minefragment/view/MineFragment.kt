@@ -103,7 +103,7 @@ class MineFragment : BaseFragment() {
         }
 
         add_medicine.setOnClickListener {
-
+            medicineAdapter?.let { it1 -> presenetr?.addMedicine(it1) }
         }
 
     }
