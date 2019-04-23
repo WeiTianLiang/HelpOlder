@@ -7,29 +7,29 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.tools.R
-import com.example.tools.model.ChildrenToOlder
+import com.example.tools.model.MedicineAndCount
 import kotlinx.android.synthetic.main.recycler_item.view.*
 
 /**
- * recyclerView 适配器
+ * 药物 recyclerlist 适配器
  * @author weitianliang
  */
-class MyRecyclerViewAdapter(
-    private val list: ArrayList<ChildrenToOlder>,
-    val context: Context
-) : RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder>() {
+class MedicineRecyclerAdapter(
+    private val list: ArrayList<MedicineAndCount>,
+    private val context: Context
+) : RecyclerView.Adapter<MedicineRecyclerAdapter.ViewHolder>() {
 
     @SuppressLint("InflateParams")
-    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): MyRecyclerViewAdapter.ViewHolder {
+    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.recycler_item, null)
         return ViewHolder(view)
     }
 
     override fun getItemCount(): Int = list.size
 
-    override fun onBindViewHolder(holder: MyRecyclerViewAdapter.ViewHolder, position: Int) {
-        holder.view.name.text = list[position].nametext
-        holder.view.identity.text = list[position].identity
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.view.name.text = list[position].medicineName
+        holder.view.identity.text = list[position].medicineCount
         holder.view.delete.setOnClickListener {
             deleteItem(position)
         }
@@ -47,7 +47,7 @@ class MyRecyclerViewAdapter(
         }
     }
 
-    fun addItem(model: ChildrenToOlder) {
+    fun addItem(model: MedicineAndCount) {
         list.add(model)
         notifyItemInserted(list.size - 1)
         notifyItemRangeInserted(list.size - 1, list.size)

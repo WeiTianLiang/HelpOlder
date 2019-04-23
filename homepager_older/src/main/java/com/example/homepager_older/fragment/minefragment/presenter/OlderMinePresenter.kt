@@ -3,8 +3,6 @@ package com.example.homepager_older.fragment.minefragment.presenter
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
-import android.graphics.Bitmap
 import android.view.Gravity
 import android.view.View
 import android.widget.TextView
@@ -99,6 +97,13 @@ class OlderMinePresenter(
         } else {
             "健康"
         }
+    }
+
+    /**
+     * 添加药物
+     */
+    override fun addMedicine() {
+
     }
 
     /**

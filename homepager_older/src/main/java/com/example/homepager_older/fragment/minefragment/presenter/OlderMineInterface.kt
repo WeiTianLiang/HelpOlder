@@ -23,4 +23,6 @@ interface OlderMineInterface {
 
     fun doBack()
 
+    fun addMedicine()
+
 }

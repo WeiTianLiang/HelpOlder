@@ -8,6 +8,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.example.homepager_older.R
 import com.example.homepager_older.activity.OlderActivity
+import com.example.tools.adapter.MedicineRecyclerAdapter
+import com.example.tools.model.MedicineAndCount
 import com.example.homepager_older.fragment.minefragment.presenter.OlderMinePresenter
 import com.example.tools.adapter.MyRecyclerViewAdapter
 import com.example.tools.fragment.BaseFragment
@@ -26,11 +28,14 @@ import java.io.FileNotFoundException
 class MineFragment : BaseFragment() {
 
     private val list = arrayListOf<ChildrenToOlder>()
+    private val list1 = arrayListOf<MedicineAndCount>()
     private val adapter by lazy { context?.let { MyRecyclerViewAdapter(list, it) } }
+    private val medicineAdapter by lazy { context?.let { MedicineRecyclerAdapter(list1, it) } }
 
     private val presenetr by lazy { context?.let { OlderMinePresenter(it) } }
 
     private val recyclerView by lazy { findViewById<RecyclerView>(R.id.with_children_recycler) }
+    private val medicineRecycler by lazy { findViewById<RecyclerView>(R.id.with_medicine_recycler) }
     private var bitmap: Bitmap? = null
 
     init {
@@ -50,11 +55,25 @@ class MineFragment : BaseFragment() {
         childrenToOlder3.nametext = "张明"
         childrenToOlder3.identity = "女儿"
         list.add(childrenToOlder3)
+
+
+        val medicineAndCount = MedicineAndCount()
+        medicineAndCount.medicineName = "药物1"
+        medicineAndCount.medicineCount = "一日三次"
+        list1.add(medicineAndCount)
+        val medicineAndCount1 = MedicineAndCount()
+        medicineAndCount1.medicineName = "药物2"
+        medicineAndCount1.medicineCount = "一日三次"
+        list1.add(medicineAndCount1)
+
     }
 
     override fun onViewCreate() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
+
+        medicineRecycler.layoutManager = LinearLayoutManager(context)
+        medicineRecycler.adapter = medicineAdapter
     }
 
     @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
@@ -83,6 +102,10 @@ class MineFragment : BaseFragment() {
             presenetr?.doBack()
         }
 
+        add_medicine.setOnClickListener {
+
+        }
+
     }
 
     override fun getLayoutResId(): Int {
@@ -93,7 +116,8 @@ class MineFragment : BaseFragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (123 == requestCode && data != null) {
             try {
-                bitmap = BitmapFactory.decodeStream((context as OlderActivity).contentResolver.openInputStream(data.data))
+                bitmap =
+                    BitmapFactory.decodeStream((context as OlderActivity).contentResolver.openInputStream(data.data))
                 older_head.setImageBitmap(rotateImage(bitmap!!, getOrientation(context as OlderActivity, data.data)))
             } catch (e: FileNotFoundException) {
                 e.printStackTrace()
