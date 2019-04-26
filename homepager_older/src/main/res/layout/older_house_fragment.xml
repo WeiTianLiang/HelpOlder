@@ -23,9 +23,78 @@
             android:layout_margin="10dp"/>
 
     <View
+            android:id="@+id/line"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#757575"
             android:layout_below="@+id/mapView"/>
+
+    <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/barChart"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:padding="10dp"
+            android:layout_below="@+id/line"/>
+
+    <View
+            android:id="@+id/line1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#757575"
+            android:layout_below="@+id/barChart"/>
+
+    <LinearLayout
+            android:id="@+id/layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/line1"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="您的健康状态:"
+                android:textSize="16sp"
+                android:textColor="#000"/>
+
+        <TextView
+                android:id="@+id/healthy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="良好！请继续保持"
+                android:textColor="#000"
+                android:textSize="22sp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/layout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="健康提醒:"
+                android:textSize="16sp"
+                android:textColor="#000"/>
+
+        <TextView
+                android:id="@+id/medicineRemind"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="现在是中文，到那个您服用药物XXX的时候了"
+                android:textColor="#000"
+                android:textSize="22sp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"/>
+
+    </LinearLayout>
 
 </RelativeLayout>

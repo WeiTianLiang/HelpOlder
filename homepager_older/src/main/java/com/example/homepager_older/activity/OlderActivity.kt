@@ -3,7 +3,7 @@ package com.example.homepager_older.activity
 import android.support.v4.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.homepager_older.fragment.escortfragment.view.EscortFragment
-import com.example.homepager_older.fragment.housefragment.view.HouseFragment
+import com.example.homepager_older.fragment.housefragment.view.view.HouseFragment
 import com.example.homepager_older.fragment.minefragment.view.MineFragment
 import com.example.tools.activity.BaseActivity
 
