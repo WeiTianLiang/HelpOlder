@@ -1,6 +1,7 @@
 package com.example.homepager_older.fragment.housefragment.view.view
 
 import android.graphics.Color
+import android.os.Bundle
 import com.example.homepager_older.R
 import com.example.tools.fragment.BaseFragment
 import com.example.tools.view.initBarChartView
@@ -19,7 +20,7 @@ class HouseFragment : BaseFragment() {
 
     }
 
-    override fun onInflated() {
+    override fun onInflated(savedInstanceState: Bundle?) {
         for (i in 0 until 5) {
             listData.add(i + 100)
         }

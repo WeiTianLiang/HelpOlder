@@ -1,7 +1,6 @@
 package com.example.homepager_children.fragment.hosuefragment.view
 
 import android.os.Bundle
-import android.view.View
 import com.example.homepager_children.R
 import com.example.tools.fragment.BaseFragment
 
@@ -18,7 +17,7 @@ class ChildrenHouseFragment : BaseFragment() {
 
     }
 
-    override fun onInflated() {
+    override fun onInflated(savedInstanceState: Bundle?) {
 
     }
 

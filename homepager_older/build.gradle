@@ -60,6 +60,4 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 
     implementation project(':tools')
-    implementation files('libs/AMap_Location_V4.5.1_20190402.jar')
-    implementation files('libs/Amap_2DMap_V5.2.0_20170627.jar')
 }

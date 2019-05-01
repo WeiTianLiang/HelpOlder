@@ -1,5 +1,6 @@
 package com.example.homepager_escort.fragment.housefragment.view
 
+import android.os.Bundle
 import com.example.homepager_escort.R
 import com.example.tools.fragment.BaseFragment
 
@@ -12,7 +13,7 @@ class HouseFragment : BaseFragment() {
 
     }
 
-    override fun onInflated() {
+    override fun onInflated(savedInstanceState: Bundle?) {
 
     }
 

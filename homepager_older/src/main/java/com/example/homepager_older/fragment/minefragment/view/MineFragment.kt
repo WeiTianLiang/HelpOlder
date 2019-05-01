@@ -4,16 +4,17 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.example.homepager_older.R
 import com.example.homepager_older.activity.OlderActivity
-import com.example.tools.adapter.MedicineRecyclerAdapter
-import com.example.tools.model.MedicineAndCount
 import com.example.homepager_older.fragment.minefragment.presenter.OlderMinePresenter
+import com.example.tools.adapter.MedicineRecyclerAdapter
 import com.example.tools.adapter.MyRecyclerViewAdapter
 import com.example.tools.fragment.BaseFragment
 import com.example.tools.model.ChildrenToOlder
+import com.example.tools.model.MedicineAndCount
 import com.example.tools.picture.getOrientation
 import com.example.tools.picture.rotateImage
 import kotlinx.android.synthetic.main.older_mine_fragment.*
@@ -77,7 +78,7 @@ class MineFragment : BaseFragment() {
     }
 
     @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-    override fun onInflated() {
+    override fun onInflated(savedInstanceState: Bundle?) {
         add_children.setOnClickListener {
             adapter?.let { it1 -> presenetr?.addChildren(it1) }
         }

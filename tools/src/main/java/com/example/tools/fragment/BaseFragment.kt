@@ -23,7 +23,7 @@ abstract class BaseFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        onInflated()
+        onInflated(savedInstanceState)
     }
 
     /**
@@ -41,7 +41,7 @@ abstract class BaseFragment : Fragment() {
     /**
      * 当 fragment inflated 结束的时候调用,此时view以创建完毕
      */
-    protected abstract fun onInflated()
+    protected abstract fun onInflated(savedInstanceState: Bundle?)
 
     /**
      * onCreateView 时调用
