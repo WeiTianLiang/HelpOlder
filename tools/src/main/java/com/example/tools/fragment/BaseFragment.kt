@@ -17,7 +17,7 @@ abstract class BaseFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         contentView = inflater.inflate(getLayoutResId(), container, false)
-        onViewCreate()
+        onViewCreate(savedInstanceState)
         return contentView
     }
 
@@ -46,7 +46,7 @@ abstract class BaseFragment : Fragment() {
     /**
      * onCreateView 时调用
      */
-    protected abstract fun onViewCreate()
+    protected abstract fun onViewCreate(savedInstanceState: Bundle?)
 
     @Suppress("UNCHECKED_CAST")
     protected fun <T : View> findViewById(resId: Int): T {

@@ -9,7 +9,7 @@ import com.example.tools.fragment.BaseFragment
  * @author weitianliang
  */
 class ChildrenMineFragment : BaseFragment() {
-    override fun onViewCreate() {
+    override fun onViewCreate(savedInstanceState: Bundle?) {
 
     }
 

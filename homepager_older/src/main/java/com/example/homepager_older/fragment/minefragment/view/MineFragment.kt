@@ -69,7 +69,7 @@ class MineFragment : BaseFragment() {
 
     }
 
-    override fun onViewCreate() {
+    override fun onViewCreate(savedInstanceState: Bundle?) {
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
 

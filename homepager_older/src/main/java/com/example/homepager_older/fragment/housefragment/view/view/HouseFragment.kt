@@ -7,13 +7,13 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
-import android.widget.Toast
 import com.amap.api.location.AMapLocation
 import com.amap.api.location.AMapLocationClient
 import com.amap.api.location.AMapLocationClientOption
 import com.amap.api.location.AMapLocationListener
 import com.amap.api.maps2d.CameraUpdateFactory
 import com.amap.api.maps2d.LocationSource
+import com.amap.api.maps2d.MapView
 import com.amap.api.maps2d.model.BitmapDescriptorFactory
 import com.amap.api.maps2d.model.LatLng
 import com.amap.api.maps2d.model.MarkerOptions
@@ -38,10 +38,11 @@ class HouseFragment : BaseFragment(), OnChartValueSelectedListener, LocationSour
     private val listData = ArrayList<Int>()
 
     private val aMap by lazy { mapView.map }
-    private val mLocationClient by lazy { AMapLocationClient(activity?.applicationContext) }
+    private val mLocationClient by lazy { AMapLocationClient(context) }
     private val mLocationOption by lazy { AMapLocationClientOption() }
     private var isFirstLoc = true
     private var mListener: LocationSource.OnLocationChangedListener? = null
+    private val mapView by lazy { findViewById<MapView>(R.id.mapView) }
 
     /**
      * 城市信息
@@ -52,8 +53,11 @@ class HouseFragment : BaseFragment(), OnChartValueSelectedListener, LocationSour
      */
     private var youStreetNum: String? = null
 
-    override fun onViewCreate() {
-
+    override fun onViewCreate(savedInstanceState: Bundle?) {
+        mapView.onCreate(savedInstanceState)
+        init()
+        showNowLocation()
+//        showOtherLocation("108.967945","34.345741")
     }
 
     override fun onInflated(savedInstanceState: Bundle?) {
@@ -62,12 +66,6 @@ class HouseFragment : BaseFragment(), OnChartValueSelectedListener, LocationSour
         }
         initBarChartView(barChart)
         showBarChart(barChart, listData, "步数", Color.BLUE)
-
-        mapView.onCreate(savedInstanceState)
-
-        init()
-
-        showNowLocation()
     }
 
     override fun getLayoutResId(): Int {
@@ -126,7 +124,7 @@ class HouseFragment : BaseFragment(), OnChartValueSelectedListener, LocationSour
         //设置定位回调监听
         mLocationClient.setLocationListener(this)
         //设置定位模式为高精度模式，Battery_Saving为低功耗模式，Device_Sensors是仅设备模式
-        mLocationOption.locationMode = AMapLocationClientOption.AMapLocationMode.Hight_Accuracy
+        mLocationOption.locationMode = AMapLocationClientOption.AMapLocationMode.Battery_Saving
         //设置是否返回地址信息（默认返回地址信息）
         mLocationOption.isNeedAddress = true
         //设置是否只定位一次,默认为false
@@ -169,6 +167,11 @@ class HouseFragment : BaseFragment(), OnChartValueSelectedListener, LocationSour
         mapView.onDestroy()
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
+    }
+
     override fun onResume() {
         super.onResume()
         mapView.onResume()
@@ -179,41 +182,32 @@ class HouseFragment : BaseFragment(), OnChartValueSelectedListener, LocationSour
         mapView.onPause()
     }
 
-    @SuppressLint("SimpleDateFormat")
+    @SuppressLint("SimpleDateFormat", "SetTextI18n")
     override fun onLocationChanged(amapLocation: AMapLocation?) {
 
         if (amapLocation != null) {
+            //定位成功回调信息，设置相关消息
             if (amapLocation.errorCode == 0) {
-                //定位成功回调信息，设置相关消息
-                amapLocation.locationType
-                //获取当前定位结果来源，如网络定位结果，详见官方定位类型表
-                amapLocation.latitude
-                //获取纬度
-                amapLocation.longitude
-                //获取经度
-                amapLocation.accuracy
-                //获取精度信息
+                amapLocation.locationType //获取当前定位结果来源，如网络定位结果，详见官方定位类型表
+                amapLocation.latitude //获取纬度
+                amapLocation.longitude //获取经度
+                amapLocation.accuracy //获取精度信息
                 val df = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
                 val date = Date(amapLocation.time)
-                df.format(date)
-                //定位时间
-                amapLocation.address
-                // 地址，如果option中设置isNeedAddress为false，则没有此结果，网络定位结果中会有地址信息，GPS定位不返回地址信息。
-                amapLocation.country
-                // 国家信息
-                amapLocation.province
-                // 省信息
-                amapLocation.city
-                // 城市信息
-                youDistrict = amapLocation.district
-                // 城区信息
-                amapLocation.street
-                // 街道信息
-                youStreetNum = amapLocation.streetNum
-                // 街道门牌号信息
-                amapLocation.cityCode
-                // 城市编码
+                df.format(date) //定位时间
+                amapLocation.address // 地址，如果option中设置isNeedAddress为false，则没有此结果，网络定位结果中会有地址信息，GPS定位不返回地址信息。
+                amapLocation.country // 国家信息
+                amapLocation.province // 省信息
+                amapLocation.city // 城市信息
+                youDistrict = amapLocation.district // 城区信息
+                youStreetNum = amapLocation.street // 街道信息
+                amapLocation.streetNum // 街道门牌号信息
+                amapLocation.cityCode // 城市编码
                 amapLocation.adCode
+
+                if (!youStreetNum.isNullOrEmpty() || !youDistrict.isNullOrEmpty()) {
+                    locationText.text = "$youDistrict,$youStreetNum"
+                }
 
                 // 如果不设置标志位，此时再拖动地图时，它会不断将地图移动到当前的位置
                 if (isFirstLoc) {
@@ -229,14 +223,14 @@ class HouseFragment : BaseFragment(), OnChartValueSelectedListener, LocationSour
                     //点击定位按钮 能够将地图的中心移动到定位点
                     mListener?.onLocationChanged(amapLocation)
                     //获取定位信息
-                    val buffer = StringBuffer()
-                    buffer.append(
-                        amapLocation.country + "" + amapLocation.province
-                                + "" + amapLocation.city + "" + amapLocation.province
-                                + "" + amapLocation.district + "" + amapLocation.street
-                                + "" + amapLocation.streetNum
-                    )
-                    Toast.makeText(activity?.applicationContext, buffer.toString(), Toast.LENGTH_LONG).show()
+//                    val buffer = StringBuffer()
+//                    buffer.append(
+//                        amapLocation.country + "" + amapLocation.province
+//                                + "" + amapLocation.city + "" + amapLocation.province
+//                                + "" + amapLocation.district + "" + amapLocation.street
+//                                + "" + amapLocation.streetNum
+//                    )
+//                    Toast.makeText(activity?.applicationContext, buffer.toString(), Toast.LENGTH_LONG).show()
                     isFirstLoc = false
                 }
             } else {
