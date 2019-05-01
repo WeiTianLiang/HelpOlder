@@ -5,7 +5,7 @@ import com.example.homepager_escort.R
 import com.example.tools.fragment.BaseFragment
 
 /**
- *
+ * 老人 -主页面
  * @author weitianliang
  */
 class HouseFragment : BaseFragment() {
