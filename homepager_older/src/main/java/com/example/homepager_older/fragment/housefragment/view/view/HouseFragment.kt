@@ -28,6 +28,7 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import kotlinx.android.synthetic.main.older_house_fragment.*
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * 老人 - 首页 fragment
@@ -35,14 +36,27 @@ import java.util.*
  */
 class HouseFragment : BaseFragment(), OnChartValueSelectedListener, LocationSource, AMapLocationListener {
 
+    /**
+     * 柱状图数据
+     */
     private val listData = ArrayList<Int>()
-
+    private val xList = ArrayList<String>()
+    /**
+     * 地图
+     */
     private val aMap by lazy { mapView.map }
+    /**
+     * 位置定位
+     */
     private val mLocationClient by lazy { AMapLocationClient(context) }
     private val mLocationOption by lazy { AMapLocationClientOption() }
     private var isFirstLoc = true
     private var mListener: LocationSource.OnLocationChangedListener? = null
     private val mapView by lazy { findViewById<MapView>(R.id.mapView) }
+    /**
+     * 当前步数
+     */
+    private val step = 0
 
     /**
      * 城市信息
@@ -61,10 +75,17 @@ class HouseFragment : BaseFragment(), OnChartValueSelectedListener, LocationSour
     }
 
     override fun onInflated(savedInstanceState: Bundle?) {
-        for (i in 0 until 5) {
-            listData.add(i + 100)
-        }
-        initBarChartView(barChart)
+        listData.add(530)
+        listData.add(2230)
+        listData.add(630)
+        listData.add(740)
+        listData.add(960)
+        xList.add("5月1")
+        xList.add("5月2")
+        xList.add("5月3")
+        xList.add("5月4")
+        xList.add("5月5")
+        initBarChartView(barChart, xList)
         showBarChart(barChart, listData, "步数", Color.BLUE)
     }
 
@@ -84,7 +105,7 @@ class HouseFragment : BaseFragment(), OnChartValueSelectedListener, LocationSour
         aMap.isTrafficEnabled = true
 
         // 设置缩放级别
-        aMap.moveCamera(CameraUpdateFactory.zoomTo(16f))
+        aMap.moveCamera(CameraUpdateFactory.zoomTo(17f))
         aMap.setLocationSource(this)
         val setting = aMap.uiSettings
         setting.isMyLocationButtonEnabled = true
