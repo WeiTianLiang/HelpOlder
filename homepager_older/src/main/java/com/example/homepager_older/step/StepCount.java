@@ -1,4 +1,4 @@
-package com.example.tools.step;
+package com.example.homepager_older.step;
 
 import android.util.Log;
 
@@ -11,7 +11,7 @@ public class StepCount implements StepCountListener{
     private StepValuePassListener stepValuePassListener;//接口用来传递步数变化
     private StepDetector stepDetector;//传感器SensorEventListener子类实例
 
-    public StepCount() {
+    StepCount() {
         stepDetector = new StepDetector();
         stepDetector.initListener(this);
     }
@@ -38,7 +38,8 @@ public class StepCount implements StepCountListener{
         }
 
     }
-    public void setSteps(int initNowBusu){
+
+    void setSteps(int initNowBusu){
         this.mCount = initNowBusu;//接收上层调用传递过来的当前步数
         this.count = 0;
         timeOfLastPeak = 0;
@@ -50,19 +51,19 @@ public class StepCount implements StepCountListener{
      * 用来给调用者获取SensorEventListener实例
      * @return 返回SensorEventListener实例
      */
-    public StepDetector getStepDetector(){
+    StepDetector getStepDetector(){
         return stepDetector;
     }
     /**
      * 更新步数，通过接口函数通过上层调用者
      */
-    public void notifyListener(){
+    private void notifyListener(){
         if(this.stepValuePassListener != null){
             Log.i("countStep","数据更新");
             this.stepValuePassListener.stepChanged(this.mCount);  //当前步数通过接口传递给调用者
         }
     }
-    public  void initListener(StepValuePassListener listener){
+    void initListener(StepValuePassListener listener){
         this.stepValuePassListener = listener;
     }
 

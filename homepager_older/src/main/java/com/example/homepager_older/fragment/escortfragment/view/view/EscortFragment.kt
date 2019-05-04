@@ -1,4 +1,4 @@
-package com.example.homepager_older.fragment.escortfragment.view
+package com.example.homepager_older.fragment.escortfragment.view.view
 
 import android.os.Bundle
 import com.example.homepager_older.R

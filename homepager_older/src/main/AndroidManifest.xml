@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.example.homepager_older">
+          xmlns:tools="http://schemas.android.com/tools" package="com.example.homepager_older">
 
     <!--允许程序打开网络套接字-->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -24,6 +24,20 @@
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
 
+    <!--计歩需要的权限-->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" tools:ignore="ProtectedPermissions"/>
+    <uses-feature android:name="android.hardware.sensor.accelerometer" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" tools:ignore="ProtectedPermissions"/>
+    <uses-feature
+            android:name="android.hardware.sensor.stepcounter"
+            android:required="true" />
+    <uses-feature
+            android:name="android.hardware.sensor.stepdetector"
+            android:required="true" />
+    <!--计歩需要的权限-->
+
     <application>
         <meta-data
                 android:name="com.amap.api.v2.apikey"
@@ -33,6 +47,11 @@
 
         <activity android:name=".activity.OlderActivity">
         </activity>
+
+        <service
+                android:name=".step.BindService"
+                android:enabled="true"
+                android:exported="true"/>
     </application>
 
 </manifest>

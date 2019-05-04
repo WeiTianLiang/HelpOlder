@@ -1,4 +1,4 @@
-package com.example.tools.step;
+package com.example.homepager_older.step;
 
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;

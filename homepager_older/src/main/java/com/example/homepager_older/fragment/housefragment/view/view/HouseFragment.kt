@@ -2,9 +2,16 @@ package com.example.homepager_older.fragment.housefragment.view.view
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
+import android.content.ServiceConnection
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.IBinder
+import android.os.Message
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import com.amap.api.location.AMapLocation
@@ -19,6 +26,7 @@ import com.amap.api.maps2d.model.LatLng
 import com.amap.api.maps2d.model.MarkerOptions
 import com.amap.api.maps2d.model.MyLocationStyle
 import com.example.homepager_older.R
+import com.example.homepager_older.step.BindService
 import com.example.tools.fragment.BaseFragment
 import com.example.tools.view.initBarChartView
 import com.example.tools.view.showBarChart
@@ -56,7 +64,7 @@ class HouseFragment : BaseFragment(), OnChartValueSelectedListener, LocationSour
     /**
      * 当前步数
      */
-    private val step = 0
+    private var step = 0
 
     /**
      * 城市信息
@@ -67,11 +75,34 @@ class HouseFragment : BaseFragment(), OnChartValueSelectedListener, LocationSour
      */
     private var youStreetNum: String? = null
 
+    /**
+     * 步数服务
+     */
+    private var bindService: BindService? = null
+    /**
+     * 是否绑定
+     */
+    private var isBind: Boolean = false
+    private val handler = @SuppressLint("HandlerLeak")
+    object : Handler() {
+        override fun handleMessage(msg: Message) {
+            if (msg.what == 1) {
+                stepCount.text = msg.arg1.toString()
+            }
+        }
+    }
+
     override fun onViewCreate(savedInstanceState: Bundle?) {
         mapView.onCreate(savedInstanceState)
         init()
         showNowLocation()
 //        showOtherLocation("108.967945","34.345741")
+        // 启动计步
+        val intent = Intent(activity?.applicationContext, BindService::class.java)
+        activity?.applicationContext?.let {
+            isBind = it.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
+        }
+        activity?.applicationContext?.startService(intent)
     }
 
     override fun onInflated(savedInstanceState: Bundle?) {
@@ -86,7 +117,7 @@ class HouseFragment : BaseFragment(), OnChartValueSelectedListener, LocationSour
         xList.add("5月4")
         xList.add("5月5")
         initBarChartView(barChart, xList)
-        showBarChart(barChart, listData, "步数", Color.BLUE)
+        showBarChart(barChart, listData, "过去五天步数", Color.BLUE)
     }
 
     override fun getLayoutResId(): Int {
@@ -94,11 +125,9 @@ class HouseFragment : BaseFragment(), OnChartValueSelectedListener, LocationSour
     }
 
     override fun onValueSelected(e: Entry?, h: Highlight?) {
-
     }
 
     override fun onNothingSelected() {
-
     }
 
     private fun init() {
@@ -110,6 +139,30 @@ class HouseFragment : BaseFragment(), OnChartValueSelectedListener, LocationSour
         val setting = aMap.uiSettings
         setting.isMyLocationButtonEnabled = true
         aMap.isMyLocationEnabled = true
+    }
+
+    //和绷定服务数据交换的桥梁，可以通过IBinder service获取服务的实例来调用服务的方法或者数据
+    private val serviceConnection = object : ServiceConnection {
+        override fun onServiceConnected(name: ComponentName, service: IBinder) {
+            val lcBinder = service as BindService.LcBinder
+            bindService = lcBinder.service
+            bindService?.registerCallback { stepCount ->
+                //当前接收到stepCount数据，就是最新的步数
+                val message = Message.obtain()
+                message.what = 1
+                message.arg1 = if(step >= stepCount) {
+                    step
+                } else {
+                    // 重启服务步数重新计算，做加法运算
+                    step += stepCount
+                    step
+                }
+                handler.sendMessage(message)
+            }
+        }
+
+        override fun onServiceDisconnected(name: ComponentName) {
+        }
     }
 
     // 定位当前位置

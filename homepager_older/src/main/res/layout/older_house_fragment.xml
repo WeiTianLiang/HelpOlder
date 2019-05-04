@@ -53,6 +53,7 @@
                 android:layout_marginStart="20dp"/>
 
         <TextView
+                android:id="@+id/stepCount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="0"
