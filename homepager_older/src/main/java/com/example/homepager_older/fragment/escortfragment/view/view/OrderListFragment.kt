@@ -33,6 +33,11 @@ class OrderListFragment : BaseFragment() {
         historyListModel2.historyNumber = "23123123412341234"
         historyListModel2.historyTime = "asdasdasdasd"
         list.add(historyListModel2)
+        list.add(historyListModel2)
+        list.add(historyListModel2)
+        list.add(historyListModel2)
+        list.add(historyListModel2)
+        list.add(historyListModel2)
     }
 
     override fun onViewCreate(savedInstanceState: Bundle?) {

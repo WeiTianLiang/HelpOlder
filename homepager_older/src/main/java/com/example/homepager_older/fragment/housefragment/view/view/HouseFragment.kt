@@ -13,6 +13,7 @@ import android.os.IBinder
 import android.os.Message
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import android.widget.TextView
 import com.amap.api.location.AMapLocation
 import com.amap.api.location.AMapLocationClient
 import com.amap.api.location.AMapLocationClientOption
@@ -53,6 +54,7 @@ class HouseFragment : BaseFragment(), OnChartValueSelectedListener, LocationSour
     private var isFirstLoc = true
     private var mListener: LocationSource.OnLocationChangedListener? = null
     private val mapView by lazy { findViewById<MapView>(R.id.mapView) }
+    private val stepCount by lazy { findViewById<TextView>(R.id.stepCount) }
     /**
      * 当前步数
      */

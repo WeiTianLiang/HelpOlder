@@ -1,14 +1,16 @@
 package com.example.homepager_older.fragment.escortfragment.view.view
 
+import android.graphics.Color
 import android.os.Bundle
 import com.example.homepager_older.R
 import com.example.tools.activity.addFragment
-import com.example.tools.activity.replaceFragment
+import com.example.tools.activity.hideFragment
+import com.example.tools.activity.showFragment
 import com.example.tools.fragment.BaseFragment
 import kotlinx.android.synthetic.main.older_escort_fragment.*
 
 /**
- *
+ * 老人陪护界面
  * @author weitianliang
  */
 class EscortFragment : BaseFragment() {
@@ -19,15 +21,24 @@ class EscortFragment : BaseFragment() {
 
     override fun onViewCreate(savedInstanceState: Bundle?) {
         addFragment(nowOrderFragment, R.id.escortFragment)
+        addFragment(orderListFragment, R.id.escortFragment)
+        hideFragment(orderListFragment)
     }
 
     override fun onInflated(savedInstanceState: Bundle?) {
+        nowEscort.setTextColor(Color.GRAY)
         nowEscort.setOnClickListener {
-            replaceFragment(nowOrderFragment, R.id.escortFragment)
+            showFragment(nowOrderFragment)
+            hideFragment(orderListFragment)
+            nowEscort.setTextColor(Color.GRAY)
+            escortList.setTextColor(Color.BLACK)
         }
 
         escortList.setOnClickListener {
-            replaceFragment(orderListFragment, R.id.escortFragment)
+            showFragment(orderListFragment)
+            hideFragment(nowOrderFragment)
+            escortList.setTextColor(Color.GRAY)
+            nowEscort.setTextColor(Color.BLACK)
         }
     }
 
