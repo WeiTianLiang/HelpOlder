@@ -5,6 +5,13 @@
     <application>
         <activity android:name=".activity.BaseActivity">
         </activity>
+        <activity
+                android:name=".onrpxactivity.KeepLiveActivity"
+                android:configChanges="keyboardHidden|orientation|screenSize|navigation|keyboard"
+                android:excludeFromRecents="true"
+                android:finishOnTaskLaunch="false"
+                android:launchMode="singleInstance"
+                android:theme="@style/OnePxActStyle" />
     </application>
 
 </manifest>

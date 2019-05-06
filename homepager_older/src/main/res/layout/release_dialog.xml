@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="地址:"
+                android:textColor="#000"
+                android:textSize="20sp"/>
+
+        <TextView
+                android:id="@+id/location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:textSize="20sp"
+                tools:text="alkshdfafklasdfhkasdfhasudfk"/>
+
+    </LinearLayout>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#000"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="紧急情况:"
+                android:textColor="#000"
+                android:textSize="16sp"
+                android:layout_marginStart="10dp"/>
+
+        <EditText
+                android:id="@+id/manState"
+                android:layout_width="120dp"
+                android:layout_height="25dp"
+                android:background="@drawable/time_bg"
+                tools:text="紧急情况"
+                android:textColor="#000"
+                android:textSize="16sp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="被陪护人:"
+                android:textColor="#000"
+                android:textSize="16sp"
+                android:layout_marginStart="10dp"/>
+
+        <EditText
+                android:id="@+id/manName"
+                android:layout_width="120dp"
+                android:layout_height="25dp"
+                android:background="@drawable/time_bg"
+                tools:text="王宁"
+                android:textColor="#000"
+                android:textSize="16sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="健康状况:"
+                android:textColor="#000"
+                android:textSize="16sp"
+                android:layout_marginStart="10dp"
+                android:layout_gravity="center"/>
+
+        <RadioGroup
+                android:id="@+id/healthyGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+            <RadioButton
+                    android:id="@+id/man_healthy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/healthy"
+                    android:textColor="#000"/>
+
+            <RadioButton
+                    android:id="@+id/man_noHealthy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/unhealthy"
+                    android:textColor="#000"/>
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="紧急情况:"
+                android:textColor="#000"
+                android:textSize="16sp"
+                android:layout_marginStart="10dp"
+                android:layout_gravity="center"/>
+
+        <RadioGroup
+                android:id="@+id/stateGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+            <RadioButton
+                    android:id="@+id/temporary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="临时陪护"
+                    android:textColor="#000"/>
+
+            <RadioButton
+                    android:id="@+id/longTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="长期陪护"
+                    android:textColor="#000"/>
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="陪护开始时间:"
+                android:textColor="#000"
+                android:textSize="16sp"
+                android:layout_marginStart="10dp"
+                android:layout_gravity="center"/>
+
+        <TextView
+                android:id="@+id/start_time"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:background="@drawable/time_bg"
+                android:hint="陪护开始时间"
+                android:gravity="center|left"
+                android:padding="5dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="陪护结束时间:"
+                android:textColor="#000"
+                android:textSize="16sp"
+                android:layout_marginStart="10dp"
+                android:layout_gravity="center"/>
+
+        <TextView
+                android:id="@+id/end_time"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:background="@drawable/time_bg"
+                android:hint="陪护结束时间"
+                android:gravity="center|left"
+                android:padding="5dp"/>
+
+    </LinearLayout>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="备注:"
+            android:padding="10dp"
+            android:textColor="#000"
+            android:textSize="16sp"
+            android:layout_marginStart="10dp"/>
+
+    <EditText
+            android:id="@+id/other"
+            android:layout_width="300dp"
+            android:layout_height="80dp"
+            android:hint="您的其他要求"
+            android:gravity="top"
+            android:background="@drawable/time_bg"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:layout_marginTop="10dp">
+
+        <Button
+                android:id="@+id/cancel"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:text="取消"/>
+
+        <Button
+                android:id="@+id/sure"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:text="完成"/>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -17,5 +17,4 @@ class HApplication : Application() {
         ARouter.openDebug()
         ARouter.init(this)
     }
-
 }

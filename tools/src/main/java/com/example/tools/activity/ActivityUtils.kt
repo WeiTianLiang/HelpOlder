@@ -44,6 +44,34 @@ inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Unit) {
 }
 
 /**
+ * Fragment中add Fragment
+ */
+fun Fragment.addFragment(fragment: Fragment, frameId: Int) {
+    childFragmentManager.inTransaction { add(frameId, fragment) }
+}
+
+/**
+ * Activity中replace Fragment
+ */
+fun Fragment.replaceFragment(fragment: Fragment, frameId: Int) {
+    childFragmentManager.inTransaction { replace(frameId, fragment) }
+}
+
+/**
+ * Activity中hide Fragment
+ */
+fun Fragment.hideFragment(fragment: Fragment) {
+    childFragmentManager.inTransaction { hide(fragment) }
+}
+
+/**
+ * Activity中show Fragment
+ */
+fun Fragment.showFragment(fragment: Fragment) {
+    childFragmentManager.inTransaction { show(fragment) }
+}
+
+/**
  * Activity中add Fragment
  */
 fun AppCompatActivity.addFragment(fragment: Fragment, frameId: Int) {
@@ -65,7 +93,7 @@ fun AppCompatActivity.hideFragment(fragment: Fragment) {
 }
 
 /**
- * Activity中hide Fragment
+ * Activity中show Fragment
  */
 fun AppCompatActivity.showFragment(fragment: Fragment) {
     supportFragmentManager.inTransaction { show(fragment) }

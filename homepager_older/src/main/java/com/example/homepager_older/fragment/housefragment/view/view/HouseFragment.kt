@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.IBinder
@@ -26,17 +25,15 @@ import com.amap.api.maps2d.model.LatLng
 import com.amap.api.maps2d.model.MarkerOptions
 import com.amap.api.maps2d.model.MyLocationStyle
 import com.example.homepager_older.R
+import com.example.homepager_older.fragment.housefragment.view.presenter.OlderHousePresenter
 import com.example.homepager_older.step.BindService
 import com.example.tools.fragment.BaseFragment
-import com.example.tools.view.initBarChartView
-import com.example.tools.view.showBarChart
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import kotlinx.android.synthetic.main.older_house_fragment.*
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 /**
  * 老人 - 首页 fragment
@@ -44,11 +41,6 @@ import kotlin.collections.ArrayList
  */
 class HouseFragment : BaseFragment(), OnChartValueSelectedListener, LocationSource, AMapLocationListener {
 
-    /**
-     * 柱状图数据
-     */
-    private val listData = ArrayList<Int>()
-    private val xList = ArrayList<String>()
     /**
      * 地图
      */
@@ -92,6 +84,8 @@ class HouseFragment : BaseFragment(), OnChartValueSelectedListener, LocationSour
         }
     }
 
+    private val presenter by lazy { OlderHousePresenter() }
+
     override fun onViewCreate(savedInstanceState: Bundle?) {
         mapView.onCreate(savedInstanceState)
         init()
@@ -106,18 +100,7 @@ class HouseFragment : BaseFragment(), OnChartValueSelectedListener, LocationSour
     }
 
     override fun onInflated(savedInstanceState: Bundle?) {
-        listData.add(530)
-        listData.add(2230)
-        listData.add(630)
-        listData.add(740)
-        listData.add(960)
-        xList.add("5月1")
-        xList.add("5月2")
-        xList.add("5月3")
-        xList.add("5月4")
-        xList.add("5月5")
-        initBarChartView(barChart, xList)
-        showBarChart(barChart, listData, "过去五天步数", Color.BLUE)
+        presenter.barChart(barChart)
     }
 
     override fun getLayoutResId(): Int {

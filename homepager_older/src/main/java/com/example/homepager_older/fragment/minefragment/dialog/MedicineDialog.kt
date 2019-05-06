@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.medicine_dialog.*
  */
 class MedicineDialog(
     context: Context
-) : Dialog(context) {
+) : Dialog(context, R.style.dialog) {
 
     private var click: OnClick? = null
 

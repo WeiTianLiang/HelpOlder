@@ -6,6 +6,7 @@ import com.example.homepager_older.fragment.escortfragment.view.view.EscortFragm
 import com.example.homepager_older.fragment.housefragment.view.view.HouseFragment
 import com.example.homepager_older.fragment.minefragment.view.MineFragment
 import com.example.tools.activity.BaseActivity
+import com.example.tools.onrpxactivity.KeepLiveManager
 
 @Route(path = "/homepager_older/OlderActivity")
 class OlderActivity : BaseActivity() {
@@ -16,7 +17,7 @@ class OlderActivity : BaseActivity() {
     private val fragmentList = arrayListOf<Fragment>()
 
     override fun onBaseCreate() {
-
+        KeepLiveManager(this).registerBroadCast(this)
     }
 
     override fun getFragmentList(): ArrayList<Fragment> {
@@ -24,5 +25,10 @@ class OlderActivity : BaseActivity() {
         fragmentList.add(escortFragment)
         fragmentList.add(mineFragment)
         return fragmentList
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        KeepLiveManager(this).unRegisterBroadCast(this)
     }
 }
