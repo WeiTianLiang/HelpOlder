@@ -6,29 +6,36 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <RelativeLayout
+
+    <com.example.tools.view.BaseMapView
+            android:id="@+id/mapView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2">
+            android:layout_weight="2"/>
 
-        <com.amap.api.maps2d.MapView
-                android:id="@+id/mapView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+    <!--<RelativeLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:layout_weight="2">-->
 
-        <TextView
-                android:id="@+id/locationText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="海淀区，西河路"
-                android:textColor="#ffffff"
-                android:background="#777777"
-                android:textSize="18sp"
-                android:padding="3dp"
-                android:textStyle="bold"
-                android:layout_margin="10dp"/>
+    <!--<com.amap.api.maps2d.MapView-->
+    <!--android:id="@+id/mapView"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"/>-->
 
-    </RelativeLayout>
+    <!--<TextView-->
+    <!--android:id="@+id/locationText"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--tools:text="海淀区，西河路"-->
+    <!--android:textColor="#ffffff"-->
+    <!--android:background="#777777"-->
+    <!--android:textSize="18sp"-->
+    <!--android:padding="3dp"-->
+    <!--android:textStyle="bold"-->
+    <!--android:layout_margin="10dp"/>-->
+
+    <!--</RelativeLayout>-->
 
     <View
             android:id="@+id/line"

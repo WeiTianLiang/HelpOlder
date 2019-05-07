@@ -3,6 +3,13 @@
           package="com.example.tools">
 
     <application>
+
+        <meta-data
+                android:name="com.amap.api.v2.apikey"
+                android:value="b7a5bfc8a2ccf9ff80674d82359aa07a"/>
+
+        <service android:name="com.amap.api.location.APSService"/>
+
         <activity android:name=".activity.BaseActivity">
         </activity>
         <activity
