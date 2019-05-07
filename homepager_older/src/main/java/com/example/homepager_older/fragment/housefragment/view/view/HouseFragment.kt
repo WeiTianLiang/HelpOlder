@@ -29,9 +29,6 @@ import com.example.homepager_older.R
 import com.example.homepager_older.fragment.housefragment.view.presenter.OlderHousePresenter
 import com.example.homepager_older.step.BindService
 import com.example.tools.fragment.BaseFragment
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.highlight.Highlight
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import kotlinx.android.synthetic.main.older_house_fragment.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -40,7 +37,7 @@ import java.util.*
  * 老人 - 首页 fragment
  * @author weitianliang
  */
-class HouseFragment : BaseFragment(), OnChartValueSelectedListener, LocationSource, AMapLocationListener {
+class HouseFragment : BaseFragment(), LocationSource, AMapLocationListener {
 
     /**
      * 地图
@@ -102,17 +99,11 @@ class HouseFragment : BaseFragment(), OnChartValueSelectedListener, LocationSour
     }
 
     override fun onInflated(savedInstanceState: Bundle?) {
-        presenter.barChart(barChart)
+        presenter.setBarChart(barChartView)
     }
 
     override fun getLayoutResId(): Int {
         return R.layout.older_house_fragment
-    }
-
-    override fun onValueSelected(e: Entry?, h: Highlight?) {
-    }
-
-    override fun onNothingSelected() {
     }
 
     private fun init() {

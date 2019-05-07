@@ -1,6 +1,6 @@
 package com.example.homepager_older.fragment.housefragment.view.presenter
 
-import com.github.mikephil.charting.charts.BarChart
+import com.example.tools.view.BarChartView
 
 /**
  *
@@ -8,6 +8,6 @@ import com.github.mikephil.charting.charts.BarChart
  */
 interface OlderHouseInterface {
 
-    fun barChart(barChart: BarChart)
+    fun setBarChart(barChartView: BarChartView)
 
 }
