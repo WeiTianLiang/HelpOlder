@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.homepager_children.fragment.escortfragment.view.ChildrenEscortFragment
 import com.example.homepager_children.fragment.hosuefragment.view.ChildrenHouseFragment
-import com.example.homepager_children.fragment.minefragment.view.ChildrenMineFragment
+import com.example.homepager_children.fragment.minefragment.view.view.ChildrenMineFragment
 import com.example.tools.activity.BaseActivity
 
 @Route(path = "/homepager_children/ChildrenActivity")
