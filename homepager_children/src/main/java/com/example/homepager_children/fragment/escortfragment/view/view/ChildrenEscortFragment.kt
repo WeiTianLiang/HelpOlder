@@ -1,4 +1,4 @@
-package com.example.homepager_children.fragment.escortfragment.view
+package com.example.homepager_children.fragment.escortfragment.view.view
 
 import android.os.Bundle
 import com.example.homepager_children.R
@@ -8,12 +8,11 @@ import com.example.tools.fragment.BaseFragment
  * 子女 -陪护 fragment
  * @author weitianliang
  */
-class ChildrenEscortFragment : BaseFragment(){
+class ChildrenEscortFragment : BaseFragment() {
+
+
+
     override fun onViewCreate(savedInstanceState: Bundle?) {
-
-    }
-
-    init {
 
     }
 

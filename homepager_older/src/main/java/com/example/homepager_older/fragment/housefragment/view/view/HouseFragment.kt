@@ -50,10 +50,8 @@ class HouseFragment : BaseFragment() {
     private val presenter by lazy { OlderHousePresenter() }
 
     override fun onViewCreate(savedInstanceState: Bundle?) {
-        // 启动地图
-        mapView.onCreate(savedInstanceState)
-        activity?.let { mapView.showNowLocation(it) }
-//        showOtherLocation("108.967945","34.345741")
+
+        activity?.let { presenter.setMapView(mapView, it, savedInstanceState) }
 
         // 启动计步
         val intent = Intent(activity?.applicationContext, BindService::class.java)
