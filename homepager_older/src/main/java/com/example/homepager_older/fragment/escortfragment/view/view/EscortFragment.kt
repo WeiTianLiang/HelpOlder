@@ -19,7 +19,7 @@ class EscortFragment : BaseFragment() {
 
     private val nowOrderFragment by lazy { NowOrderFragment() }
 
-    private val orderListFragment by lazy { OrderListFragment() }
+    private val orderListFragment by lazy { OrderListFragment(100) }
 
     override fun onViewCreate(savedInstanceState: Bundle?) {
         addFragment(nowOrderFragment, R.id.escortFragment)

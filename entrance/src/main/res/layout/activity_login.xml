@@ -64,17 +64,6 @@
                 android:textColor="#ffffff"
                 android:textSize="20sp"/>
 
-        <TextView
-                android:id="@+id/forgot_password"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/main_login"
-                android:text="@string/forgot_password"
-                android:textSize="17dp"
-                android:textColor="#fff"
-                android:layout_centerInParent="true"
-                android:layout_marginTop="25dp"/>
-
     </RelativeLayout>
 
 

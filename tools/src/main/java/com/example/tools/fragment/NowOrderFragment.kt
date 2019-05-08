@@ -7,7 +7,7 @@ import com.example.tools.dialog.ReleaseDialog
 import kotlinx.android.synthetic.main.escort_isover_fragment.*
 
 /**
- *
+ * 当前发布的订单
  * @author WeiTianLiang
  */
 class NowOrderFragment : BaseFragment() {

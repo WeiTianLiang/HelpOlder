@@ -3,6 +3,8 @@
           package="com.example.tools">
 
     <application>
+        <activity android:name=".activity.DetailActivity">
+        </activity>
 
         <meta-data
                 android:name="com.amap.api.v2.apikey"
@@ -18,7 +20,7 @@
                 android:excludeFromRecents="true"
                 android:finishOnTaskLaunch="false"
                 android:launchMode="singleInstance"
-                android:theme="@style/OnePxActStyle" />
+                android:theme="@style/OnePxActStyle"/>
     </application>
 
 </manifest>

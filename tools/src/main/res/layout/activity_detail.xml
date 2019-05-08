@@ -2,8 +2,32 @@
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".activity.DetailActivity"
         android:orientation="vertical">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="39dp">
+
+        <ImageView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/back"
+                android:layout_gravity="center"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="订单详情"
+                android:textColor="#000"
+                android:textSize="20sp"
+                android:layout_marginStart="30dp"
+                android:layout_gravity="center"/>
+
+    </LinearLayout>
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -15,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:text="订单号："
                 android:textColor="#000"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:gravity="center"/>
         <TextView
                 android:id="@+id/orderNumber"
@@ -23,7 +47,7 @@
                 android:layout_height="wrap_content"
                 tools:text="2134123412341234"
                 android:textColor="#000"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:gravity="center"/>
     </LinearLayout>
 
@@ -37,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:text="地址："
                 android:textColor="#000"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:gravity="center"/>
         <TextView
                 android:id="@+id/orderLocation"
@@ -47,7 +71,7 @@
                 android:singleLine="true"
                 android:ellipsize="end"
                 android:textColor="#000"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:gravity="center"/>
     </LinearLayout>
 
@@ -61,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:text="被陪护人："
                 android:textColor="#000"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:gravity="center"/>
         <TextView
                 android:id="@+id/orderName"
@@ -69,7 +93,51 @@
                 android:layout_height="wrap_content"
                 tools:text="王悦"
                 android:textColor="#000"
-                android:textSize="16sp"
+                android:textSize="18sp"
+                android:gravity="center"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="年龄："
+                android:textColor="#000"
+                android:textSize="18sp"
+                android:gravity="center"/>
+        <TextView
+                android:id="@+id/orderAge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="18"
+                android:textColor="#000"
+                android:textSize="18sp"
+                android:gravity="center"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="性别："
+                android:textColor="#000"
+                android:textSize="18sp"
+                android:gravity="center"/>
+        <TextView
+                android:id="@+id/orderSex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="男"
+                android:textColor="#000"
+                android:textSize="18sp"
                 android:gravity="center"/>
     </LinearLayout>
 
@@ -83,7 +151,7 @@
                 android:layout_height="wrap_content"
                 android:text="健康情况："
                 android:textColor="#000"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:gravity="center"/>
         <TextView
                 android:id="@+id/orderState"
@@ -91,7 +159,7 @@
                 android:layout_height="wrap_content"
                 tools:text="健康"
                 android:textColor="#000"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:gravity="center"/>
     </LinearLayout>
 
@@ -105,7 +173,7 @@
                 android:layout_height="wrap_content"
                 android:text="陪护时间："
                 android:textColor="#000"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:gravity="center"/>
         <TextView
                 android:id="@+id/orderTime"
@@ -113,25 +181,30 @@
                 android:layout_height="wrap_content"
                 tools:text="123123"
                 android:textColor="#000"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:gravity="center"/>
     </LinearLayout>
 
-    <TextView
-            android:id="@+id/showD"
-            android:layout_width="wrap_content"
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/orderMedic"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
-            android:text="查看详情"
-            android:textColor="#7987E4"
-            android:textSize="18sp"
-            android:gravity="center"/>
-
-    <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#000"
             android:layout_marginTop="5dp"/>
+
+    <TextView
+            android:id="@+id/doIt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/text_bg"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:gravity="center"
+            android:paddingBottom="8dp"
+            android:paddingTop="10dp"
+            android:text="接单"
+            android:textColor="#000000"
+            android:textSize="20sp"/>
 
 </LinearLayout>
