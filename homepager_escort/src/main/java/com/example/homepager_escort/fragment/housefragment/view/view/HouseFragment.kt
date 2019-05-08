@@ -1,22 +1,22 @@
-package com.example.homepager_children.fragment.hosuefragment.view.view
+package com.example.homepager_escort.fragment.housefragment.view.view
 
 import android.os.Bundle
 import android.widget.TextView
-import com.example.homepager_children.R
-import com.example.homepager_children.fragment.hosuefragment.view.presenter.ChildrenHousePresenter
+import com.example.homepager_escort.R
+import com.example.homepager_escort.fragment.housefragment.view.presenter.EscortHousePresenter
 import com.example.tools.fragment.BaseFragment
 import com.example.tools.view.BaseMapView
-import kotlinx.android.synthetic.main.children_house_fragment.*
+import kotlinx.android.synthetic.main.house_fragment.*
 
 /**
- * 子女 -首页 fragment
+ * 老人 -主页面
  * @author weitianliang
  */
-class ChildrenHouseFragment : BaseFragment() {
+class HouseFragment : BaseFragment() {
 
     private val mapView by lazy { findViewById<BaseMapView>(R.id.mapView) }
 
-    private val presenter by lazy { ChildrenHousePresenter() }
+    private val presenter by lazy { EscortHousePresenter() }
 
     private val locationText by lazy { findViewById<TextView>(R.id.locationText) }
 
@@ -31,10 +31,6 @@ class ChildrenHouseFragment : BaseFragment() {
         changeOlder.setOnClickListener {
             activity?.let { it1 -> presenter.changeOlder(mapView, it1, savedInstanceState, locationText) }
         }
-    }
-
-    override fun getLayoutResId(): Int {
-        return R.layout.children_house_fragment
     }
 
     override fun onDestroy() {
@@ -52,4 +48,7 @@ class ChildrenHouseFragment : BaseFragment() {
         mapView.onSaveInstanceState(outState)
     }
 
+    override fun getLayoutResId(): Int {
+        return R.layout.house_fragment
+    }
 }

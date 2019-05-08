@@ -1,14 +1,17 @@
-package com.example.homepager_escort.fragment.minefragment.view
+package com.example.homepager_escort.fragment.escortfragment.view.view
 
 import android.os.Bundle
 import com.example.homepager_escort.R
 import com.example.tools.fragment.BaseFragment
 
 /**
- *
+ * 陪护 - 陪护 fragment
  * @author weitianliang
  */
-class MineFragment : BaseFragment() {
+class EscortFragment : BaseFragment() {
+
+
+
     override fun onViewCreate(savedInstanceState: Bundle?) {
 
     }
@@ -18,6 +21,6 @@ class MineFragment : BaseFragment() {
     }
 
     override fun getLayoutResId(): Int {
-        return R.layout.mine_fragment
+        return R.layout.escort_fragment
     }
 }

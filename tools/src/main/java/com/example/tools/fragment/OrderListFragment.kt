@@ -1,11 +1,11 @@
-package com.example.homepager_older.fragment.escortfragment.view.view
+package com.example.tools.fragment
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import com.example.homepager_older.R
-import com.example.homepager_older.fragment.escortfragment.view.model.HistoryListModel
-import com.example.tools.fragment.BaseFragment
+import com.example.tools.R
+import com.example.tools.adapter.ReleaseRecyclerAdapter
+import com.example.tools.model.HistoryListModel
 
 /**
  * 历史订单数据

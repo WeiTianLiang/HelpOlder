@@ -16,9 +16,12 @@ interface ChildrenHouseInterface {
     fun setBarChart(barChartView: BarChartView)
 
     // 设置地图
-    fun setMapView(mapView: BaseMapView, activity: Activity, savedInstanceState: Bundle?)
+    fun setMapView(mapView: BaseMapView, activity: Activity, savedInstanceState: Bundle?, locationText: TextView)
 
     // 设置步数
     fun setStepCount(steCount: TextView)
+
+    // 改变人物
+    fun changeOlder(mapView: BaseMapView, activity: Activity, savedInstanceState: Bundle?, locationText: TextView)
 
 }

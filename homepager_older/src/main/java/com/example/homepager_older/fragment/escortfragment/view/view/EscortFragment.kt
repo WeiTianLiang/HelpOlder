@@ -7,6 +7,8 @@ import com.example.tools.activity.addFragment
 import com.example.tools.activity.hideFragment
 import com.example.tools.activity.showFragment
 import com.example.tools.fragment.BaseFragment
+import com.example.tools.fragment.NowOrderFragment
+import com.example.tools.fragment.OrderListFragment
 import kotlinx.android.synthetic.main.older_escort_fragment.*
 
 /**

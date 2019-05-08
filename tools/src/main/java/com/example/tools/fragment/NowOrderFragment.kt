@@ -1,9 +1,9 @@
-package com.example.homepager_older.fragment.escortfragment.view.view
+package com.example.tools.fragment
 
 import android.os.Bundle
 import android.view.Gravity
-import com.example.homepager_older.R
-import com.example.tools.fragment.BaseFragment
+import com.example.tools.R
+import com.example.tools.dialog.ReleaseDialog
 import kotlinx.android.synthetic.main.escort_isover_fragment.*
 
 /**

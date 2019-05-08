@@ -1,7 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        xmlns:tools="http://schemas.android.com/tools">
 
-</android.support.constraint.ConstraintLayout>
+    <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2">
+
+        <TextView
+                android:id="@+id/locationText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="海淀区，茶南街"
+                android:translationZ="3dp"
+                android:textColor="#fff"
+                android:textSize="18sp"
+                android:background="#7A7A7A"
+                android:layout_margin="10dp"/>
+
+        <TextView
+                android:id="@+id/changeOlder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="切换"
+                android:textColor="#000"
+                android:textSize="16sp"
+                android:translationZ="3dp"
+                android:padding="5dp"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/time_bg"
+                android:layout_margin="10dp"/>
+
+        <com.example.tools.view.BaseMapView
+                android:id="@+id/mapView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+    </RelativeLayout>
+
+    <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#757575"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:orientation="horizontal">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="今日步数:"
+                android:textSize="20sp"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:layout_marginStart="20dp"/>
+
+        <TextView
+                android:id="@+id/stepCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="#000"
+                android:layout_marginStart="10dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+    <com.example.tools.view.BarChartView
+            android:id="@+id/barChartView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:padding="5dp"/>
+
+    <View
+            android:id="@+id/line1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#757575"/>
+
+    <LinearLayout
+            android:id="@+id/layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="老人的健康状态:"
+                android:textSize="16sp"
+                android:textColor="#000"/>
+
+        <TextView
+                android:id="@+id/healthy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="良好！请继续保持"
+                android:textColor="#000"
+                android:textSize="22sp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"/>
+
+    </LinearLayout>
+
+</LinearLayout>

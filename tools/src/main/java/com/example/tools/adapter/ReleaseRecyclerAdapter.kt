@@ -1,4 +1,4 @@
-package com.example.homepager_older.fragment.escortfragment.view.view
+package com.example.tools.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -6,8 +6,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.homepager_older.R
-import com.example.homepager_older.fragment.escortfragment.view.model.HistoryListModel
+import com.example.tools.R
+import com.example.tools.model.HistoryListModel
 import kotlinx.android.synthetic.main.history_item.view.*
 
 /**

@@ -1,4 +1,4 @@
-package com.example.homepager_older.fragment.housefragment.view.presenter
+package com.example.homepager_escort.fragment.housefragment.view.presenter
 
 import android.app.Activity
 import android.graphics.Color
@@ -11,7 +11,7 @@ import com.example.tools.view.BaseMapView
  *
  * @author WeiTianLiang
  */
-class OlderHousePresenter : OlderHouseInterface {
+class EscortHousePresenter : EscortHouseInterface {
 
     /**
      * 柱状图数据
@@ -19,9 +19,20 @@ class OlderHousePresenter : OlderHouseInterface {
     private val listData = ArrayList<Int>()
     private val xList = ArrayList<String>()
 
-    /**
-     * 地图
-     */
+    override fun changeOlder(
+        mapView: BaseMapView,
+        activity: Activity,
+        savedInstanceState: Bundle?,
+        locationText: TextView
+    ) {
+        mapView.onCreate(savedInstanceState, locationText)
+        mapView.showOtherLocation("104.967945","39.345741")
+    }
+
+    override fun setStepCount(steCount: TextView) {
+        steCount.text = "12312"
+    }
+
     override fun setMapView(
         mapView: BaseMapView,
         activity: Activity,
@@ -29,7 +40,7 @@ class OlderHousePresenter : OlderHouseInterface {
         locationText: TextView
     ) {
         mapView.onCreate(savedInstanceState, locationText)
-        activity.let { mapView.showNowLocation(it) }
+        mapView.showOtherLocation("108.967945","34.345741")
     }
 
     override fun setBarChart(barChartView: BarChartView) {

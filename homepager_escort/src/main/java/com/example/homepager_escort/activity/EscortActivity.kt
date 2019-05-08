@@ -2,9 +2,9 @@ package com.example.homepager_escort.activity
 
 import android.support.v4.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.homepager_escort.fragment.escortfragment.view.EscortFragment
-import com.example.homepager_escort.fragment.housefragment.view.HouseFragment
-import com.example.homepager_escort.fragment.minefragment.view.MineFragment
+import com.example.homepager_escort.fragment.escortfragment.view.view.EscortFragment
+import com.example.homepager_escort.fragment.housefragment.view.view.HouseFragment
+import com.example.homepager_escort.fragment.minefragment.view.view.MineFragment
 import com.example.tools.activity.BaseActivity
 
 @Route(path = "/homepager_escort/EscortActivity")

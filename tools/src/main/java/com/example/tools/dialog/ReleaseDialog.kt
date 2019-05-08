@@ -1,10 +1,10 @@
-package com.example.homepager_older.fragment.escortfragment.view.view
+package com.example.tools.dialog
 
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.widget.RadioButton
-import com.example.homepager_older.R
+import com.example.tools.R
 import kotlinx.android.synthetic.main.release_dialog.*
 
 /**

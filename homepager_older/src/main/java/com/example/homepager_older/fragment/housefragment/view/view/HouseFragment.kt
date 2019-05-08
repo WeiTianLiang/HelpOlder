@@ -25,6 +25,7 @@ class HouseFragment : BaseFragment() {
 
     private val stepCount by lazy { findViewById<TextView>(R.id.stepCount) }
     private val mapView by lazy { findViewById<BaseMapView>(R.id.mapView) }
+    private val locationText by lazy { findViewById<TextView>(R.id.locationText) }
     /**
      * 当前步数
      */
@@ -51,7 +52,7 @@ class HouseFragment : BaseFragment() {
 
     override fun onViewCreate(savedInstanceState: Bundle?) {
 
-        activity?.let { presenter.setMapView(mapView, it, savedInstanceState) }
+        activity?.let { presenter.setMapView(mapView, it, savedInstanceState, locationText) }
 
         // 启动计步
         val intent = Intent(activity?.applicationContext, BindService::class.java)

@@ -2,8 +2,50 @@
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-        android:layout_height="match_parent" tools:ignore="MissingDefaultResource">
+        android:layout_height="match_parent" tools:ignore="MissingDefaultResource"
+        android:orientation="vertical">
 
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+        <TextView
+                android:id="@+id/nowEscort"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="订单情况"
+                android:textSize="20sp"
+                android:textColor="#000"
+                android:gravity="center"
+                android:padding="10dp"/>
+
+        <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#000"/>
+
+        <TextView
+                android:id="@+id/escortList"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="订单列表"
+                android:textSize="20sp"
+                android:textColor="#000"
+                android:gravity="center"
+                android:padding="10dp"/>
+
+    </LinearLayout>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#000"/>
+
+    <FrameLayout
+            android:id="@+id/escortFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
 </LinearLayout>

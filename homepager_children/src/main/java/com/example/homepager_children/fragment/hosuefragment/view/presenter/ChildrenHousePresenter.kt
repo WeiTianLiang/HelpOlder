@@ -36,8 +36,13 @@ class ChildrenHousePresenter : ChildrenHouseInterface {
     /**
      * 地图
      */
-    override fun setMapView(mapView: BaseMapView, activity: Activity, savedInstanceState: Bundle?) {
-        mapView.onCreate(savedInstanceState)
+    override fun setMapView(
+        mapView: BaseMapView,
+        activity: Activity,
+        savedInstanceState: Bundle?,
+        locationText: TextView
+    ) {
+        mapView.onCreate(savedInstanceState, locationText)
         mapView.showOtherLocation("108.967945","34.345741")
     }
 
@@ -46,5 +51,18 @@ class ChildrenHousePresenter : ChildrenHouseInterface {
      */
     override fun setStepCount(steCount: TextView) {
         steCount.text = "12312"
+    }
+
+    /**
+     * 改变老人
+     */
+    override fun changeOlder(
+        mapView: BaseMapView,
+        activity: Activity,
+        savedInstanceState: Bundle?,
+        locationText: TextView
+    ) {
+        mapView.onCreate(savedInstanceState, locationText)
+        mapView.showOtherLocation("104.967945","39.345741")
     }
 }

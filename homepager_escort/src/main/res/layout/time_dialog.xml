@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <TextView
+            android:id="@+id/allDay"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="全天"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:textColor="#000"/>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#000"/>
+
+    <TextView
+            android:id="@+id/whiteDay"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="白天（早上8点-晚上8点）"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:textColor="#000"/>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#000"/>
+
+    <TextView
+            android:id="@+id/blackDay"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="晚上（晚上8点-早上8点）"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:textColor="#000"/>
+
+</LinearLayout>

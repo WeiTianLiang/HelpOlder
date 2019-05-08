@@ -50,7 +50,7 @@ class BaseMapView(
     private var isFirstLoc = true
     private var mListener: LocationSource.OnLocationChangedListener? = null
     private val mapView by lazy { findViewById<MapView>(R.id.baseMap) }
-    private val locationText by lazy { findViewById<TextView>(R.id.locationText) }
+    private var locationText: TextView? = null
 
     /**
      * 城市信息
@@ -66,9 +66,9 @@ class BaseMapView(
 
     }
 
-    fun onCreate(savedInstanceState: Bundle?) {
+    fun onCreate(savedInstanceState: Bundle?, text: TextView) {
         baseMap.onCreate(savedInstanceState)
-
+        locationText = text
         aMap.isTrafficEnabled = true
 
         // 设置缩放级别
@@ -182,7 +182,7 @@ class BaseMapView(
                 amapLocation.adCode
 
                 if (!youStreetNum.isNullOrEmpty() || !youDistrict.isNullOrEmpty()) {
-                    locationText.text = "$youDistrict,$youStreetNum"
+                    locationText?.text = "$youDistrict,$youStreetNum"
                 }
 
                 // 如果不设置标志位，此时再拖动地图时，它会不断将地图移动到当前的位置
