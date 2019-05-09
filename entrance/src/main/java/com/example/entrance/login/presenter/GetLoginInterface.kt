@@ -1,6 +1,6 @@
 package com.example.entrance.login.presenter
 
-import com.example.entrance.register.model.RegisterModel
+import com.example.tools.model.BaseModel
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -11,13 +11,13 @@ import retrofit2.http.Query
  */
 interface GetLoginInterface {
 
-    @GET("parent/check")
-    fun parentLogin(@Query("nickname") nickname: String, @Query("password") password: String): Call<RegisterModel>
+    @GET("parent/login")
+    fun parentLogin(@Query("nickname") nickname: String, @Query("password") password: String): Call<BaseModel>
 
-    @GET("parent/check")
-    fun escortLogin(@Query("nickname") nickname: String, @Query("password") password: String): Call<RegisterModel>
+    @GET("parent/login")
+    fun escortLogin(@Query("nickname") nickname: String, @Query("password") password: String): Call<BaseModel>
 
-    @GET("parent/check")
-    fun childrenLogin(@Query("nickname") nickname: String, @Query("password") password: String): Call<RegisterModel>
+    @GET("parent/login")
+    fun childrenLogin(@Query("nickname") nickname: String, @Query("password") password: String): Call<BaseModel>
 
 }

@@ -17,6 +17,10 @@ import kotlinx.android.synthetic.main.older_escort_fragment.*
  */
 class EscortFragment : BaseFragment() {
 
+    private var nickname: String? = null
+
+    private var older_id = -1
+
     private val nowOrderFragment by lazy { NowOrderFragment() }
 
     private val orderListFragment by lazy { OrderListFragment(100) }
@@ -46,5 +50,13 @@ class EscortFragment : BaseFragment() {
 
     override fun getLayoutResId(): Int {
         return R.layout.older_escort_fragment
+    }
+
+    fun setNickName(name: String) {
+        nickname = name
+    }
+
+    fun setID(id: Int) {
+        older_id = id
     }
 }

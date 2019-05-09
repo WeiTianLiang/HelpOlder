@@ -6,11 +6,11 @@ import android.content.Intent
 import android.support.v4.app.Fragment
 import android.util.Log
 import android.widget.Toast
-import com.example.entrance.register.model.RegisterModel
 import com.example.entrance.register.view.RegisterActivity
 import com.example.tools.activity.doGetPicture
 import com.example.tools.activity.finishWithAnimal
 import com.example.tools.activity.jumpActivity
+import com.example.tools.model.BaseModel
 import com.example.tools.net.CreateRetrofit
 import com.example.tools.net.FileOperate
 import com.example.tools.net.PackageGson
@@ -28,7 +28,7 @@ import java.util.*
 @Suppress("UNUSED_EXPRESSION")
 class RegisterPresenterCompl(private val context: Context) : IRegisterPresenter {
 
-    private var call: Call<RegisterModel>? = null
+    private var call: Call<BaseModel>? = null
 
     override fun doRegister(
         type: String,
@@ -58,10 +58,10 @@ class RegisterPresenterCompl(private val context: Context) : IRegisterPresenter 
         when (type) {
             "老人" -> {
                 call = request.parentCheck(account)
-                call?.enqueue(object : Callback<RegisterModel> {
-                    override fun onResponse(call: Call<RegisterModel>, response: Response<RegisterModel>) {
+                call?.enqueue(object : Callback<BaseModel> {
+                    override fun onResponse(call: Call<BaseModel>, response: Response<BaseModel>) {
                         if(response.isSuccessful && response.body() != null) {
-                            if(response.body()!!.msg == "请求成功" && response.body()!!.code == 200) {
+                            if(response.body()!!.msg == "请求成功" && response.body()!!.code == "200") {
                                 // 开始注册
                                 val registerMap = HashMap<Any, Any>()
                                 registerMap["type"] = type
@@ -75,12 +75,16 @@ class RegisterPresenterCompl(private val context: Context) : IRegisterPresenter 
                                 val body = RequestBody.create(MediaType.parse("application/json"), PackageGson.PacketGson(registerMap))
 
                                 val call1 = request.createParentUser(body)
-                                call1.enqueue(object : Callback<RegisterModel> {
-                                    override fun onResponse(call: Call<RegisterModel>, response: Response<RegisterModel>) {
+                                call1.enqueue(object : Callback<BaseModel> {
+                                    override fun onResponse(call: Call<BaseModel>, response: Response<BaseModel>) {
                                         if(response.isSuccessful && response.body() != null) {
-                                            if (response.body()!!.code == 200) {
+                                            if (response.body()!!.code == "200") {
                                                 Toast.makeText(context, "注册成功!!!", Toast.LENGTH_SHORT).show()
-                                                jumpActivity("/homepager_older/OlderActivity", context as Activity)
+                                                response.body()!!.data?.id?.let {
+                                                    jumpActivity("/homepager_older/OlderActivity", context as Activity, account,
+                                                        it
+                                                    )
+                                                }
                                                 val intent = Intent()
                                                 intent.action = "com.example.entrance.register.presenter"
                                                 context.sendBroadcast(intent)
@@ -88,7 +92,7 @@ class RegisterPresenterCompl(private val context: Context) : IRegisterPresenter 
                                         }
                                     }
 
-                                    override fun onFailure(call: Call<RegisterModel>, t: Throwable) {
+                                    override fun onFailure(call: Call<BaseModel>, t: Throwable) {
                                         Toast.makeText(context, "注册失败!!!", Toast.LENGTH_SHORT).show()
                                     }
 
@@ -99,7 +103,7 @@ class RegisterPresenterCompl(private val context: Context) : IRegisterPresenter 
                         }
                     }
 
-                    override fun onFailure(call: Call<RegisterModel>, t: Throwable) {
+                    override fun onFailure(call: Call<BaseModel>, t: Throwable) {
                         Log.e("onFailure", t.message + "失败")
                     }
 
@@ -107,10 +111,10 @@ class RegisterPresenterCompl(private val context: Context) : IRegisterPresenter 
             }
             "子女" -> {
                 call = request.childrenCheck(account)
-                call?.enqueue(object : Callback<RegisterModel> {
-                    override fun onResponse(call: Call<RegisterModel>, response: Response<RegisterModel>) {
+                call?.enqueue(object : Callback<BaseModel> {
+                    override fun onResponse(call: Call<BaseModel>, response: Response<BaseModel>) {
                         if(response.isSuccessful && response.body() != null) {
-                            if(response.body()!!.msg == "请求成功" && response.body()!!.code == 200) {
+                            if(response.body()!!.msg == "请求成功" && response.body()!!.code == "200") {
                                 val registerMap = HashMap<Any, Any>()
                                 registerMap["type"] = type
                                 registerMap["name"] = name
@@ -122,11 +126,15 @@ class RegisterPresenterCompl(private val context: Context) : IRegisterPresenter 
                                 val body = RequestBody.create(MediaType.parse("application/json"), PackageGson.PacketGson(registerMap))
 
                                 val call1 = request.createChildUser(body)
-                                call1.enqueue(object : Callback<RegisterModel> {
-                                    override fun onResponse(call: Call<RegisterModel>, response: Response<RegisterModel>) {
+                                call1.enqueue(object : Callback<BaseModel> {
+                                    override fun onResponse(call: Call<BaseModel>, response: Response<BaseModel>) {
                                         if(response.isSuccessful && response.body() != null) {
-                                            if (response.body()!!.msg == "请求成功" && response.body()!!.code == 200) {
-                                                jumpActivity("/homepager_children/ChildrenActivity", context as Activity)
+                                            if (response.body()!!.msg == "请求成功" && response.body()!!.code == "200") {
+                                                response.body()!!.data?.id?.let {
+                                                    jumpActivity("/homepager_children/ChildrenActivity", context as Activity, account,
+                                                        it
+                                                    )
+                                                }
                                                 Toast.makeText(context, "注册成功!!!", Toast.LENGTH_SHORT).show()
                                                 val intent = Intent()
                                                 intent.action = "com.example.entrance.register.presenter"
@@ -135,7 +143,7 @@ class RegisterPresenterCompl(private val context: Context) : IRegisterPresenter 
                                         }
                                     }
 
-                                    override fun onFailure(call: Call<RegisterModel>, t: Throwable) {
+                                    override fun onFailure(call: Call<BaseModel>, t: Throwable) {
                                         Toast.makeText(context, "注册失败!!!", Toast.LENGTH_SHORT).show()
                                     }
 
@@ -146,7 +154,7 @@ class RegisterPresenterCompl(private val context: Context) : IRegisterPresenter 
                         }
                     }
 
-                    override fun onFailure(call: Call<RegisterModel>, t: Throwable) {
+                    override fun onFailure(call: Call<BaseModel>, t: Throwable) {
                         Log.e("onFailure", t.message + "失败")
                     }
 
@@ -154,10 +162,10 @@ class RegisterPresenterCompl(private val context: Context) : IRegisterPresenter 
             }
             "陪护" -> {
                 call = request.escortCheck(account)
-                call?.enqueue(object : Callback<RegisterModel> {
-                    override fun onResponse(call: Call<RegisterModel>, response: Response<RegisterModel>) {
+                call?.enqueue(object : Callback<BaseModel> {
+                    override fun onResponse(call: Call<BaseModel>, response: Response<BaseModel>) {
                         if(response.isSuccessful && response.body() != null) {
-                            if(response.body()!!.msg == "请求成功" && response.body()!!.code == 200) {
+                            if(response.body()!!.msg == "请求成功" && response.body()!!.code == "200") {
                                 val registerMap = HashMap<Any, Any>()
                                 registerMap["type"] = type
                                 registerMap["name"] = name
@@ -171,11 +179,15 @@ class RegisterPresenterCompl(private val context: Context) : IRegisterPresenter 
                                 registerMap["workType"] = type_work
                                 val body = RequestBody.create(MediaType.parse("application/json"), PackageGson.PacketGson(registerMap))
                                 val call1 = request.createEscortUser(body)
-                                call1.enqueue(object : Callback<RegisterModel> {
-                                    override fun onResponse(call: Call<RegisterModel>, response: Response<RegisterModel>) {
+                                call1.enqueue(object : Callback<BaseModel> {
+                                    override fun onResponse(call: Call<BaseModel>, response: Response<BaseModel>) {
                                         if(response.isSuccessful && response.body() != null) {
-                                            if (response.body()!!.msg == "请求成功" && response.body()!!.code == 200) {
-                                                jumpActivity("/homepager_escort/EscortActivity", context as Activity)
+                                            if (response.body()!!.msg == "请求成功" && response.body()!!.code == "200") {
+                                                response.body()!!.data?.id?.let {
+                                                    jumpActivity("/homepager_escort/EscortActivity", context as Activity, account,
+                                                        it
+                                                    )
+                                                }
                                                 Toast.makeText(context, "注册成功!!!", Toast.LENGTH_SHORT).show()
                                                 val intent = Intent()
                                                 intent.action = "com.example.entrance.register.presenter"
@@ -184,7 +196,7 @@ class RegisterPresenterCompl(private val context: Context) : IRegisterPresenter 
                                         }
                                     }
 
-                                    override fun onFailure(call: Call<RegisterModel>, t: Throwable) {
+                                    override fun onFailure(call: Call<BaseModel>, t: Throwable) {
                                         Toast.makeText(context, "注册失败!!!", Toast.LENGTH_SHORT).show()
                                     }
 
@@ -195,7 +207,7 @@ class RegisterPresenterCompl(private val context: Context) : IRegisterPresenter 
                         }
                     }
 
-                    override fun onFailure(call: Call<RegisterModel>, t: Throwable) {
+                    override fun onFailure(call: Call<BaseModel>, t: Throwable) {
                         Log.e("onFailure", t.message + "失败")
                     }
 

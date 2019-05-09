@@ -1,10 +1,10 @@
 package com.example.homepager_older.fragment.minefragment.presenter
 
+import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.TextView
 import com.example.homepager_older.fragment.minefragment.view.MineFragment
-import com.example.tools.adapter.MedicineRecyclerAdapter
-import com.example.tools.adapter.MyRecyclerViewAdapter
+import de.hdodenhof.circleimageview.CircleImageView
 
 /**
  * 老人 -我的 实现接口
@@ -12,7 +12,7 @@ import com.example.tools.adapter.MyRecyclerViewAdapter
  */
 interface OlderMineInterface {
 
-    fun addChildren(adapter: MyRecyclerViewAdapter)
+    fun addChildren()
 
     fun changeBirthday(view: View)
 
@@ -24,6 +24,12 @@ interface OlderMineInterface {
 
     fun doBack()
 
-    fun addMedicine(adapter: MedicineRecyclerAdapter)
+    fun addMedicine()
+
+    fun setMedicine(recyclerView: RecyclerView)
+
+    fun setChildren(recyclerView: RecyclerView)
+
+    fun setData(imageView: CircleImageView, name: TextView, sex: TextView, birthday: TextView, healthy: TextView, idText: TextView)
 
 }

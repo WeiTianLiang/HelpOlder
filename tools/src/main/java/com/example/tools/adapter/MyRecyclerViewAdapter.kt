@@ -33,6 +33,9 @@ class MyRecyclerViewAdapter(
         holder.view.delete.setOnClickListener {
             deleteItem(position)
         }
+        holder.view.change.setOnClickListener {
+            changeItem(position)
+        }
     }
 
     private fun deleteItem(position: Int) {
@@ -45,6 +48,10 @@ class MyRecyclerViewAdapter(
             notifyItemRemoved(position)
             notifyItemRangeChanged(position, list.size)
         }
+    }
+
+    private fun changeItem(position: Int) {
+
     }
 
     fun addItem(model: ChildrenToOlder) {

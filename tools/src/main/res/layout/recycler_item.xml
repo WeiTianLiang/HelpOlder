@@ -38,9 +38,19 @@
             android:layout_toEndOf="@+id/name"/>
 
     <ImageView
+            android:id="@+id/change"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_toStartOf="@+id/delete"
+            android:src="@drawable/pen"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            android:layout_marginEnd="5dp"/>
+
+    <ImageView
             android:id="@+id/delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentEnd="true"
             tools:ignore="RtlHardcoded"
             android:src="@drawable/delete"

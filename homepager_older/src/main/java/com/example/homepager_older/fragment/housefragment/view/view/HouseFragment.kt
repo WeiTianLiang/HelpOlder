@@ -23,6 +23,8 @@ import kotlinx.android.synthetic.main.older_house_fragment.*
  */
 class HouseFragment : BaseFragment() {
 
+    private var nickname: String? = null
+    private var older_id = -1
     private val stepCount by lazy { findViewById<TextView>(R.id.stepCount) }
     private val mapView by lazy { findViewById<BaseMapView>(R.id.mapView) }
     private val locationText by lazy { findViewById<TextView>(R.id.locationText) }
@@ -107,5 +109,13 @@ class HouseFragment : BaseFragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         mapView.onSaveInstanceState(outState)
+    }
+
+    fun setNickName(name: String) {
+        nickname = name
+    }
+
+    fun setID(id: Int) {
+        older_id = id
     }
 }

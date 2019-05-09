@@ -11,12 +11,25 @@ import com.example.tools.onrpxactivity.KeepLiveManager
 @Route(path = "/homepager_older/OlderActivity")
 class OlderActivity : BaseActivity() {
 
+    var nickname: String? = null
+    var id: Int = -1
+
     private val escortFragment by lazy { EscortFragment() }
     private val houseFragment by lazy { HouseFragment() }
     private val mineFragment by lazy { MineFragment() }
     private val fragmentList = arrayListOf<Fragment>()
 
     override fun onBaseCreate() {
+        nickname = intent.getStringExtra("nickname")
+        id = intent.getIntExtra("ID", -1)
+        escortFragment.setNickName(nickname!!)
+        houseFragment.setNickName(nickname!!)
+        mineFragment.setNickName(nickname!!)
+        if (id != -1) {
+            escortFragment.setID(id)
+            houseFragment.setID(id)
+            mineFragment.setID(id)
+        }
         KeepLiveManager(this).registerBroadCast(this)
     }
 

@@ -18,10 +18,12 @@ import com.example.tools.R
 /**
  * 无参跨model跳转
  */
-fun jumpActivity(path: String, activity: Activity) {
+fun jumpActivity(path: String, activity: Activity, nickname: String? = null, id: Int = -1) {
     ARouter.getInstance()
         .build(path)
         .withTransition(R.anim.activity_right_out, R.anim.activity_right_in)
+        .withString("nickname", nickname)
+        .withInt("ID", id)
         .navigation()
     activity.finish()
 }
@@ -112,7 +114,7 @@ fun doGetPicture(activity: Activity? = null, fragment: Fragment? = null) {
     intent.putExtra("outputX", 100) // 裁切的宽度
     intent.putExtra("outputY", 100) // 裁切的高度
     intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString())//裁切成的图片的格式
-    if(activity != null) {
+    if (activity != null) {
         activity.startActivityForResult(intent, 123)
     } else {
         fragment?.startActivityForResult(intent, 123)
