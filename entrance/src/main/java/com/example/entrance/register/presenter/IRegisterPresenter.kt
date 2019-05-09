@@ -1,5 +1,7 @@
 package com.example.entrance.register.presenter
 
+import android.support.v4.app.Fragment
+
 /**
  * 注册接口
  * @author weitianliang
@@ -20,11 +22,16 @@ interface IRegisterPresenter {
                    sex: String,
                    account: String,
                    password: String,
-                   repeat: String)
+                   repeat: String,
+                   imageUrl: String,
+                   state: Int = 0,
+                   workTime: String = "",
+                   workExperience: String = "",
+                   type_work: Int = 0)
 
     /**
      * 获取头像
      */
-    fun doGetHeadPicture()
+    fun doGetHeadPicture(fragment: Fragment)
 
 }

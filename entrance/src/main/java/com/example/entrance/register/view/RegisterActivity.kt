@@ -1,79 +1,45 @@
 package com.example.entrance.register.view
 
-import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.support.v7.app.AppCompatActivity
+import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
-import android.widget.RadioButton
+import android.support.v7.app.AppCompatActivity
 import com.example.entrance.R
-import com.example.entrance.register.presenter.RegisterPresenterCompl
-import com.example.tools.picture.getOrientation
-import com.example.tools.picture.imagePath
-import com.example.tools.picture.rotateImage
+import com.example.tools.activity.addFragment
+import com.example.tools.activity.replaceFragment
 import kotlinx.android.synthetic.main.activity_register.*
-import java.io.File
-import java.io.FileNotFoundException
 
 class RegisterActivity : AppCompatActivity() {
 
-    private val presenter by lazy { RegisterPresenterCompl(this) }
-    private var type = ""
-    private var sex = ""
-    private var identity_button: RadioButton? = null
-    private var sex_button: RadioButton? = null
-    private var bitmap: Bitmap? = null
+    private val childrenRegisterFragment by lazy { ChildrenRegisterFragment() }
+    private val olderRegisterFragment by lazy { OlderRegisterFragment() }
+    private val escortRegisterFragment by lazy { EscortRegisterFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        identity_register.setOnCheckedChangeListener { _, checkedId ->
-            identity_button = findViewById(checkedId)
-            type = identity_button?.text.toString()
+        addFragment(olderRegisterFragment, R.id.register_fragment)
+        register_olderFragment.setTextColor(Color.GRAY)
+
+        register_olderFragment.setOnClickListener {
+            replaceFragment(olderRegisterFragment, R.id.register_fragment)
+            register_olderFragment.setTextColor(Color.GRAY)
+            register_childrenFragment.setTextColor(Color.BLACK)
+            register_escortFragment.setTextColor(Color.BLACK)
         }
 
-        sex_register.setOnCheckedChangeListener { _, checkedId ->
-            sex_button = findViewById(checkedId)
-            sex = sex_button?.text.toString()
+        register_childrenFragment.setOnClickListener {
+            replaceFragment(childrenRegisterFragment, R.id.register_fragment)
+            register_olderFragment.setTextColor(Color.BLACK)
+            register_childrenFragment.setTextColor(Color.GRAY)
+            register_escortFragment.setTextColor(Color.BLACK)
         }
 
-        register_head.setOnClickListener {
-            presenter.doGetHeadPicture()
-        }
-
-        main_register.setOnClickListener {
-            presenter.doRegister(
-                type,
-                name_register.text.toString(),
-                age_register.text.toString(),
-                sex,
-                account_register.text.toString(),
-                password_register.text.toString(),
-                repeat_register.text.toString()
-            )
-        }
-
-        register_back.setOnClickListener {
-            presenter.doBack()
+        register_escortFragment.setOnClickListener {
+            replaceFragment(escortRegisterFragment, R.id.register_fragment)
+            register_olderFragment.setTextColor(Color.BLACK)
+            register_childrenFragment.setTextColor(Color.BLACK)
+            register_escortFragment.setTextColor(Color.GRAY)
         }
     }
-
-    @Suppress(
-        "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS",
-        "RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS"
-    )
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (123 == requestCode && data != null) {
-            try {
-//                    val file = File(data.data.path)
-                bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(data.data))
-                register_head.setImageBitmap(rotateImage(bitmap!!, getOrientation(this, data.data)))
-            } catch (e: FileNotFoundException) {
-                e.printStackTrace()
-            }
-        }
-    }
-
 }

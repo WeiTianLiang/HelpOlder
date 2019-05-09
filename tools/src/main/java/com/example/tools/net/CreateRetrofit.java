@@ -16,19 +16,19 @@ public class CreateRetrofit {
     public static Retrofit requestRetrofit(String str) {
         CookieManager manager = new CookieManager();
         manager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
-        Retrofit retrofit = null;
+        Retrofit retrofit;
         /*
         * 创建Retrofit对象
         * */
         if(str!=null) {
             retrofit = new Retrofit.Builder()
-                    .baseUrl("http://123.206.82.241:8080")
+                    .baseUrl("http://182.254.208.159:8080/escort/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(AddHeader.addHeadersClient(str))
                     .build();
         } else {
             retrofit = new Retrofit.Builder()
-                    .baseUrl("http://123.206.82.241:8080")
+                    .baseUrl("http://182.254.208.159:8080/escort/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
