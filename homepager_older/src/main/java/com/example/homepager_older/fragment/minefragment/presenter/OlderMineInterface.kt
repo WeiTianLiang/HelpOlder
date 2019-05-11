@@ -32,4 +32,10 @@ interface OlderMineInterface {
 
     fun setData(imageView: CircleImageView, name: TextView, sex: TextView, birthday: TextView, healthy: TextView, idText: TextView)
 
+    fun changeMedicine(state: Int, position: Int)
+
+    fun deleteMedicine(position: Int)
+
+    fun deleteChildren(position: Int)
+
 }

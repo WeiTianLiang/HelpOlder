@@ -10,6 +10,8 @@ import android.widget.TextView
 import com.example.homepager_older.R
 import com.example.homepager_older.activity.OlderActivity
 import com.example.homepager_older.fragment.minefragment.presenter.OlderMinePresenter
+import com.example.tools.adapter.MedicineRecyclerAdapter
+import com.example.tools.adapter.MyRecyclerViewAdapter
 import com.example.tools.fragment.BaseFragment
 import com.example.tools.picture.getOrientation
 import com.example.tools.picture.rotateImage
@@ -40,13 +42,39 @@ class MineFragment : BaseFragment() {
     private val older_Id by lazy { findViewById<TextView>(R.id.older_Id) }
 
     override fun onViewCreate(savedInstanceState: Bundle?) {
-        presenetr?.setData(older_head, older_name, older_sex, older_birthday, older_body, older_Id)
         presenetr?.setChildren(recyclerView)
         presenetr?.setMedicine(medicineRecycler)
+        presenetr?.setData(older_head, older_name, older_sex, older_birthday, older_body, older_Id)
     }
 
     @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     override fun onInflated(savedInstanceState: Bundle?) {
+        presenetr?.getAdapter(object : OlderMinePresenter.OnGetAdapter{
+            override fun getAdapter(adapter: MedicineRecyclerAdapter) {
+                adapter.setOnChangeClick(object : MedicineRecyclerAdapter.OnChangeClick {
+                    override fun changeClick(position: Int) {
+                        presenetr?.changeMedicine(1, position)
+                    }
+                })
+
+                adapter.setOnDeleteClick(object : MedicineRecyclerAdapter.OnDeleteClick {
+                    override fun deleteClick(position: Int) {
+                        presenetr?.deleteMedicine(position)
+                    }
+                })
+            }
+        })
+
+        presenetr?.getChildrenAdapter(object : OlderMinePresenter.OnGetChildrenAdapter {
+            override fun getChildrenAdapter(adapter: MyRecyclerViewAdapter) {
+                adapter.setOnDeleteClick(object : MyRecyclerViewAdapter.OnDeleteClick {
+                    override fun deleteClick(position: Int) {
+                        presenetr?.deleteChildren(position)
+                    }
+                })
+            }
+        })
+
         add_children.setOnClickListener {
             presenetr?.addChildren()
         }

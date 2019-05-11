@@ -19,6 +19,9 @@ class MedicineRecyclerAdapter(
     private val context: Context
 ) : RecyclerView.Adapter<MedicineRecyclerAdapter.ViewHolder>() {
 
+    private var changeClick: OnChangeClick? = null
+    private var deleteClick: OnDeleteClick? = null
+
     @SuppressLint("InflateParams")
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.recycler_item, null)
@@ -32,9 +35,10 @@ class MedicineRecyclerAdapter(
         holder.view.identity.text = list[position].medicineCount
         holder.view.delete.setOnClickListener {
             deleteItem(position)
+            deleteClick?.deleteClick(position)
         }
         holder.view.change.setOnClickListener {
-            changeItem(position)
+            changeClick?.changeClick(position)
         }
     }
 
@@ -50,8 +54,10 @@ class MedicineRecyclerAdapter(
         }
     }
 
-    private fun changeItem(position: Int) {
-
+    fun changeItem(position: Int, model: MedicineAndCount) {
+        list[position].medicineName = model.medicineName
+        list[position].medicineCount = model.medicineCount
+        notifyItemChanged(position)
     }
 
     fun addItem(model: MedicineAndCount) {
@@ -62,4 +68,19 @@ class MedicineRecyclerAdapter(
 
     class ViewHolder(val view: View) : RecyclerView.ViewHolder(view)
 
+    interface OnChangeClick {
+        fun changeClick(position: Int)
+    }
+
+    interface OnDeleteClick {
+        fun deleteClick(position: Int)
+    }
+
+    fun setOnChangeClick(changeClick: OnChangeClick) {
+        this.changeClick = changeClick
+    }
+
+    fun setOnDeleteClick(deleteClick: OnDeleteClick) {
+        this.deleteClick = deleteClick
+    }
 }

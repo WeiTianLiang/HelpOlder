@@ -19,6 +19,9 @@ class MyRecyclerViewAdapter(
     val context: Context
 ) : RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder>() {
 
+    private var changeClick: MedicineRecyclerAdapter.OnChangeClick? = null
+    private var deleteClick: OnDeleteClick? = null
+
     @SuppressLint("InflateParams")
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): MyRecyclerViewAdapter.ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.recycler_item, null)
@@ -32,10 +35,9 @@ class MyRecyclerViewAdapter(
         holder.view.identity.text = list[position].identity
         holder.view.delete.setOnClickListener {
             deleteItem(position)
+            deleteClick?.deleteClick(position)
         }
-        holder.view.change.setOnClickListener {
-            changeItem(position)
-        }
+        holder.view.change.visibility = View.GONE
     }
 
     private fun deleteItem(position: Int) {
@@ -50,10 +52,6 @@ class MyRecyclerViewAdapter(
         }
     }
 
-    private fun changeItem(position: Int) {
-
-    }
-
     fun addItem(model: ChildrenToOlder) {
         list.add(model)
         notifyItemInserted(list.size - 1)
@@ -61,5 +59,13 @@ class MyRecyclerViewAdapter(
     }
 
     class ViewHolder(val view: View) : RecyclerView.ViewHolder(view)
+
+    interface OnDeleteClick {
+        fun deleteClick(position: Int)
+    }
+
+    fun setOnDeleteClick(deleteClick: OnDeleteClick) {
+        this.deleteClick = deleteClick
+    }
 
 }

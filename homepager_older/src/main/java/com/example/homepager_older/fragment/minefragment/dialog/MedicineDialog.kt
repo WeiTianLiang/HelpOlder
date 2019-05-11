@@ -25,14 +25,26 @@ class MedicineDialog(
         }
 
         sure.setOnClickListener {
-            click?.sureClick(medicineName.text.toString(), medicineTime.text.toString())
+            click?.sureClick(medicineName.text.toString(), medicineCount.text.toString(), medicineTime.text.toString())
             medicineName.setText("")
-            medicineTime.setText("")
+            medicineCount.setText("")
         }
     }
 
+    fun setName(name: String) {
+        medicineName.setText(name)
+    }
+
+    fun setCount(count: String) {
+        medicineCount.setText(count)
+    }
+
+    fun setTime(time: String) {
+        medicineTime.setText(time)
+    }
+
     interface OnClick {
-        fun sureClick(medicineName: String, medicineTime: String)
+        fun sureClick(medicineName: String, medicineCount: String, medicineTime: String)
         fun cancelClick()
     }
 
