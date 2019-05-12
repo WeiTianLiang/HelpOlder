@@ -1,4 +1,4 @@
-package com.example.tools.view
+package com.example.tools.FallDeteation
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -23,18 +23,29 @@ class getXYZ : SensorEventListener {
     private var mSensor: Sensor? = null
     private var bundle: Bundle? = null
     var df = DecimalFormat("0.0000000")
+    private val list = arrayListOf<Acceleration>()
+    private val detection by lazy { Detection() }
+    private var isDown = false
 
     private val mHandler = @SuppressLint("HandlerLeak")
     object : Handler() {
         override fun handleMessage(msg: Message) {
             when (msg.what) {
                 1 -> {
-                    Log.i(
-                        "三轴加速数据---->",
-                        "X = " + bundle?.getDouble("x") + ", Y = " + bundle?.getDouble("y") + ", Z = " + bundle?.getDouble(
-                            "z"
-                        )
-                    )
+                    if(list.size < 500) {
+                        val acceleration = Acceleration()
+                        acceleration.accx = bundle?.getDouble("x")!!
+                        acceleration.accy = bundle?.getDouble("y")!!
+                        acceleration.accz = bundle?.getDouble("z")!!
+                        list.add(acceleration)
+                    } else {
+                        isDown = detection.Detect(list)
+                        if(isDown) {
+                            // 弹出摔倒
+                        }
+                        list.clear()
+                    }
+                    Log.i("三轴加速数据---->", "X = " + bundle?.getDouble("x") + ", Y = " + bundle?.getDouble("y") + ", Z = " + bundle?.getDouble("z"))
                 }
             }
         }
@@ -78,7 +89,7 @@ class getXYZ : SensorEventListener {
                 // 发送消息
                 mHandler.sendMessage(message)
                 try {
-                    Thread.sleep(100)
+                    Thread.sleep(10)
                 } catch (e: InterruptedException) {
                     Thread.currentThread().interrupt()
                 }

@@ -17,4 +17,8 @@ interface OlderHouseInterface {
 
     // 设置地图
     fun setMapView(mapView: BaseMapView, activity: Activity, savedInstanceState: Bundle?, locationText: TextView)
+
+    fun setHealthy(textView: TextView)
+
+    fun setMedicine(textView: TextView)
 }

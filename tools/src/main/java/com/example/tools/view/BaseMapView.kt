@@ -61,6 +61,16 @@ class BaseMapView(
      */
     private var youStreetNum: String? = null
 
+    /**
+     * 当前纬度
+     */
+    private var latitude: Double? = null
+
+    /**
+     * 当前经度
+     */
+    private var longitude: Double? = null
+
     init {
         LayoutInflater.from(context).inflate(R.layout.base_map, this)
 
@@ -158,15 +168,23 @@ class BaseMapView(
         marker.showInfoWindow()
     }
 
+    fun getLatitude(): Double? {
+        return latitude
+    }
+
+    fun getLongitude(): Double? {
+        return longitude
+    }
+
     @SuppressLint("SimpleDateFormat", "SetTextI18n")
     override fun onLocationChanged(amapLocation: AMapLocation?) {
 
         if (amapLocation != null) {
             //定位成功回调信息，设置相关消息
             if (amapLocation.errorCode == 0) {
-                amapLocation.locationType //获取当前定位结果来源，如网络定位结果，详见官方定位类型表
-                amapLocation.latitude //获取纬度
-                amapLocation.longitude //获取经度
+                amapLocation.locationType //获取当前定位结果
+                latitude = amapLocation.latitude //获取纬度
+                longitude = amapLocation.longitude //获取经度
                 amapLocation.accuracy //获取精度信息
                 val df = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
                 val date = Date(amapLocation.time)

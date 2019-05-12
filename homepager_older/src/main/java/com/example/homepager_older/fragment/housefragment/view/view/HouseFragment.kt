@@ -12,6 +12,7 @@ import android.os.Message
 import android.widget.TextView
 import com.example.homepager_older.R
 import com.example.homepager_older.fragment.housefragment.view.presenter.OlderHousePresenter
+import com.example.homepager_older.fragment.housefragment.view.tools.SharePreferenceStep
 import com.example.homepager_older.step.BindService
 import com.example.tools.fragment.BaseFragment
 import com.example.tools.view.BaseMapView
@@ -49,22 +50,26 @@ class HouseFragment : BaseFragment() {
         }
     }
 
-    private val presenter by lazy { OlderHousePresenter() }
+    private val presenter by lazy { context?.let { nickname?.let { it1 -> OlderHousePresenter(it, it1) } } }
 
     override fun onViewCreate(savedInstanceState: Bundle?) {
 
-        activity?.let { presenter.setMapView(mapView, it, savedInstanceState, locationText) }
+        activity?.let { presenter?.setMapView(mapView, it, savedInstanceState, locationText) }
 
         // 启动计步
         val intent = Intent(activity?.applicationContext, BindService::class.java)
         activity?.applicationContext?.let {
             isBind = it.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
         }
+        val bindService = BindService()
+        bindService.setNickName(nickname)
         activity?.applicationContext?.startService(intent)
     }
 
     override fun onInflated(savedInstanceState: Bundle?) {
-        presenter.setBarChart(barChartView)
+        presenter?.setBarChart(barChartView)
+        presenter?.setHealthy(healthy)
+        presenter?.setMedicine(medicineRemind)
     }
 
     override fun getLayoutResId(): Int {
@@ -80,13 +85,8 @@ class HouseFragment : BaseFragment() {
                 //当前接收到stepCount数据，就是最新的步数
                 val message = Message.obtain()
                 message.what = 1
-                message.arg1 = if(step >= stepCount) {
-                    step
-                } else {
-                    // 重启服务步数重新计算，做加法运算
-                    step += stepCount
-                    step
-                }
+                message.arg1 = context?.let { SharePreferenceStep.readStep(it) }!!
+                context?.let { SharePreferenceStep.writeStep(stepCount, it) }
                 handler.sendMessage(message)
             }
         }

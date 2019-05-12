@@ -22,6 +22,7 @@ class OlderDataModel {
         val healthStatus: Int? = null
         val medicine: Int? = null
         val parentCode: String? = null
+        val position: String? = null
     }
 
 }
