@@ -4,14 +4,12 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.example.homepager_escort.R
 import com.example.homepager_escort.activity.EscortActivity
 import com.example.homepager_escort.fragment.minefragment.view.presenter.EscortMinePresenter
 import com.example.tools.adapter.MyRecyclerViewAdapter
 import com.example.tools.fragment.BaseFragment
-import com.example.tools.model.ChildrenToOlder
 import com.example.tools.picture.getOrientation
 import com.example.tools.picture.rotateImage
 import kotlinx.android.synthetic.main.mine_fragment.*
@@ -23,37 +21,26 @@ import java.io.FileNotFoundException
  */
 class MineFragment : BaseFragment() {
 
-    private val presenter by lazy { context?.let { EscortMinePresenter(it) } }
-    private val list = arrayListOf<ChildrenToOlder>()
-    private val adapter by lazy { context?.let { MyRecyclerViewAdapter(list, it) } }
+    private val presenter by lazy { context?.let { nickname?.let { it1 -> EscortMinePresenter(it, it1) } } }
     private var bitmap: Bitmap? = null
     private val recyclerView by lazy { findViewById<RecyclerView>(R.id.with_older_recycler) }
-
-    init {
-        val childrenToOlder = ChildrenToOlder()
-        childrenToOlder.nametext = "张明"
-        childrenToOlder.identity = "父亲"
-        list.add(childrenToOlder)
-        val childrenToOlder1 = ChildrenToOlder()
-        childrenToOlder1.nametext = "张明"
-        childrenToOlder1.identity = "母亲"
-        list.add(childrenToOlder1)
-        val childrenToOlder2 = ChildrenToOlder()
-        childrenToOlder2.nametext = "张明"
-        childrenToOlder2.identity = "父亲"
-        list.add(childrenToOlder2)
-        val childrenToOlder3 = ChildrenToOlder()
-        childrenToOlder3.nametext = "张明"
-        childrenToOlder3.identity = "母亲"
-        list.add(childrenToOlder3)
-    }
+    private var nickname: String? = null
 
     override fun onViewCreate(savedInstanceState: Bundle?) {
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = adapter
+        presenter?.setOlder(recyclerView)
     }
 
     override fun onInflated(savedInstanceState: Bundle?) {
+        presenter?.setData(escort_head, escort_sex, escort_age, escort_time, escort_name, escort_workType, escort_workEx)
+        presenter?.getChildrenAdapter(object : EscortMinePresenter.OnGetChildrenAdapter {
+            override fun getChildrenAdapter(adapter: MyRecyclerViewAdapter) {
+                adapter.setOnDeleteClick(object : MyRecyclerViewAdapter.OnDeleteClick {
+                    override fun deleteClick(position: Int) {
+                        presenter?.deleteParent(position)
+                    }
+                })
+            }
+        })
         /**
          * 改变头像
          */
@@ -75,6 +62,10 @@ class MineFragment : BaseFragment() {
             presenter?.changeAge(escort_age)
         }
 
+        change_workType.setOnClickListener {
+            presenter?.changeWorkType(escort_workType)
+        }
+
         /**
          * 改变时间
          */
@@ -83,7 +74,7 @@ class MineFragment : BaseFragment() {
         }
 
         add_Older.setOnClickListener {
-            adapter?.let { it1 -> presenter?.addOlder(it1) }
+            presenter?.addOlder()
         }
 
         mine_back.setOnClickListener {
@@ -107,5 +98,9 @@ class MineFragment : BaseFragment() {
                 e.printStackTrace()
             }
         }
+    }
+
+    fun setNickName(name: String) {
+        nickname = name
     }
 }

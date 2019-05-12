@@ -1,8 +1,9 @@
 package com.example.homepager_escort.fragment.minefragment.view.presenter
 
+import android.support.v7.widget.RecyclerView
 import android.widget.TextView
 import com.example.homepager_escort.fragment.minefragment.view.view.MineFragment
-import com.example.tools.adapter.MyRecyclerViewAdapter
+import de.hdodenhof.circleimageview.CircleImageView
 
 /**
  *
@@ -10,7 +11,7 @@ import com.example.tools.adapter.MyRecyclerViewAdapter
  */
 interface EscortMineInterface {
 
-    fun addOlder(adapter: MyRecyclerViewAdapter)
+    fun addOlder()
 
     fun escortHead(fragment: MineFragment)
 
@@ -22,6 +23,20 @@ interface EscortMineInterface {
 
     fun doBack()
 
-    fun setSex(escortSex: TextView)
+    fun setData(
+        escort_head: CircleImageView,
+        escortSex: TextView,
+        escortAge: TextView,
+        escortTime: TextView,
+        escortName: TextView,
+        escortWorkType: TextView,
+        escortWorkEx: TextView
+    )
+
+    fun changeWorkType(escortWorkType: TextView)
+
+    fun setOlder(recyclerView: RecyclerView)
+
+    fun deleteParent(position: Int)
 
 }

@@ -45,8 +45,7 @@ import java.util.*
 @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class OlderMinePresenter(
     private val context: Context,
-    private val nickname: String,
-    private val id: Int
+    private val nickname: String
 ) : OlderMineInterface {
 
     private val list = arrayListOf<ChildrenToOlder>()
@@ -63,28 +62,10 @@ class OlderMinePresenter(
     private val childrenId = arrayListOf<Int>()
     private val childrenCode = arrayListOf<String>()
     private var olderCode: String? = null
+    private var id: Int = -1
 
     private val request =
         CreateRetrofit.requestRetrofit(FileOperate.readFile(context)).create(GetOlderInterface::class.java)
-
-    init {
-        val childrenToOlder = ChildrenToOlder()
-        childrenToOlder.nametext = "张明"
-        childrenToOlder.identity = "女儿"
-        list.add(childrenToOlder)
-        val childrenToOlder1 = ChildrenToOlder()
-        childrenToOlder1.nametext = "张明"
-        childrenToOlder1.identity = "女儿"
-        list.add(childrenToOlder1)
-        val childrenToOlder2 = ChildrenToOlder()
-        childrenToOlder2.nametext = "张明"
-        childrenToOlder2.identity = "女儿"
-        list.add(childrenToOlder2)
-        val childrenToOlder3 = ChildrenToOlder()
-        childrenToOlder3.nametext = "张明"
-        childrenToOlder3.identity = "女儿"
-        list.add(childrenToOlder3)
-    }
 
     override fun setData(
         imageView: CircleImageView,
@@ -105,7 +86,7 @@ class OlderMinePresenter(
                         var date: Date? = null
                         response.body()!!.data?.birthday?.let { date = Date(it.toLong()) }
                         if (date != null) birthday.text = format.format(date)
-
+                        id = response.body()!!.data?.id!!
                         sex.text = response.body()!!.data?.gender
                         if (response.body()!!.data?.healthStatus == 0) {
                             healthy.text = "健康"
@@ -129,9 +110,6 @@ class OlderMinePresenter(
     }
 
     override fun setChildren(recyclerView: RecyclerView) {
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = adapter
-
         val call = request.getChildrenData(nickname)
         call.enqueue(object : Callback<ChildrenModel> {
             override fun onResponse(call: Call<ChildrenModel>, response: Response<ChildrenModel>) {

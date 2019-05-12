@@ -6,11 +6,7 @@ package com.example.tools.model
  */
 class BaseModel {
 
-    var data: Data? = null
     var code: String? = null
     var msg: String? = null
 
-    class Data {
-        var id: Int? = null
-    }
 }

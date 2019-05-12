@@ -1,8 +1,9 @@
 package com.example.homepager_children.fragment.minefragment.view.presenter
 
+import android.support.v7.widget.RecyclerView
 import android.widget.TextView
 import com.example.homepager_children.fragment.minefragment.view.view.ChildrenMineFragment
-import com.example.tools.adapter.MyRecyclerViewAdapter
+import de.hdodenhof.circleimageview.CircleImageView
 
 /**
  *
@@ -10,7 +11,7 @@ import com.example.tools.adapter.MyRecyclerViewAdapter
  */
 interface ChildrenMineInterface {
 
-    fun addOlder(adapter: MyRecyclerViewAdapter)
+    fun addOlder()
 
     fun childrenHead(fragment: ChildrenMineFragment)
 
@@ -18,6 +19,10 @@ interface ChildrenMineInterface {
 
     fun doBack()
 
-    fun setID(childrenID: TextView)
+    fun setData(children_head: CircleImageView, children_name: TextView, children_Id: TextView)
+
+    fun setParent(recyclerView: RecyclerView)
+
+    fun deleteParent(position: Int)
 
 }

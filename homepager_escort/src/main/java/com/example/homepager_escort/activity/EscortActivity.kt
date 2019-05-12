@@ -10,13 +10,18 @@ import com.example.tools.activity.BaseActivity
 @Route(path = "/homepager_escort/EscortActivity")
 class EscortActivity : BaseActivity() {
 
+    var nickname: String? = null
+
     private val escortFragment by lazy { EscortFragment() }
     private val houseFragment by lazy { HouseFragment() }
     private val mineFragment by lazy { MineFragment() }
     private val fragmentList = arrayListOf<Fragment>()
 
     override fun onBaseCreate() {
-
+        nickname = intent.getStringExtra("nickname")
+        escortFragment.setNickName(nickname!!)
+        houseFragment.setNickName(nickname!!)
+        mineFragment.setNickName(nickname!!)
     }
 
     override fun getFragmentList(): ArrayList<Fragment> {

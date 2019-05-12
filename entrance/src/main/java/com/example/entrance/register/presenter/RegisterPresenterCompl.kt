@@ -60,31 +60,33 @@ class RegisterPresenterCompl(private val context: Context) : IRegisterPresenter 
                 call = request.parentCheck(account)
                 call?.enqueue(object : Callback<BaseModel> {
                     override fun onResponse(call: Call<BaseModel>, response: Response<BaseModel>) {
-                        if(response.isSuccessful && response.body() != null) {
-                            if(response.body()!!.msg == "请求成功" && response.body()!!.code == "200") {
+                        if (response.isSuccessful && response.body() != null) {
+                            if (response.body()!!.msg == "请求成功" && response.body()!!.code == "200") {
                                 // 开始注册
                                 val registerMap = HashMap<Any, Any>()
-                                registerMap["type"] = type
                                 registerMap["name"] = name
-                                registerMap["age"] = age
+                                registerMap["age"] = age.toInt()
                                 registerMap["gender"] = sex
                                 registerMap["nickname"] = account
                                 registerMap["password"] = password
                                 registerMap["imageUrl"] = imageUrl
                                 registerMap["healthStatus"] = state
-                                val body = RequestBody.create(MediaType.parse("application/json"), PackageGson.PacketGson(registerMap))
+                                val body = RequestBody.create(
+                                    MediaType.parse("application/json"),
+                                    PackageGson.PacketGson(registerMap)
+                                )
 
                                 val call1 = request.createParentUser(body)
                                 call1.enqueue(object : Callback<BaseModel> {
                                     override fun onResponse(call: Call<BaseModel>, response: Response<BaseModel>) {
-                                        if(response.isSuccessful && response.body() != null) {
+                                        if (response.isSuccessful && response.body() != null) {
                                             if (response.body()!!.code == "200") {
                                                 Toast.makeText(context, "注册成功!!!", Toast.LENGTH_SHORT).show()
-                                                response.body()!!.data?.id?.let {
-                                                    jumpActivity("/homepager_older/OlderActivity", context as Activity, account,
-                                                        it
-                                                    )
-                                                }
+                                                jumpActivity(
+                                                    "/homepager_older/OlderActivity",
+                                                    context as Activity,
+                                                    account
+                                                )
                                                 val intent = Intent()
                                                 intent.action = "com.example.entrance.register.presenter"
                                                 context.sendBroadcast(intent)
@@ -113,28 +115,30 @@ class RegisterPresenterCompl(private val context: Context) : IRegisterPresenter 
                 call = request.childrenCheck(account)
                 call?.enqueue(object : Callback<BaseModel> {
                     override fun onResponse(call: Call<BaseModel>, response: Response<BaseModel>) {
-                        if(response.isSuccessful && response.body() != null) {
-                            if(response.body()!!.msg == "请求成功" && response.body()!!.code == "200") {
+                        if (response.isSuccessful && response.body() != null) {
+                            if (response.body()!!.code == "200") {
                                 val registerMap = HashMap<Any, Any>()
-                                registerMap["type"] = type
                                 registerMap["name"] = name
-                                registerMap["age"] = age
+                                registerMap["age"] = age.toInt()
                                 registerMap["gender"] = sex
                                 registerMap["nickname"] = account
                                 registerMap["password"] = password
                                 registerMap["imageUrl"] = imageUrl
-                                val body = RequestBody.create(MediaType.parse("application/json"), PackageGson.PacketGson(registerMap))
+                                val body = RequestBody.create(
+                                    MediaType.parse("application/json"),
+                                    PackageGson.PacketGson(registerMap)
+                                )
 
                                 val call1 = request.createChildUser(body)
                                 call1.enqueue(object : Callback<BaseModel> {
                                     override fun onResponse(call: Call<BaseModel>, response: Response<BaseModel>) {
-                                        if(response.isSuccessful && response.body() != null) {
+                                        if (response.isSuccessful && response.body() != null) {
                                             if (response.body()!!.msg == "请求成功" && response.body()!!.code == "200") {
-                                                response.body()!!.data?.id?.let {
-                                                    jumpActivity("/homepager_children/ChildrenActivity", context as Activity, account,
-                                                        it
-                                                    )
-                                                }
+                                                jumpActivity(
+                                                    "/homepager_children/ChildrenActivity",
+                                                    context as Activity,
+                                                    account
+                                                )
                                                 Toast.makeText(context, "注册成功!!!", Toast.LENGTH_SHORT).show()
                                                 val intent = Intent()
                                                 intent.action = "com.example.entrance.register.presenter"
@@ -164,12 +168,11 @@ class RegisterPresenterCompl(private val context: Context) : IRegisterPresenter 
                 call = request.escortCheck(account)
                 call?.enqueue(object : Callback<BaseModel> {
                     override fun onResponse(call: Call<BaseModel>, response: Response<BaseModel>) {
-                        if(response.isSuccessful && response.body() != null) {
-                            if(response.body()!!.msg == "请求成功" && response.body()!!.code == "200") {
+                        if (response.isSuccessful && response.body() != null) {
+                            if (response.body()!!.msg == "请求成功" && response.body()!!.code == "200") {
                                 val registerMap = HashMap<Any, Any>()
-                                registerMap["type"] = type
                                 registerMap["name"] = name
-                                registerMap["age"] = age
+                                registerMap["age"] = age.toInt()
                                 registerMap["gender"] = sex
                                 registerMap["nickname"] = account
                                 registerMap["password"] = password
@@ -177,17 +180,20 @@ class RegisterPresenterCompl(private val context: Context) : IRegisterPresenter 
                                 registerMap["workExperience"] = workExperience
                                 registerMap["workTime"] = workTime
                                 registerMap["workType"] = type_work
-                                val body = RequestBody.create(MediaType.parse("application/json"), PackageGson.PacketGson(registerMap))
+                                val body = RequestBody.create(
+                                    MediaType.parse("application/json"),
+                                    PackageGson.PacketGson(registerMap)
+                                )
                                 val call1 = request.createEscortUser(body)
                                 call1.enqueue(object : Callback<BaseModel> {
                                     override fun onResponse(call: Call<BaseModel>, response: Response<BaseModel>) {
-                                        if(response.isSuccessful && response.body() != null) {
+                                        if (response.isSuccessful && response.body() != null) {
                                             if (response.body()!!.msg == "请求成功" && response.body()!!.code == "200") {
-                                                response.body()!!.data?.id?.let {
-                                                    jumpActivity("/homepager_escort/EscortActivity", context as Activity, account,
-                                                        it
-                                                    )
-                                                }
+                                                jumpActivity(
+                                                    "/homepager_escort/EscortActivity",
+                                                    context as Activity,
+                                                    account
+                                                )
                                                 Toast.makeText(context, "注册成功!!!", Toast.LENGTH_SHORT).show()
                                                 val intent = Intent()
                                                 intent.action = "com.example.entrance.register.presenter"

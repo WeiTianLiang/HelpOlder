@@ -20,6 +20,8 @@ class HouseFragment : BaseFragment() {
 
     private val locationText by lazy { findViewById<TextView>(R.id.locationText) }
 
+    private var nickname: String? = null
+
     override fun onViewCreate(savedInstanceState: Bundle?) {
 
         activity?.let { presenter.setMapView(mapView, it, savedInstanceState, locationText) }
@@ -50,5 +52,9 @@ class HouseFragment : BaseFragment() {
 
     override fun getLayoutResId(): Int {
         return R.layout.house_fragment
+    }
+
+    fun setNickName(name: String) {
+        nickname = name
     }
 }

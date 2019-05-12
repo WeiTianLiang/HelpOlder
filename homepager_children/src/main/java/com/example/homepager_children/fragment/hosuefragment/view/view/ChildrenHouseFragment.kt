@@ -19,6 +19,7 @@ class ChildrenHouseFragment : BaseFragment() {
     private val presenter by lazy { ChildrenHousePresenter() }
 
     private val locationText by lazy { findViewById<TextView>(R.id.locationText) }
+    private var nickname: String? = null
 
     override fun onViewCreate(savedInstanceState: Bundle?) {
 
@@ -50,6 +51,10 @@ class ChildrenHouseFragment : BaseFragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         mapView.onSaveInstanceState(outState)
+    }
+
+    fun setNickName(name: String) {
+        nickname = name
     }
 
 }

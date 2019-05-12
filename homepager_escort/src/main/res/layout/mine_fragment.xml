@@ -180,13 +180,88 @@
                 android:layout_marginStart="5dp">
 
             <TextView
+                    android:id="@+id/layout9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:textSize="20sp"
+                    android:textColor="#000"
+                    android:text="工作类型："/>
+
+            <TextView
+                    android:id="@+id/escort_workType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@+id/layout9"
+                    android:textSize="20sp"
+                    android:textColor="#000"
+                    tools:text="全职"/>
+
+            <ImageView
+                    android:id="@+id/change_workType"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/pen"/>
+
+        </RelativeLayout>
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#424242"
+                android:layout_marginTop="10dp"/>
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="5dp">
+
+            <TextView
+                    android:id="@+id/layout10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:textSize="20sp"
+                    android:textColor="#000"
+                    android:text="工作经验："/>
+
+            <TextView
+                    android:id="@+id/escort_workEx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@+id/layout10"
+                    android:textSize="20sp"
+                    android:textColor="#000"
+                    tools:text="3年"/>
+
+        </RelativeLayout>
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#424242"
+                android:layout_marginTop="10dp"/>
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="5dp">
+
+            <TextView
                     android:id="@+id/layout4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:textSize="20sp"
                     android:textColor="#000"
-                    android:text="子女绑定："/>
+                    android:text="老人绑定："/>
 
             <android.support.v7.widget.RecyclerView
                     android:id="@+id/with_older_recycler"

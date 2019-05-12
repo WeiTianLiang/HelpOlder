@@ -28,8 +28,7 @@ import java.io.FileNotFoundException
 class MineFragment : BaseFragment() {
 
     private var nickname: String? = null
-    private var older_id = -1
-    private val presenetr by lazy { context?.let { nickname?.let { it1 -> OlderMinePresenter(it, it1, older_id) } } }
+    private val presenetr by lazy { context?.let { nickname?.let { it1 -> OlderMinePresenter(it, it1) } } }
     private val recyclerView by lazy { findViewById<RecyclerView>(R.id.with_children_recycler) }
     private val medicineRecycler by lazy { findViewById<RecyclerView>(R.id.with_medicine_recycler) }
     private var bitmap: Bitmap? = null
@@ -123,9 +122,5 @@ class MineFragment : BaseFragment() {
 
     fun setNickName(name: String) {
         nickname = name
-    }
-
-    fun setID(id: Int) {
-        older_id = id
     }
 }

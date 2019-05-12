@@ -4,16 +4,16 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.widget.TextView
 import com.example.homepager_children.R
 import com.example.homepager_children.activity.ChildrenActivity
 import com.example.homepager_children.fragment.minefragment.view.presenter.ChildrenMinePresenter
 import com.example.tools.adapter.MyRecyclerViewAdapter
 import com.example.tools.fragment.BaseFragment
-import com.example.tools.model.ChildrenToOlder
 import com.example.tools.picture.getOrientation
 import com.example.tools.picture.rotateImage
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.children_mine_fragment.*
 import java.io.FileNotFoundException
 
@@ -23,39 +23,33 @@ import java.io.FileNotFoundException
  */
 class ChildrenMineFragment : BaseFragment() {
 
-    private val list = arrayListOf<ChildrenToOlder>()
-    private val adapter by lazy { context?.let { MyRecyclerViewAdapter(list, it) } }
     private var bitmap: Bitmap? = null
     private val recyclerView by lazy { findViewById<RecyclerView>(R.id.with_older_recycler) }
-    private val presenter by lazy { context?.let { ChildrenMinePresenter(it) } }
+    private val presenter by lazy { context?.let { nickname?.let { it1 -> ChildrenMinePresenter(it, it1) } } }
+    private var nickname: String? = null
+    private var child_Id = -1
 
-    init {
-        val childrenToOlder = ChildrenToOlder()
-        childrenToOlder.nametext = "张明"
-        childrenToOlder.identity = "父亲"
-        list.add(childrenToOlder)
-        val childrenToOlder1 = ChildrenToOlder()
-        childrenToOlder1.nametext = "张明"
-        childrenToOlder1.identity = "母亲"
-        list.add(childrenToOlder1)
-        val childrenToOlder2 = ChildrenToOlder()
-        childrenToOlder2.nametext = "张明"
-        childrenToOlder2.identity = "父亲"
-        list.add(childrenToOlder2)
-        val childrenToOlder3 = ChildrenToOlder()
-        childrenToOlder3.nametext = "张明"
-        childrenToOlder3.identity = "母亲"
-        list.add(childrenToOlder3)
-    }
+    private val children_head by lazy { findViewById<CircleImageView>(R.id.children_head) }
+    private val children_ID by lazy { findViewById<TextView>(R.id.children_ID) }
+    private val children_name by lazy { findViewById<TextView>(R.id.children_name) }
 
     override fun onViewCreate(savedInstanceState: Bundle?) {
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = adapter
+        presenter?.setParent(recyclerView)
+        presenter?.setData(children_head, children_name, children_ID)
     }
 
     override fun onInflated(savedInstanceState: Bundle?) {
+        presenter?.getChildrenAdapter(object : ChildrenMinePresenter.OnGetChildrenAdapter {
+            override fun getChildrenAdapter(adapter: MyRecyclerViewAdapter) {
+                adapter.setOnDeleteClick(object : MyRecyclerViewAdapter.OnDeleteClick {
+                    override fun deleteClick(position: Int) {
+                        presenter?.deleteParent(position)
+                    }
+                })
+            }
+        })
         add_children.setOnClickListener {
-            adapter?.let { it1 -> presenter?.addOlder(it1) }
+            presenter?.addOlder()
         }
 
         change_name.setOnClickListener {
@@ -69,8 +63,6 @@ class ChildrenMineFragment : BaseFragment() {
         mine_back.setOnClickListener {
             presenter?.doBack()
         }
-
-        presenter?.setID(children_ID)
     }
 
     override fun getLayoutResId(): Int {
@@ -89,5 +81,13 @@ class ChildrenMineFragment : BaseFragment() {
                 e.printStackTrace()
             }
         }
+    }
+
+    fun setNickName(name: String) {
+        nickname = name
+    }
+
+    fun setID(id: Int) {
+        child_Id = id
     }
 }

@@ -39,11 +39,7 @@ class LoginPresenterCompl(private val context: Context) : ILoginPresenter {
                     override fun onResponse(call: Call<BaseModel>, response: Response<BaseModel>) {
                         if(response.isSuccessful && response.body() != null) {
                             if (response.body()!!.code == "200") {
-                                response.body()!!.data?.id?.let {
-                                    jumpActivity("/homepager_older/OlderActivity", context as Activity, account,
-                                        it
-                                    )
-                                }
+                                    jumpActivity("/homepager_older/OlderActivity", context as Activity, account)
                             } else {
                                 Toast.makeText(context, "登录失败", Toast.LENGTH_SHORT).show()
                             }
@@ -62,11 +58,7 @@ class LoginPresenterCompl(private val context: Context) : ILoginPresenter {
                     override fun onResponse(call: Call<BaseModel>, response: Response<BaseModel>) {
                         if(response.isSuccessful && response.body() != null) {
                             if (response.body()!!.code == "200") {
-                                response.body()!!.data?.id?.let {
-                                    jumpActivity("/homepager_escort/EscortActivity", context as Activity, account,
-                                        it
-                                    )
-                                }
+                                    jumpActivity("/homepager_escort/EscortActivity", context as Activity, account)
                             } else {
                                 Toast.makeText(context, "登录失败", Toast.LENGTH_SHORT).show()
                             }
@@ -81,16 +73,11 @@ class LoginPresenterCompl(private val context: Context) : ILoginPresenter {
             }
             "子女" -> {
                 call = request.childrenLogin(account, password)
-                call = request.escortLogin(account, password)
                 call?.enqueue(object : Callback<BaseModel> {
                     override fun onResponse(call: Call<BaseModel>, response: Response<BaseModel>) {
                         if(response.isSuccessful && response.body() != null) {
                             if (response.body()!!.code == "200") {
-                                response.body()!!.data?.id?.let {
-                                    jumpActivity("/homepager_children/ChildrenActivity", context as Activity, account,
-                                        it
-                                    )
-                                }
+                                    jumpActivity("/homepager_children/ChildrenActivity", context as Activity, account)
                             } else {
                                 Toast.makeText(context, "登录失败", Toast.LENGTH_SHORT).show()
                             }

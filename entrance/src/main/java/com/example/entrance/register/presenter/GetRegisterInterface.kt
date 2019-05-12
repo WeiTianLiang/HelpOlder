@@ -20,16 +20,16 @@ interface GetRegisterInterface {
     @POST("child/register")
     fun createChildUser(@Body body: RequestBody): Call<BaseModel>
 
-    @POST("parent/register")
+    @POST("escort/register")
     fun createEscortUser(@Body body: RequestBody): Call<BaseModel>
 
     @GET("parent/check")
     fun parentCheck(@Query("nickname") nickname: String): Call<BaseModel>
 
-    @GET("parent/check")
+    @GET("escort/check")
     fun escortCheck(@Query("nickname") nickname: String): Call<BaseModel>
 
-    @GET("parent/check")
+    @GET("child/check")
     fun childrenCheck(@Query("nickname") nickname: String): Call<BaseModel>
 
 }

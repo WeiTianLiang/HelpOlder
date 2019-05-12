@@ -14,10 +14,10 @@ interface GetLoginInterface {
     @GET("parent/login")
     fun parentLogin(@Query("nickname") nickname: String, @Query("password") password: String): Call<BaseModel>
 
-    @GET("parent/login")
+    @GET("escort/login")
     fun escortLogin(@Query("nickname") nickname: String, @Query("password") password: String): Call<BaseModel>
 
-    @GET("parent/login")
+    @GET("child/login")
     fun childrenLogin(@Query("nickname") nickname: String, @Query("password") password: String): Call<BaseModel>
 
 }

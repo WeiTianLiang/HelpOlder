@@ -8,7 +8,7 @@ import com.example.tools.activity.hideFragment
 import com.example.tools.activity.showFragment
 import com.example.tools.fragment.BaseFragment
 import com.example.tools.fragment.OrderListFragment
-import kotlinx.android.synthetic.main.escort_fragment.*
+import kotlinx.android.synthetic.main.escort_escort_fragment.*
 
 /**
  * 陪护 - 陪护 fragment
@@ -19,6 +19,8 @@ class EscortFragment : BaseFragment() {
     private val nowOrderFragment by lazy { OrderListFragment(100) }
 
     private val orderListFragment by lazy { OrderListFragment(1) }
+
+    private var nickname: String? = null
 
     override fun onViewCreate(savedInstanceState: Bundle?) {
         addFragment(nowOrderFragment, R.id.escortFragment)
@@ -44,6 +46,10 @@ class EscortFragment : BaseFragment() {
     }
 
     override fun getLayoutResId(): Int {
-        return R.layout.escort_fragment
+        return R.layout.escort_escort_fragment
+    }
+
+    fun setNickName(name: String) {
+        nickname = name
     }
 }

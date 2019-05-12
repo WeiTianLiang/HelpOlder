@@ -21,6 +21,8 @@ class ChildrenEscortFragment : BaseFragment() {
 
     private val orderListFragment by lazy { OrderListFragment(100) }
 
+    private var nickname: String? = null
+
     override fun onViewCreate(savedInstanceState: Bundle?) {
         addFragment(nowOrderFragment, R.id.escortFragment)
         addFragment(orderListFragment, R.id.escortFragment)
@@ -46,5 +48,9 @@ class ChildrenEscortFragment : BaseFragment() {
 
     override fun getLayoutResId(): Int {
         return R.layout.children_escort_fragment
+    }
+
+    fun setNickName(name: String) {
+        nickname = name
     }
 }
