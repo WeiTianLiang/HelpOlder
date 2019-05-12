@@ -316,6 +316,7 @@ class EscortMinePresenter(
                 val map = HashMap<Any, Any?>()
                 map["escort"] = parentCode
                 map["parent"] = text
+                map["status"] = 1
                 val body = RequestBody.create(MediaType.parse("application/json"), PackageGson.PacketGson(map))
                 val call = request.postEscortDate(body)
                 call.enqueue(object : Callback<BaseStringModel> {

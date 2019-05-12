@@ -198,6 +198,7 @@ class ChildrenMinePresenter(
                 val map = HashMap<Any, Any?>()
                 map["child"] = parentCode
                 map["parent"] = text
+                map["status"] = 1
                 val body = RequestBody.create(MediaType.parse("application/json"), PackageGson.PacketGson(map))
                 val call = request.postChildrenDate(body)
                 call.enqueue(object : Callback<BaseStringModel> {

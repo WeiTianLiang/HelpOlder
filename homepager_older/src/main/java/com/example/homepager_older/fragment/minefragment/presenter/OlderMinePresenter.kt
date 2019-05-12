@@ -282,6 +282,7 @@ class OlderMinePresenter(
                 val map = HashMap<Any, Any?>()
                 map["child"] = text
                 map["parent"] = olderCode
+                map["status"] = 1
                 val body = RequestBody.create(MediaType.parse("application/json"), PackageGson.PacketGson(map))
                 val call = request.postChildrenDate(body)
                 call.enqueue(object : Callback<BaseStringModel> {
