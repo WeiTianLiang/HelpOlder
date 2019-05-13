@@ -324,6 +324,34 @@ class EscortMinePresenter(
                         if (response.isSuccessful && response.body() != null) {
                             if (response.body()!!.code == "200") {
                                 Toast.makeText(context, "添加成功", Toast.LENGTH_SHORT).show()
+                                val call1 = request.getOlderData(nickname)
+                                call1.enqueue(object : Callback<EscortParentModel>{
+                                    override fun onResponse(call: Call<EscortParentModel>, response: Response<EscortParentModel>) {
+                                        if (response.isSuccessful && response.body() != null) {
+                                            if (response.body()!!.code == "200") {
+                                                val list = arrayListOf<ChildrenToOlder>()
+                                                for (i in 0 until response.body()!!.data?.parentList?.size!!) {
+                                                    response.body()!!.data?.parentList?.get(i)?.parentCode?.let { parentCode.add(
+                                                        it
+                                                    ) }
+                                                    val childrenToOlder = ChildrenToOlder()
+                                                    childrenToOlder.nametext = response.body()!!.data?.parentList?.get(i)?.name
+                                                    if (response.body()!!.data?.parentList?.get(i)?.gender == "男") {
+                                                        childrenToOlder.identity = "儿子"
+                                                    } else {
+                                                        childrenToOlder.identity = "女儿"
+                                                    }
+                                                    list.add(childrenToOlder)
+                                                }
+                                                adapter?.upadte(list)
+                                            }
+                                        }
+                                    }
+
+                                    override fun onFailure(call: Call<EscortParentModel>, t: Throwable) {
+
+                                    }
+                                })
                             } else {
                                 Toast.makeText(context, "账号不存在", Toast.LENGTH_SHORT).show()
                             }

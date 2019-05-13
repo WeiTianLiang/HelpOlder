@@ -15,11 +15,10 @@ import kotlinx.android.synthetic.main.recycler_item.view.*
  * @author weitianliang
  */
 class MyRecyclerViewAdapter(
-    private val list: ArrayList<ChildrenToOlder>,
+    private var list: ArrayList<ChildrenToOlder>,
     val context: Context
 ) : RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder>() {
 
-    private var changeClick: MedicineRecyclerAdapter.OnChangeClick? = null
     private var deleteClick: OnDeleteClick? = null
 
     @SuppressLint("InflateParams")
@@ -50,6 +49,11 @@ class MyRecyclerViewAdapter(
             notifyItemRemoved(position)
             notifyItemRangeChanged(position, list.size)
         }
+    }
+
+    fun upadte(list1: ArrayList<ChildrenToOlder>) {
+        list = list1
+        notifyDataSetChanged()
     }
 
     fun addItem(model: ChildrenToOlder) {

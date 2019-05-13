@@ -290,6 +290,33 @@ class OlderMinePresenter(
                         if (response.isSuccessful && response.body() != null) {
                             if (response.body()!!.code == "200") {
                                 Toast.makeText(context, "添加成功", Toast.LENGTH_SHORT).show()
+                                val call1 = request.getChildrenData(nickname)
+                                call1.enqueue(object : Callback<ChildrenModel>{
+                                    override fun onResponse(call: Call<ChildrenModel>, response: Response<ChildrenModel>) {
+                                        if (response.isSuccessful && response.body() != null) {
+                                            if (response.body()!!.code == "200") {
+                                                val list = arrayListOf<ChildrenToOlder>()
+                                                for (i in 0 until response.body()!!.data?.childList?.size!!) {
+                                                    response.body()!!.data?.childList?.get(i)?.id?.let { childrenId.add(it) }
+                                                    response.body()!!.data?.childList?.get(i)?.childCode?.let { childrenCode.add(it) }
+                                                    val childrenToOlder = ChildrenToOlder()
+                                                    childrenToOlder.nametext = response.body()!!.data?.childList?.get(i)?.name
+                                                    if (response.body()!!.data?.childList?.get(i)?.gender == "男") {
+                                                        childrenToOlder.identity = "儿子"
+                                                    } else {
+                                                        childrenToOlder.identity = "女儿"
+                                                    }
+                                                    list.add(childrenToOlder)
+                                                }
+                                                adapter?.upadte(list)
+                                            }
+                                        }
+                                    }
+
+                                    override fun onFailure(call: Call<ChildrenModel>, t: Throwable) {
+
+                                    }
+                                })
                             } else {
                                 Toast.makeText(context, "账号不存在", Toast.LENGTH_SHORT).show()
                             }
