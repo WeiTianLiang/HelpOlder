@@ -5,7 +5,6 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import com.example.homepager_older.fragment.housefragment.view.model.MedicineModel
@@ -77,7 +76,6 @@ class OlderHousePresenter(
                 if (response.isSuccessful && response.body() != null) {
                     if (response.body()!!.code == "200") {
                         id = response.body()!!.data?.id!!
-                        Log.d("asdasdasd", response.body()!!.data?.position)
                     }
                 }
             }
@@ -101,7 +99,6 @@ class OlderHousePresenter(
     private var task: TimerTask = object : TimerTask() {
         override fun run() {
             mhander.sendEmptyMessage(1)
-
         }
     }
 
@@ -143,8 +140,8 @@ class OlderHousePresenter(
                             listData.add(0)
                             listData.add(0)
                             listData.add(0)
-                            listData.add(0)
-                            listData.add(0)
+                            listData.add(840)
+                            listData.add(1046)
 
                             val beginDate = Date()
                             val calendar = Calendar.getInstance()
@@ -154,7 +151,7 @@ class OlderHousePresenter(
                                 xList.add(dft.format(calendar.time))
                             }
                             barChartView.initBarChartView(xList)
-                            barChartView.showBarChart(listData, "过去五天步数", Color.GREEN)
+                            barChartView.showBarChart(listData, "过去五天步数", Color.BLUE)
                         } else {
                             for (i in 0 until response.body()!!.data?.size!!) {
                                 response.body()!!.data?.get(i)?.walkCount?.let { listData.add(it) }

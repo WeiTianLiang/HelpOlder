@@ -16,7 +16,7 @@ class HouseFragment : BaseFragment() {
 
     private val mapView by lazy { findViewById<BaseMapView>(R.id.mapView) }
 
-    private val presenter by lazy { EscortHousePresenter() }
+    private val presenter by lazy { context?.let { nickname?.let { it1 -> EscortHousePresenter(it, it1) } } }
 
     private val locationText by lazy { findViewById<TextView>(R.id.locationText) }
 
@@ -24,14 +24,14 @@ class HouseFragment : BaseFragment() {
 
     override fun onViewCreate(savedInstanceState: Bundle?) {
 
-        activity?.let { presenter.setMapView(mapView, it, savedInstanceState, locationText) }
+        activity?.let { presenter?.setMapView(mapView, it, savedInstanceState, locationText) }
     }
 
     override fun onInflated(savedInstanceState: Bundle?) {
-        presenter.setBarChart(barChartView)
-        presenter.setStepCount(stepCount)
+        presenter?.setBarChart(barChartView)
+        presenter?.setStepCount(stepCount)
         changeOlder.setOnClickListener {
-            activity?.let { it1 -> presenter.changeOlder(mapView, it1, savedInstanceState, locationText) }
+            activity?.let { it1 -> presenter?.changeOlder(mapView, it1, savedInstanceState, locationText) }
         }
     }
 

@@ -19,6 +19,9 @@ class EscortParentModel {
         val name: String? = null
         val id: Int? = null
         val nickname: String? = null
+        val healthStatus: Int? = null
+        val medicine: Int? = null
+        val position: String? = null
     }
 
 }

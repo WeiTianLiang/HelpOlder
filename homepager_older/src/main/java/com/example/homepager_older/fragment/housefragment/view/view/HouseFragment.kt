@@ -28,10 +28,6 @@ class HouseFragment : BaseFragment() {
     private val stepCount by lazy { findViewById<TextView>(R.id.stepCount) }
     private val mapView by lazy { findViewById<BaseMapView>(R.id.mapView) }
     private val locationText by lazy { findViewById<TextView>(R.id.locationText) }
-    /**
-     * 当前步数
-     */
-    private var step = 0
 
     /**
      * 步数服务
@@ -67,6 +63,7 @@ class HouseFragment : BaseFragment() {
     }
 
     override fun onInflated(savedInstanceState: Bundle?) {
+        stepCount.text = "${context?.let { SharePreferenceStep.readStep(it)}}"
         presenter?.setBarChart(barChartView)
         presenter?.setHealthy(healthy)
         presenter?.setMedicine(medicineRemind)

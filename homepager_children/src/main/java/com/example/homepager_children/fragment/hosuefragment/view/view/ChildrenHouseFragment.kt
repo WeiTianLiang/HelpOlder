@@ -14,23 +14,24 @@ import kotlinx.android.synthetic.main.children_house_fragment.*
  */
 class ChildrenHouseFragment : BaseFragment() {
 
+    private var nickname: String? = null
+
     private val mapView by lazy { findViewById<BaseMapView>(R.id.mapView) }
 
-    private val presenter by lazy { ChildrenHousePresenter() }
+    private val presenter by lazy { context?.let { nickname?.let { it1 -> ChildrenHousePresenter(it, it1) } } }
 
     private val locationText by lazy { findViewById<TextView>(R.id.locationText) }
-    private var nickname: String? = null
 
     override fun onViewCreate(savedInstanceState: Bundle?) {
 
-        activity?.let { presenter.setMapView(mapView, it, savedInstanceState, locationText) }
+        activity?.let { presenter?.setMapView(mapView, it, savedInstanceState, locationText) }
     }
 
     override fun onInflated(savedInstanceState: Bundle?) {
-        presenter.setBarChart(barChartView)
-        presenter.setStepCount(stepCount)
+        presenter?.setBarChart(barChartView)
+        presenter?.setStepCount(stepCount)
         changeOlder.setOnClickListener {
-            activity?.let { it1 -> presenter.changeOlder(mapView, it1, savedInstanceState, locationText) }
+            activity?.let { it1 -> presenter?.changeOlder(mapView, it1, savedInstanceState, locationText) }
         }
     }
 
