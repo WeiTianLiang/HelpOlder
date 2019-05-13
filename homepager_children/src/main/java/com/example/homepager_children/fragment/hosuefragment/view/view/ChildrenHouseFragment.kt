@@ -28,6 +28,7 @@ class ChildrenHouseFragment : BaseFragment() {
     }
 
     override fun onInflated(savedInstanceState: Bundle?) {
+        presenter?.setHealthy(healthy)
         presenter?.setBarChart(barChartView)
         presenter?.setStepCount(stepCount)
         changeOlder.setOnClickListener {
