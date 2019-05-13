@@ -11,22 +11,8 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
-import com.example.homepager_older.fragment.housefragment.view.presenter.GetOlderHouseInterface;
-import com.example.tools.model.BaseStringModel;
-import com.example.tools.net.CreateRetrofit;
-import com.example.tools.net.FileOperate;
-import com.example.tools.net.PackageGson;
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 
 public class BindService extends Service implements SensorEventListener {
 
@@ -151,33 +137,6 @@ public class BindService extends Service implements SensorEventListener {
             @Override
             public void stepChanged(int steps) {
                 nowBuSu = steps;// 通过接口回调获得当前步数
-                Date date = new Date(System.currentTimeMillis());
-                if (simpleDateFormat.format(date).equals("23:00:00")) {
-                    Map map = new HashMap<String, Objects>();
-                    map.put("date", simpleDate.format(date));
-                    map.put("nickname", nickname);
-                    map.put("walkCount", nowBuSu);
-                    RequestBody body = RequestBody.create(MediaType.parse("application/json"), PackageGson.PacketGson(map));
-                    GetOlderHouseInterface request = CreateRetrofit.requestRetrofit(FileOperate.readFile(getApplicationContext())).create(GetOlderHouseInterface.class);
-                    Call<BaseStringModel> call = request.postOlderStep(body);
-                    call.enqueue(new Callback<BaseStringModel>() {
-                        @Override
-                        public void onResponse(Call<BaseStringModel> call, Response<BaseStringModel> response) {
-                            if (response.isSuccessful() && response.body() != null) {
-                                if (response.body().getCode().equals("200")) {
-
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<BaseStringModel> call, Throwable t) {
-
-                        }
-                    });
-                } else if (simpleDateFormat.format(date).equals("6:00:00")) {
-                    nowBuSu = 0;
-                }
                 updateNotification();    // 更新步数通知
             }
         });
@@ -229,33 +188,6 @@ public class BindService extends Service implements SensorEventListener {
             if (event.values[0] == 1.0) {
                 nowBuSu++;
             }
-        }
-        Date date = new Date(System.currentTimeMillis());
-        if (simpleDateFormat.format(date).equals("23:00:00")) {
-            Map map = new HashMap<String, Objects>();
-            map.put("date", simpleDate.format(date));
-            map.put("nickname", nickname);
-            map.put("walkCount", nowBuSu);
-            RequestBody body = RequestBody.create(MediaType.parse("application/json"), PackageGson.PacketGson(map));
-            GetOlderHouseInterface request = CreateRetrofit.requestRetrofit(FileOperate.readFile(getApplicationContext())).create(GetOlderHouseInterface.class);
-            Call<BaseStringModel> call = request.postOlderStep(body);
-            call.enqueue(new Callback<BaseStringModel>() {
-                @Override
-                public void onResponse(Call<BaseStringModel> call, Response<BaseStringModel> response) {
-                    if (response.isSuccessful() && response.body() != null) {
-                        if (response.body().getCode().equals("200")) {
-
-                        }
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<BaseStringModel> call, Throwable t) {
-
-                }
-            });
-        } else if (simpleDateFormat.format(date).equals("6:00:00")) {
-            nowBuSu = 0;
         }
         updateNotification();
     }

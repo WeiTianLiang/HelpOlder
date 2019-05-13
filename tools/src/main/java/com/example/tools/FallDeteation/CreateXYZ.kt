@@ -2,6 +2,7 @@ package com.example.tools.FallDeteation
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.Service
 import android.content.Context
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -10,6 +11,7 @@ import android.hardware.SensorManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
+import android.os.Vibrator
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Gravity
@@ -47,16 +49,19 @@ class CreateXYZ(
                     } else {
                         isDown = detection.Detect(list)
                         if (isDown) {
-                            val dialog: FallDialog? = if(type != "older") {
+                            val vibrator = context.getSystemService(Service.VIBRATOR_SERVICE) as Vibrator
+                            vibrator.vibrate(longArrayOf(1000,50,50,100,50), 1)
+                            val dialog: FallDialog? = if (type != "older") {
                                 FallDialog(context, "您的老人出现了状况，请及时处理", "确认")
                             } else {
                                 FallDialog(context, "已向子女报警", "取消警报")
                             }
                             dialog?.window?.setGravity(Gravity.CENTER)
                             dialog?.show()
-                            dialog?.setOnSureClick(object : FallDialog.OnFallClick{
+                            dialog?.setOnSureClick(object : FallDialog.OnFallClick {
                                 override fun buttonClick() {
                                     dialog.cancel()
+                                    vibrator.cancel()
                                 }
                             })
                         }

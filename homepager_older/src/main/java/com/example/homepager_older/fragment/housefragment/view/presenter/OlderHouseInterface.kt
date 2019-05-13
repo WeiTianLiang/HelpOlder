@@ -21,4 +21,7 @@ interface OlderHouseInterface {
     fun setHealthy(textView: TextView)
 
     fun setMedicine(textView: TextView)
+
+    // 设置步数
+    fun setStep(stepCount: TextView)
 }

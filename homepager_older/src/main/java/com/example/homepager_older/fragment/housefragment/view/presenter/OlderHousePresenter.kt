@@ -16,6 +16,7 @@ import com.example.tools.model.BaseStringModel
 import com.example.tools.net.CreateRetrofit
 import com.example.tools.net.FileOperate
 import com.example.tools.net.PackageGson
+import com.example.tools.tool.listMax
 import com.example.tools.view.BarChartView
 import com.example.tools.view.BaseMapView
 import okhttp3.MediaType
@@ -62,6 +63,7 @@ class OlderHousePresenter(
 
     @SuppressLint("SimpleDateFormat")
     private val dft = SimpleDateFormat("MM月dd")
+    private val changeTime = SimpleDateFormat("MM-dd")
 
     /**
      * 地图
@@ -98,14 +100,53 @@ class OlderHousePresenter(
         timer.schedule(task, 5000, 3000)
     }
 
+    override fun setStep(stepCount: TextView) {
+        val call = request.getOlderStep(nickname)
+        call.enqueue(object : Callback<StepModel> {
+            override fun onResponse(call: Call<StepModel>, response: Response<StepModel>) {
+                if (response.isSuccessful && response.body() != null) {
+                    if (response.body()!!.code == "200") {
+                        val list = arrayListOf<Int>()
+                        for (i in 0 until response.body()!!.data?.size!!) {
+                            if (dft.format(Date(response.body()!!.data?.get(i)?.date?.toLong()!!)) == dft.format(Date())) {
+                                response.body()!!.data?.get(i)?.walkCount?.let { list.add(it) }
+                            }
+                        }
+                        val max = if (list.size == 0) {
+                            0
+                        } else {
+                            listMax(list)
+                        }
+                        stepCount.text = max.toString()
+                        getStepCount?.getStep(max)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<StepModel>, t: Throwable) {
+
+            }
+        })
+    }
+
+    private var getStepCount: OnGetStepCount? = null
+
+    interface OnGetStepCount {
+        fun getStep(count: Int)
+    }
+
+    fun setOnGetStepCount(getStepCount: OnGetStepCount) {
+        this.getStepCount = getStepCount
+    }
+
     private var task: TimerTask = object : TimerTask() {
         override fun run() {
             mhander.sendEmptyMessage(1)
         }
     }
 
-    private val mhander= Handler(Handler.Callback { p0 ->
-        if(p0?.what == 1) {
+    private val mhander = Handler(Handler.Callback { p0 ->
+        if (p0?.what == 1) {
             activity?.let { mapView?.showNowLocation(it) }
             longitude = mapView?.getLongitude()
             latitude = mapView?.getLatitude()
@@ -138,30 +179,27 @@ class OlderHousePresenter(
             override fun onResponse(call: Call<StepModel>, response: Response<StepModel>) {
                 if (response.isSuccessful && response.body() != null) {
                     if (response.body()!!.code == "200") {
-                        if (response.body()!!.data?.size!! == 0) {
-                            listData.add(0)
-                            listData.add(0)
-                            listData.add(0)
-                            listData.add(840)
-                            listData.add(1046)
-
-                            val beginDate = Date()
-                            val calendar = Calendar.getInstance()
-                            for (i in -5 until 0) {
-                                calendar.time = beginDate
-                                calendar.add(Calendar.DATE, i)
-                                xList.add(dft.format(calendar.time))
+                        val beginDate = Date()
+                        val calendar = Calendar.getInstance()
+                        for (i in -5 until 0) {
+                            calendar.time = beginDate
+                            calendar.add(Calendar.DATE, i)
+                            xList.add(dft.format(calendar.time))
+                            val list = arrayListOf<Int>()
+                            for (j in 0 until response.body()!!.data?.size!!) {
+                                if (dft.format(Date(response.body()!!.data?.get(j)?.date?.toLong()!!)) == dft.format(calendar.time)) {
+                                    response.body()!!.data?.get(j)?.walkCount?.let { list.add(it) }
+                                }
                             }
-                            barChartView.initBarChartView(xList)
-                            barChartView.showBarChart(listData, "过去五天步数", Color.BLUE)
-                        } else {
-                            for (i in 0 until response.body()!!.data?.size!!) {
-                                response.body()!!.data?.get(i)?.walkCount?.let { listData.add(it) }
-                                response.body()!!.data?.get(i)?.date?.let { xList.add(dft.format(it)) }
+                            val max = if (list.size == 0) {
+                                0
+                            } else {
+                                listMax(list)
                             }
-                            barChartView.initBarChartView(xList)
-                            barChartView.showBarChart(listData, "过去五天步数", Color.GREEN)
+                            listData.add(max)
                         }
+                        barChartView.initBarChartView(xList)
+                        barChartView.showBarChart(listData, "过去五天步数", Color.GREEN)
                     }
                 }
             }
@@ -178,7 +216,7 @@ class OlderHousePresenter(
             override fun onResponse(call: Call<OlderDataModel>, response: Response<OlderDataModel>) {
                 if (response.isSuccessful && response.body() != null) {
                     if (response.body()!!.code == "200") {
-                        if(response.body()!!.data?.healthStatus == 0) {
+                        if (response.body()!!.data?.healthStatus == 0) {
                             textView.text = "良好！请继续保持"
                         } else {
                             textView.text = "请注意身体"

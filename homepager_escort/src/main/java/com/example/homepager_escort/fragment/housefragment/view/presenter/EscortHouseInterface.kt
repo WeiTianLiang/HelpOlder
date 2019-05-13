@@ -24,4 +24,6 @@ interface EscortHouseInterface {
     // 改变人物
     fun changeOlder(mapView: BaseMapView, activity: Activity, savedInstanceState: Bundle?, locationText: TextView)
 
+    fun setHealthy(textView: TextView)
+
 }

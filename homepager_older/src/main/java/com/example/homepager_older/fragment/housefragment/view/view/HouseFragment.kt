@@ -10,13 +10,25 @@ import android.os.Handler
 import android.os.IBinder
 import android.os.Message
 import android.widget.TextView
+import android.widget.Toast
 import com.example.homepager_older.R
+import com.example.homepager_older.fragment.housefragment.view.presenter.GetOlderHouseInterface
 import com.example.homepager_older.fragment.housefragment.view.presenter.OlderHousePresenter
 import com.example.homepager_older.fragment.housefragment.view.tools.SharePreferenceStep
 import com.example.homepager_older.step.BindService
 import com.example.tools.fragment.BaseFragment
+import com.example.tools.model.BaseStringModel
+import com.example.tools.net.CreateRetrofit
+import com.example.tools.net.FileOperate
+import com.example.tools.net.PackageGson
 import com.example.tools.view.BaseMapView
 import kotlinx.android.synthetic.main.older_house_fragment.*
+import okhttp3.MediaType
+import okhttp3.RequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.util.*
 
 /**
  * 老人 - 首页 fragment
@@ -28,6 +40,7 @@ class HouseFragment : BaseFragment() {
     private val stepCount by lazy { findViewById<TextView>(R.id.stepCount) }
     private val mapView by lazy { findViewById<BaseMapView>(R.id.mapView) }
     private val locationText by lazy { findViewById<TextView>(R.id.locationText) }
+    private var nowCount = 0
 
     /**
      * 步数服务
@@ -49,9 +62,8 @@ class HouseFragment : BaseFragment() {
     private val presenter by lazy { context?.let { nickname?.let { it1 -> OlderHousePresenter(it, it1) } } }
 
     override fun onViewCreate(savedInstanceState: Bundle?) {
-
         activity?.let { presenter?.setMapView(mapView, it, savedInstanceState, locationText) }
-
+        presenter?.setStep(stepCount)
         // 启动计步
         val intent = Intent(activity?.applicationContext, BindService::class.java)
         activity?.applicationContext?.let {
@@ -63,6 +75,11 @@ class HouseFragment : BaseFragment() {
     }
 
     override fun onInflated(savedInstanceState: Bundle?) {
+        presenter?.setOnGetStepCount(object : OlderHousePresenter.OnGetStepCount {
+            override fun getStep(count: Int) {
+                nowCount = count
+            }
+        })
         stepCount.text = "${context?.let { SharePreferenceStep.readStep(it)}}"
         presenter?.setBarChart(barChartView)
         presenter?.setHealthy(healthy)
@@ -84,6 +101,31 @@ class HouseFragment : BaseFragment() {
                 message.what = 1
                 message.arg1 = context?.let { SharePreferenceStep.readStep(it) }!!
                 context?.let { SharePreferenceStep.writeStep(stepCount, it) }
+                val request =
+                    CreateRetrofit.requestRetrofit(FileOperate.readFile(context)).create(GetOlderHouseInterface::class.java)
+                val map = HashMap<Any, Any>()
+                map["date"] = Date().time
+                map["nickname"] = nickname!!
+                if(nowCount <= stepCount) {
+                    map["walkCount"] = stepCount
+                } else {
+                    map["walkCount"] = stepCount + nowCount
+                }
+                val body = RequestBody.create(MediaType.parse("application/json"), PackageGson.PacketGson(map))
+                val call = request.postOlderStep(body)
+                call.enqueue(object : Callback<BaseStringModel> {
+                    override fun onResponse(call: Call<BaseStringModel>, response: Response<BaseStringModel>) {
+                        if (response.isSuccessful && response.body() != null) {
+                            if (response.body()!!.code == "200") {
+                                Toast.makeText(context, "上传成功", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+
+                    override fun onFailure(call: Call<BaseStringModel>, t: Throwable) {
+
+                    }
+                })
                 handler.sendMessage(message)
             }
         }
