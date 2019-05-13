@@ -2,6 +2,7 @@ package com.example.tools.FallDeteation
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -11,13 +12,18 @@ import android.os.Handler
 import android.os.Message
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.Gravity
+import com.example.tools.dialog.FallDialog
 import java.text.DecimalFormat
 
 /**
  * xyz三轴加速度
  * @author WeiTianLiang
  */
-class getXYZ : SensorEventListener {
+class CreateXYZ(
+    val context: Context,
+    val type: String
+) : SensorEventListener {
 
     private var mSensorManager: SensorManager? = null
     private var mSensor: Sensor? = null
@@ -32,7 +38,7 @@ class getXYZ : SensorEventListener {
         override fun handleMessage(msg: Message) {
             when (msg.what) {
                 1 -> {
-                    if(list.size < 500) {
+                    if (list.size < 500) {
                         val acceleration = Acceleration()
                         acceleration.accx = bundle?.getDouble("x")!!
                         acceleration.accy = bundle?.getDouble("y")!!
@@ -40,12 +46,28 @@ class getXYZ : SensorEventListener {
                         list.add(acceleration)
                     } else {
                         isDown = detection.Detect(list)
-                        if(isDown) {
-                            // 弹出摔倒
+                        if (isDown) {
+                            val dialog: FallDialog? = if(type != "older") {
+                                FallDialog(context, "您的老人出现了状况，请及时处理", "确认")
+                            } else {
+                                FallDialog(context, "已向子女报警", "取消警报")
+                            }
+                            dialog?.window?.setGravity(Gravity.CENTER)
+                            dialog?.show()
+                            dialog?.setOnSureClick(object : FallDialog.OnFallClick{
+                                override fun buttonClick() {
+                                    dialog.cancel()
+                                }
+                            })
                         }
                         list.clear()
                     }
-                    Log.i("三轴加速数据---->", "X = " + bundle?.getDouble("x") + ", Y = " + bundle?.getDouble("y") + ", Z = " + bundle?.getDouble("z"))
+                    Log.i(
+                        "三轴加速数据---->",
+                        "X = " + bundle?.getDouble("x") + ", Y = " + bundle?.getDouble("y") + ", Z = " + bundle?.getDouble(
+                            "z"
+                        )
+                    )
                 }
             }
         }

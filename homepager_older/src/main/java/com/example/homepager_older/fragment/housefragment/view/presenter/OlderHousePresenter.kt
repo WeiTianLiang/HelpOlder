@@ -1,5 +1,6 @@
 package com.example.homepager_older.fragment.housefragment.view.presenter
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.graphics.Color
@@ -59,6 +60,7 @@ class OlderHousePresenter(
     private var locationText: TextView? = null
     private var savedInstanceState: Bundle? = null
 
+    @SuppressLint("SimpleDateFormat")
     private val dft = SimpleDateFormat("MM月dd")
 
     /**
