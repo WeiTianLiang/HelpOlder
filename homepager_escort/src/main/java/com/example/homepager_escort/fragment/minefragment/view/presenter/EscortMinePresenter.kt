@@ -62,7 +62,8 @@ class EscortMinePresenter(
         escortTime: TextView,
         escortName: TextView,
         escortWorkType: TextView,
-        escortWorkEx: TextView
+        escortWorkEx: TextView,
+        escortIsState: TextView
     ) {
         val call = request.getEscortData(nickname)
         call.enqueue(object : Callback<EscortModel> {
@@ -80,6 +81,11 @@ class EscortMinePresenter(
                             escortWorkType.text = "全职"
                         }
                         escortWorkEx.text = response.body()!!.data?.workExperience + "年"
+                        escortIsState.text = if(response.body()!!.data?.cardStatus == 0) {
+                            "未通过审核"
+                        } else {
+                            "已通过审核"
+                        }
                     }
                 }
             }

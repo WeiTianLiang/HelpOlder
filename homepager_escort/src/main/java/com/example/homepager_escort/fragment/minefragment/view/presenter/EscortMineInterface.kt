@@ -30,7 +30,8 @@ interface EscortMineInterface {
         escortTime: TextView,
         escortName: TextView,
         escortWorkType: TextView,
-        escortWorkEx: TextView
+        escortWorkEx: TextView,
+        escortIsState: TextView
     )
 
     fun changeWorkType(escortWorkType: TextView)

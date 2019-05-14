@@ -96,6 +96,39 @@
                 android:layout_marginStart="5dp">
 
             <TextView
+                    android:id="@+id/layout11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:textSize="20sp"
+                    android:textColor="#000"
+                    android:text="状态："/>
+
+            <TextView
+                    android:id="@+id/escort_isState"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@+id/layout11"
+                    android:textSize="20sp"
+                    android:textColor="#000"
+                    tools:text="未通过"/>
+
+        </RelativeLayout>
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#424242"
+                android:layout_marginTop="10dp"/>
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="5dp">
+
+            <TextView
                     android:id="@+id/layout1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

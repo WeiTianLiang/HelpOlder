@@ -23,11 +23,11 @@ class HouseFragment : BaseFragment() {
     private var nickname: String? = null
 
     override fun onViewCreate(savedInstanceState: Bundle?) {
-
         activity?.let { presenter?.setMapView(mapView, it, savedInstanceState, locationText) }
     }
 
     override fun onInflated(savedInstanceState: Bundle?) {
+        presenter?.setHealthy(healthy)
         presenter?.setBarChart(barChartView)
         presenter?.setStepCount(stepCount)
         changeOlder.setOnClickListener {

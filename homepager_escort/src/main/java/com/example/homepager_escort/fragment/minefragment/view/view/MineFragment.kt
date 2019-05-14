@@ -31,7 +31,16 @@ class MineFragment : BaseFragment() {
     }
 
     override fun onInflated(savedInstanceState: Bundle?) {
-        presenter?.setData(escort_head, escort_sex, escort_age, escort_time, escort_name, escort_workType, escort_workEx)
+        presenter?.setData(
+            escort_head,
+            escort_sex,
+            escort_age,
+            escort_time,
+            escort_name,
+            escort_workType,
+            escort_workEx,
+            escort_isState
+        )
         presenter?.getChildrenAdapter(object : EscortMinePresenter.OnGetChildrenAdapter {
             override fun getChildrenAdapter(adapter: MyRecyclerViewAdapter) {
                 adapter.setOnDeleteClick(object : MyRecyclerViewAdapter.OnDeleteClick {

@@ -19,6 +19,7 @@ class EscortModel {
         val workExperience: String? = null
         val workTime: String? = null
         val workType: String? = null
+        val cardStatus: Int? = null
     }
 
 }

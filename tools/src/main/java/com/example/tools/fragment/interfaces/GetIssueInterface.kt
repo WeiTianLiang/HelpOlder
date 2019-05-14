@@ -1,9 +1,6 @@
 package com.example.tools.fragment.interfaces
 
-import com.example.tools.fragment.model.ChildParentModel
-import com.example.tools.fragment.model.EscortParentModel
-import com.example.tools.fragment.model.OrderModel
-import com.example.tools.fragment.model.ParentOrderModel
+import com.example.tools.fragment.model.*
 import com.example.tools.model.BaseStringModel
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -38,6 +35,9 @@ interface GetIssueInterface {
 
     @GET("order/valid")
     fun getValid(): Call<ParentOrderModel>
+
+    @GET("order/batch/list")
+    fun getAllOrder(@Query("page") page: String, @Query("limit") limit: String): Call<AllOrderModel>
 
     @POST("parent/escort/save")
     fun postEscortDate(@Body body: RequestBody): Call<BaseStringModel>
