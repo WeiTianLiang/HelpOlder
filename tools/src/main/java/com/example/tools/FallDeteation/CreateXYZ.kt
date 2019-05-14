@@ -15,8 +15,18 @@ import android.os.Vibrator
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Gravity
+import android.widget.Toast
 import com.example.tools.dialog.FallDialog
+import com.example.tools.model.BaseStringModel
+import com.example.tools.net.CreateRetrofit
+import com.example.tools.net.FileOperate
+import com.example.tools.net.PackageGson
+import okhttp3.MediaType
+import okhttp3.RequestBody
+import retrofit2.Call
+import retrofit2.Response
 import java.text.DecimalFormat
+import java.util.*
 
 /**
  * xyz三轴加速度
@@ -24,7 +34,8 @@ import java.text.DecimalFormat
  */
 class CreateXYZ(
     val context: Context,
-    val type: String
+    val type: String,
+    val nickname: String? = null
 ) : SensorEventListener {
 
     private var mSensorManager: SensorManager? = null
@@ -34,6 +45,9 @@ class CreateXYZ(
     private val list = arrayListOf<Acceleration>()
     private val detection by lazy { Detection() }
     private var isDown = false
+
+    val request =
+        CreateRetrofit.requestRetrofit(FileOperate.readFile(context)).create(GetFallDeteationInterface::class.java)
 
     private val mHandler = @SuppressLint("HandlerLeak")
     object : Handler() {
@@ -64,6 +78,21 @@ class CreateXYZ(
                                     vibrator.cancel()
                                 }
                             })
+                            val map = HashMap<Any, Any>()
+                            map["nickname"] = nickname!!
+                            map["date"] = Date().time
+                            val body = RequestBody.create(MediaType.parse("application/json"), PackageGson.PacketGson(map))
+                            val call = request.postFallSave(body)
+                            call.enqueue(object : retrofit2.Callback<BaseStringModel> {
+                                override fun onResponse(call: Call<BaseStringModel>, response: Response<BaseStringModel>) {
+                                    Toast.makeText(context, "消息已经发送", Toast.LENGTH_LONG).show()
+                                }
+
+                                override fun onFailure(call: Call<BaseStringModel>, t: Throwable) {
+                                }
+
+                            })
+
                         }
                         list.clear()
                     }

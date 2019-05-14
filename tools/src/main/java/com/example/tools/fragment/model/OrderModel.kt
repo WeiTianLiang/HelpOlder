@@ -25,5 +25,7 @@ class OrderModel {
         val orderStatus: Int? = null
         val escortName: String? = null
         val escortRealName: String? = null
+        val parentAge: Int? = null
+        val parentGender: String? = null
     }
 }

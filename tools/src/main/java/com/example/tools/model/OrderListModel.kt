@@ -16,4 +16,6 @@ class OrderListModel {
 
     var orderTime: String? = null
 
+    var id: Int? = null
+
 }

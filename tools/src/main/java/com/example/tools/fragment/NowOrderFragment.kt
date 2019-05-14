@@ -30,6 +30,9 @@ class NowOrderFragment : BaseFragment() {
         escort_push.setOnClickListener {
             presenter?.orderPush()
         }
+        escort_detail.setOnClickListener {
+            presenter?.showDetail()
+        }
     }
 
     override fun getLayoutResId(): Int {

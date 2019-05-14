@@ -19,7 +19,7 @@ class OlderActivity : BaseActivity() {
     private val houseFragment by lazy { HouseFragment() }
     private val mineFragment by lazy { MineFragment() }
     private val fragmentList = arrayListOf<Fragment>()
-    private val createXYZ by lazy { CreateXYZ(this, "older") }
+    private val createXYZ by lazy { CreateXYZ(this, "older", nickname) }
 
     override fun onBaseCreate() {
         nickname = intent.getStringExtra("nickname")

@@ -17,4 +17,6 @@ interface NowOrderInterface {
 
     fun setMapView(mapView1: BaseMapView, activity1: Activity, savedInstanceState1: Bundle?)
 
+    fun showDetail()
+
 }

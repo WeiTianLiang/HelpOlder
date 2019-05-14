@@ -55,8 +55,9 @@ class OrderListPresenter(
                             } else {
                                 "长期陪护"
                             }
+                            orderListModel.id = response.body()!!.data?.get(i)?.id
                             parentList.add(orderListModel)
-                            adapter = ReleaseRecyclerAdapter(parentList, context, key)
+                            adapter = ReleaseRecyclerAdapter(parentList, context, key, nickname)
                             recyclerView.layoutManager = LinearLayoutManager(context)
                             recyclerView.adapter = adapter
                         }

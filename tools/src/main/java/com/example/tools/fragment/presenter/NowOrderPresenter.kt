@@ -8,6 +8,7 @@ import android.os.Handler
 import android.view.Gravity
 import android.widget.TextView
 import android.widget.Toast
+import com.alibaba.android.arouter.launcher.ARouter
 import com.example.tools.dialog.ReleaseDialog
 import com.example.tools.fragment.SaveOrder
 import com.example.tools.fragment.interfaces.GetIssueInterface
@@ -125,6 +126,15 @@ class NowOrderPresenter(
         false
     })
 
+    override fun showDetail() {
+        ARouter.getInstance()
+            .build("/tools/DetailActivity")
+            .withInt("key",-1)
+            .withString("orderNo", SaveOrder.readFile(context))
+            .withString("nickname", nickname)
+            .navigation()
+    }
+
     override fun orderPush() {
         releaseDialog.setCanceledOnTouchOutside(false)
         releaseDialog.window?.setGravity(Gravity.CENTER)
@@ -165,7 +175,6 @@ class NowOrderPresenter(
                                 Toast.makeText(context, "发布成功", Toast.LENGTH_SHORT).show()
                                 response.body()!!.data?.orderNo?.let { SaveOrder.writeFile(it, context) }
                                 handler.sendEmptyMessage(1)
-
                             } else {
                                 Toast.makeText(context, "发布失败", Toast.LENGTH_SHORT).show()
                             }

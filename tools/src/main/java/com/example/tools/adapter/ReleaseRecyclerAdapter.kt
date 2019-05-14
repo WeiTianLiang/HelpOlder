@@ -18,7 +18,8 @@ import kotlinx.android.synthetic.main.history_item.view.*
 class ReleaseRecyclerAdapter(
     private val list: ArrayList<OrderListModel>,
     private val context: Context,
-    private val keyCode: Int
+    private val keyCode: Int,
+    private val nickname: String
 ) : RecyclerView.Adapter<ReleaseRecyclerAdapter.ViewHolder>() {
 
     @SuppressLint("InflateParams")
@@ -36,7 +37,13 @@ class ReleaseRecyclerAdapter(
         holder.view.orderLocation.text = list[position].orderLocation
         holder.view.orderState.text = list[position].orderState
         holder.view.showD.setOnClickListener {
-            ARouter.getInstance().build("/tools/DetailActivity").withInt("key",keyCode).withString("orderNo", list[position].orderNumber).navigation()
+            ARouter.getInstance()
+                .build("/tools/DetailActivity")
+                .withInt("key",keyCode)
+                .withString("orderNo", list[position].orderNumber)
+                .withString("nickname", nickname)
+                .withInt("id", list[position].id!!)
+                .navigation()
         }
     }
 
