@@ -28,4 +28,7 @@ interface GetChildInterface {
     @POST("parent/child/save")
     fun postChildrenDate(@Body body: RequestBody): Call<BaseStringModel>
 
+    @GET("fall/record/batch/list")
+    fun getOlderState(@Query("nickname") nickname: String): Call<FallModel>
+
 }

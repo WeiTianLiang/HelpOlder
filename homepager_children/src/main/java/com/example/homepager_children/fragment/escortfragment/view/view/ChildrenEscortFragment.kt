@@ -19,7 +19,7 @@ class ChildrenEscortFragment : BaseFragment() {
 
     private val nowOrderFragment by lazy { NowOrderFragment() }
 
-    private val orderListFragment by lazy { OrderListFragment(100) }
+    private val orderListFragment by lazy { OrderListFragment(100, "child") }
 
     private var nickname: String? = null
 
@@ -27,6 +27,8 @@ class ChildrenEscortFragment : BaseFragment() {
         addFragment(nowOrderFragment, R.id.escortFragment)
         addFragment(orderListFragment, R.id.escortFragment)
         hideFragment(orderListFragment)
+        nowOrderFragment.setNickname(nickname)
+        orderListFragment.setNickname(nickname)
     }
 
     override fun onInflated(savedInstanceState: Bundle?) {

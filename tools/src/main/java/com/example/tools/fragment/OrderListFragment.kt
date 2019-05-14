@@ -11,11 +11,11 @@ import com.example.tools.fragment.presenter.OrderListPresenter
  * @author WeiTianLiang
  */
 @SuppressLint("ValidFragment")
-class OrderListFragment @SuppressLint("ValidFragment") constructor(key: Int) : BaseFragment() {
+class OrderListFragment @SuppressLint("ValidFragment") constructor(key: Int, state: String) : BaseFragment() {
 
     private val recyclerView by lazy { findViewById<RecyclerView>(R.id.releaseRecycler) }
     private var nickname: String? = null
-    private val presenter by lazy { context?.let { nickname?.let { it1 -> OrderListPresenter(it, it1, key) } } }
+    private val presenter by lazy { context?.let { nickname?.let { it1 -> OrderListPresenter(it, it1, key, state) } } }
 
     override fun onViewCreate(savedInstanceState: Bundle?) {
         presenter?.setListData(recyclerView)

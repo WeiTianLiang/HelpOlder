@@ -69,8 +69,6 @@ class HouseFragment : BaseFragment() {
         activity?.applicationContext?.let {
             isBind = it.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
         }
-        val bindService = BindService()
-        bindService.setNickName(nickname)
         activity?.applicationContext?.startService(intent)
     }
 

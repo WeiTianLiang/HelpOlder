@@ -13,13 +13,17 @@ import com.example.tools.fragment.model.OrderModel
 import com.example.tools.model.BaseStringModel
 import com.example.tools.net.CreateRetrofit
 import com.example.tools.net.FileOperate
+import com.example.tools.net.PackageGson
 import kotlinx.android.synthetic.main.activity_detail.*
+import okhttp3.MediaType
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 
+@SuppressLint("SimpleDateFormat")
 @Route(path = "/tools/DetailActivity")
 class DetailActivity : AppCompatActivity() {
 
@@ -61,7 +65,52 @@ class DetailActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<BaseStringModel>, response: Response<BaseStringModel>) {
                     if (response.isSuccessful && response.body() != null) {
                         if (response.body()!!.code == "200") {
-                            Toast.makeText(baseContext, "成功接收订单", Toast.LENGTH_SHORT).show()
+                            val call1 = request.putOrderStatus(1, orderId)
+                            call1.enqueue(object : Callback<BaseStringModel> {
+                                override fun onResponse(call: Call<BaseStringModel>, response: Response<BaseStringModel>) {
+                                    if (response.isSuccessful && response.body() != null && response.body()!!.code == "200") {
+                                        Toast.makeText(baseContext, "成功接收订单", Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+
+                                override fun onFailure(call: Call<BaseStringModel>, t: Throwable) {
+                                }
+                            })
+
+                            val call2 = request.getOrderWithOrderNo(orderNo!!)
+                            call2.enqueue(object : Callback<OrderModel> {
+                                override fun onResponse(call: Call<OrderModel>, response: Response<OrderModel>) {
+                                    if (response.isSuccessful && response.body() != null) {
+                                        if (response.body()!!.code == "200") {
+                                            val parentName = response.body()!!.data?.parentEscort
+                                            val escortName = response.body()!!.data?.escortName
+                                            val map = HashMap<Any, Any?>()
+                                            map["escort"] = escortName
+                                            map["parent"] = parentName
+                                            map["status"] = 1
+                                            val body = RequestBody.create(MediaType.parse("application/json"), PackageGson.PacketGson(map))
+                                            val call3 = request.postEscortDate(body)
+                                            call3.enqueue(object : Callback<BaseStringModel> {
+                                                override fun onResponse(call: Call<BaseStringModel>, response: Response<BaseStringModel>) {
+                                                    if (response.isSuccessful && response.body() != null) {
+                                                        if (response.body()!!.code == "200") {
+                                                            Toast.makeText(baseContext, "成功与老人绑定", Toast.LENGTH_SHORT).show()
+                                                        }
+                                                    }
+                                                }
+
+                                                override fun onFailure(call: Call<BaseStringModel>, t: Throwable) {
+
+                                                }
+                                            })
+                                        }
+                                    }
+                                }
+
+                                override fun onFailure(call: Call<OrderModel>, t: Throwable) {
+
+                                }
+                            })
                         }
                     }
                 }

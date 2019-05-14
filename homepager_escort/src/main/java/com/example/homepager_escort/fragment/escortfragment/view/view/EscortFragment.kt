@@ -16,9 +16,9 @@ import kotlinx.android.synthetic.main.escort_escort_fragment.*
  */
 class EscortFragment : BaseFragment() {
 
-    private val nowOrderFragment by lazy { OrderListFragment(100) }
+    private val nowOrderFragment by lazy { OrderListFragment(100, "escorted") }
 
-    private val orderListFragment by lazy { OrderListFragment(1) }
+    private val orderListFragment by lazy { OrderListFragment(1, "escorting") }
 
     private var nickname: String? = null
 
@@ -26,6 +26,8 @@ class EscortFragment : BaseFragment() {
         addFragment(nowOrderFragment, R.id.escortFragment)
         addFragment(orderListFragment, R.id.escortFragment)
         hideFragment(orderListFragment)
+        nowOrderFragment.setNickname(nickname)
+        orderListFragment.setNickname(nickname)
     }
 
     override fun onInflated(savedInstanceState: Bundle?) {

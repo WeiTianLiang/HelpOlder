@@ -11,7 +11,6 @@ class EscortModel {
 
     class Data {
         val age: Int? = null
-        val escortCode: String? = null
         val gender: String? = null
         val id: Int? = null
         val imageUrl: String? = null

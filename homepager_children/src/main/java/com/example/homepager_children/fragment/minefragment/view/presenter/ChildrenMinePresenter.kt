@@ -2,6 +2,7 @@ package com.example.homepager_children.fragment.minefragment.view.presenter
 
 import android.app.Activity
 import android.content.Context
+import android.os.Handler
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.Gravity
@@ -10,11 +11,13 @@ import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.homepager_children.fragment.minefragment.view.model.ChildModel
 import com.example.homepager_children.fragment.minefragment.view.model.ChildParentModel
+import com.example.homepager_children.fragment.minefragment.view.model.FallModel
 import com.example.homepager_children.fragment.minefragment.view.view.ChildrenMineFragment
 import com.example.tools.activity.doGetPicture
 import com.example.tools.activity.jumpActivity
 import com.example.tools.adapter.MyRecyclerViewAdapter
 import com.example.tools.dialog.BaseDialog
+import com.example.tools.dialog.FallDialog
 import com.example.tools.model.BaseStringModel
 import com.example.tools.model.ChildrenToOlder
 import com.example.tools.net.CreateRetrofit
@@ -45,6 +48,7 @@ class ChildrenMinePresenter(
     private var adapter: MyRecyclerViewAdapter? = null
     private val list = arrayListOf<ChildrenToOlder>()
     private var id: Int = -1
+    private val parentNickname = arrayListOf<String>()
 
     private val request =
         CreateRetrofit.requestRetrofit(FileOperate.readFile(context)).create(GetChildInterface::class.java)
@@ -77,6 +81,7 @@ class ChildrenMinePresenter(
                 if (response.isSuccessful && response.body() != null) {
                     if (response.body()!!.code == "200" && response.body()!!.data != null) {
                         for (i in 0 until response.body()!!.data?.parentList?.size!!) {
+                            response.body()!!.data?.parentList?.get(i)?.nickname?.let { parentNickname.add(it) }
                             response.body()!!.data?.parentList?.get(i)?.parentCode?.let { parentCode.add(it) }
                             val childrenToOlder = ChildrenToOlder()
                             childrenToOlder.nametext = response.body()!!.data?.parentList?.get(i)?.name
@@ -100,6 +105,43 @@ class ChildrenMinePresenter(
             }
         })
     }
+
+    private var task: TimerTask = object : TimerTask() {
+        override fun run() {
+            mhander.sendEmptyMessage(2)
+        }
+    }
+
+    private val mhander = Handler(Handler.Callback { p0 ->
+        if (p0?.what == 1) {
+            val call = request.getOlderState(parentNickname[0])
+            call.enqueue(object : Callback<FallModel> {
+                override fun onResponse(call: Call<FallModel>, response: Response<FallModel>) {
+                    if (response.isSuccessful && response.body() != null) {
+                        if (response.body()!!.code == "200") {
+                            val d = response.body()!!.data?.date?.toLong()?.let { Date(it).time }
+                            val d1 = Date().time
+                            val judge = d1 - d!!
+                            if(judge < Date(120000).time) {
+                                val dialog = FallDialog(context, "您的老人出现了状况，请及时处理", "确认")
+                                dialog.show()
+                                dialog.setOnSureClick(object : FallDialog.OnFallClick {
+                                    override fun buttonClick() {
+                                        dialog.cancel()
+                                    }
+                                })
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<FallModel>, t: Throwable) {
+
+                }
+            })
+        }
+        false
+    })
 
     override fun deleteParent(position: Int) {
         val call = request.deleteChildrenDate(parentCode[position], childCode!!)
@@ -140,7 +182,7 @@ class ChildrenMinePresenter(
         changeNameDialog.setCanceledOnTouchOutside(false)
         changeNameDialog.window.setGravity(Gravity.CENTER)
         changeNameDialog.show()
-        changeNameDialog.setOnSureClick(object : BaseDialog.OnClick{
+        changeNameDialog.setOnSureClick(object : BaseDialog.OnClick {
             override fun cancelClick() {
                 changeNameDialog.cancel()
             }
@@ -182,7 +224,7 @@ class ChildrenMinePresenter(
         addChildrenDialog.setCanceledOnTouchOutside(false)
         addChildrenDialog.window.setGravity(Gravity.CENTER)
         addChildrenDialog.show()
-        addChildrenDialog.setOnSureClick(object : BaseDialog.OnClick{
+        addChildrenDialog.setOnSureClick(object : BaseDialog.OnClick {
             override fun cancelClick() {
                 addChildrenDialog.cancel()
             }
@@ -207,15 +249,20 @@ class ChildrenMinePresenter(
                             if (response.body()!!.code == "200") {
                                 Toast.makeText(context, "添加成功", Toast.LENGTH_SHORT).show()
                                 val call1 = request.getParentData(nickname)
-                                call1.enqueue(object : Callback<ChildParentModel>{
-                                    override fun onResponse(call: Call<ChildParentModel>, response: Response<ChildParentModel>) {
+                                call1.enqueue(object : Callback<ChildParentModel> {
+                                    override fun onResponse(
+                                        call: Call<ChildParentModel>,
+                                        response: Response<ChildParentModel>
+                                    ) {
                                         if (response.isSuccessful && response.body() != null) {
                                             if (response.body()!!.code == "200") {
                                                 val list = arrayListOf<ChildrenToOlder>()
                                                 for (i in 0 until response.body()!!.data?.parentList?.size!!) {
-                                                    response.body()!!.data?.parentList?.get(i)?.parentCode?.let { parentCode.add(it) }
+                                                    response.body()!!.data?.parentList?.get(i)
+                                                        ?.parentCode?.let { parentCode.add(it) }
                                                     val childrenToOlder = ChildrenToOlder()
-                                                    childrenToOlder.nametext = response.body()!!.data?.parentList?.get(i)?.name
+                                                    childrenToOlder.nametext =
+                                                        response.body()!!.data?.parentList?.get(i)?.name
                                                     if (response.body()!!.data?.parentList?.get(i)?.gender == "男") {
                                                         childrenToOlder.identity = "儿子"
                                                     } else {

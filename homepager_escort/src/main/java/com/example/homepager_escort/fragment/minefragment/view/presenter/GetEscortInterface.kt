@@ -2,6 +2,7 @@ package com.example.homepager_escort.fragment.minefragment.view.presenter
 
 import com.example.homepager_escort.fragment.minefragment.view.model.EscortModel
 import com.example.homepager_escort.fragment.minefragment.view.model.EscortParentModel
+import com.example.homepager_escort.fragment.minefragment.view.model.FallModel
 import com.example.tools.model.BaseStringModel
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -27,5 +28,8 @@ interface GetEscortInterface {
 
     @POST("parent/escort/save")
     fun postEscortDate(@Body body: RequestBody): Call<BaseStringModel>
+
+    @GET("fall/record/batch/list")
+    fun getOlderState(@Query("nickname") nickname: String): Call<FallModel>
 
 }

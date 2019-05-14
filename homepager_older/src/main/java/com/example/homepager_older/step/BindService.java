@@ -1,6 +1,5 @@
 package com.example.homepager_older.step;
 
-import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Intent;
 import android.hardware.Sensor;
@@ -11,8 +10,6 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
-
-import java.text.SimpleDateFormat;
 
 public class BindService extends Service implements SensorEventListener {
 
@@ -54,24 +51,9 @@ public class BindService extends Service implements SensorEventListener {
      * 上一次的步数
      */
     private int previousStepCount = 0;
-    private String nickname;
-    /**
-     * 系统时间
-     */
-    @SuppressLint("SimpleDateFormat")
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
-    @SuppressLint("SimpleDateFormat")
-    SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd");
 
-    /**
-     * 构造函数
-     */
+
     public BindService() {
-
-    }
-
-    public void setNickName(String nickname) {
-        this.nickname = nickname;
     }
 
     @Override

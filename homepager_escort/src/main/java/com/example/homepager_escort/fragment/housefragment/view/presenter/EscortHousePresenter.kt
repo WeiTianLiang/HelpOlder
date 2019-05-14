@@ -42,7 +42,6 @@ class EscortHousePresenter(
     private var activity: Activity? = null
     private var locationText: TextView? = null
     private var savedInstanceState: Bundle? = null
-    private val olderNickname = arrayListOf<String>()
     private var stepCount: TextView? = null
 
     @SuppressLint("SimpleDateFormat")
@@ -61,7 +60,7 @@ class EscortHousePresenter(
         locationText: TextView
     ) {
         mapView.onCreate(savedInstanceState, locationText)
-        mapView.showOtherLocation("104.967945","39.345741")
+        mapView.showOtherLocation("104.967945", "39.345741")
     }
 
     override fun setStepCount(steCount: TextView) {
@@ -95,21 +94,29 @@ class EscortHousePresenter(
         }
     }
 
-    private val stepHandler = Handler(Handler.Callback {message ->
-        if(message.what == 2) {
+    private val stepHandler = Handler(Handler.Callback { message ->
+        if (message.what == 2) {
             val call = request.getOlderData(nickname)
             call.enqueue(object : Callback<EscortParentModel> {
                 override fun onResponse(call: Call<EscortParentModel>, response: Response<EscortParentModel>) {
                     if (response.isSuccessful && response.body() != null) {
                         if (response.body()!!.code == "200") {
-                            val call1 = request1.getOlderStep(response.body()!!.data?.parentList?.get(0)?.nickname!!)
-                            call1.enqueue(object : Callback<StepCountModel> {
-                                override fun onResponse(call: Call<StepCountModel>, response: Response<StepCountModel>) {
+                            val call1 = response.body()!!.data?.parentList?.get(0)?.nickname?.let {
+                                request1.getOlderStep(it)
+                            }
+                            call1?.enqueue(object : Callback<StepCountModel> {
+                                override fun onResponse(
+                                    call: Call<StepCountModel>,
+                                    response: Response<StepCountModel>
+                                ) {
                                     if (response.isSuccessful && response.body() != null) {
                                         if (response.body()!!.code == "200") {
                                             val list = arrayListOf<Int>()
                                             for (i in 0 until response.body()!!.data?.size!!) {
-                                                if (dft.format(Date(response.body()!!.data?.get(i)?.date?.toLong()!!)) == dft.format(Date())) {
+                                                if (dft.format(Date(response.body()!!.data?.get(i)?.date?.toLong()!!)) == dft.format(
+                                                        Date()
+                                                    )
+                                                ) {
                                                     response.body()!!.data?.get(i)?.walkCount?.let { list.add(it) }
                                                 }
                                             }
@@ -139,14 +146,15 @@ class EscortHousePresenter(
         false
     })
 
-    private val mhander= Handler(Handler.Callback { p0 ->
-        if(p0?.what == 1) {
+    private val mhander = Handler(Handler.Callback { p0 ->
+        if (p0?.what == 1) {
             val call = request.getOlderData(nickname)
             call.enqueue(object : Callback<EscortParentModel> {
                 override fun onResponse(call: Call<EscortParentModel>, response: Response<EscortParentModel>) {
                     if (response.isSuccessful && response.body() != null) {
                         if (response.body()!!.code == "200") {
-                            mapView?.showOtherLocation(response.body()!!.data?.parentList?.get(0)?.position?.split(" ")?.get(1),
+                            mapView?.showOtherLocation(
+                                response.body()!!.data?.parentList?.get(0)?.position?.split(" ")?.get(1),
                                 response.body()!!.data?.parentList?.get(0)?.position?.split(" ")?.get(0)
                             )
                         }
@@ -167,8 +175,9 @@ class EscortHousePresenter(
             override fun onResponse(call: Call<EscortParentModel>, response: Response<EscortParentModel>) {
                 if (response.isSuccessful && response.body() != null) {
                     if (response.body()!!.code == "200") {
-                        val call1 = request1.getOlderStep(response.body()!!.data?.parentList?.get(0)?.nickname!!)
-                        call1.enqueue(object : Callback<StepCountModel> {
+                        val call1 =
+                            response.body()!!.data?.parentList?.get(0)?.nickname?.let { request1.getOlderStep(it) }
+                        call1?.enqueue(object : Callback<StepCountModel> {
                             override fun onResponse(call: Call<StepCountModel>, response: Response<StepCountModel>) {
                                 if (response.isSuccessful && response.body() != null) {
                                     if (response.body()!!.code == "200") {
@@ -180,7 +189,10 @@ class EscortHousePresenter(
                                             xList.add(dft.format(calendar.time))
                                             val list = arrayListOf<Int>()
                                             for (j in 0 until response.body()!!.data?.size!!) {
-                                                if (dft.format(Date(response.body()!!.data?.get(j)?.date?.toLong()!!)) == dft.format(calendar.time)) {
+                                                if (dft.format(Date(response.body()!!.data?.get(j)?.date?.toLong()!!)) == dft.format(
+                                                        calendar.time
+                                                    )
+                                                ) {
                                                     response.body()!!.data?.get(j)?.walkCount?.let { list.add(it) }
                                                 }
                                             }
@@ -201,8 +213,28 @@ class EscortHousePresenter(
                                 Toast.makeText(context, "数据加载失败，请检查网络", Toast.LENGTH_SHORT).show()
                             }
                         })
-                        for(i in 0 until response.body()!!.data?.parentList?.size!!) {
-                            response.body()!!.data?.parentList?.get(i)?.nickname?.let { olderNickname.add(it) }
+                        if (call1 == null) {
+                            val beginDate = Date()
+                            val calendar = Calendar.getInstance()
+                            for (i in -5 until 0) {
+                                calendar.time = beginDate
+                                calendar.add(Calendar.DATE, i)
+                                xList.add(dft.format(calendar.time))
+                                val list = arrayListOf<Int>()
+                                list.add(0)
+                                list.add(0)
+                                list.add(0)
+                                list.add(0)
+                                list.add(0)
+                                val max = if (list.size == 0) {
+                                    0
+                                } else {
+                                    listMax(list)
+                                }
+                                listData.add(max)
+                            }
+                            barChartView.initBarChartView(xList)
+                            barChartView.showBarChart(listData, "过去五天步数", Color.GREEN)
                         }
                     }
                 }

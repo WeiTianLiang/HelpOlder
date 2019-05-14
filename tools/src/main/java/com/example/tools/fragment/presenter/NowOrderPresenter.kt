@@ -63,40 +63,57 @@ class NowOrderPresenter(
         escort_time: TextView,
         escort_type: TextView
     ) {
-        val call = SaveOrder.readFile(context)?.let { request.getOrderWithOrderNo(it) }
-        call?.enqueue(object : Callback<OrderModel> {
-            @SuppressLint("SetTextI18n")
-            override fun onResponse(call: Call<OrderModel>, response: Response<OrderModel>) {
-                if (response.isSuccessful && response.body() != null) {
-                    if (response.body()!!.code == "200") {
-                        isOver.text = if(response.body()!!.data?.orderStatus == 0) {
-                            escortName.text = "无"
-                            "还没有人接单"
-                        } else {
-                            "陪护员已经接单"
-                        }
-                        escort_ID.text = response.body()!!.data?.orderNo
-                        escort_time.text = response.body()!!.data?.escortStart?.let { simp.format(Date(it)) }.toString() + " 到 " + response.body()!!.data?.escortEnd?.let { simp.format(Date(it)) }.toString()
-                        escort_type.text = if(response.body()!!.data?.escortType == 0) {
-                            "临时陪护"
-                        } else {
-                            "长期陪护"
-                        }
-                    }
-                }
-            }
-
-            override fun onFailure(call: Call<OrderModel>, t: Throwable) {
-                Toast.makeText(context, "网络有问题!!!", Toast.LENGTH_SHORT).show()
-            }
-        })
 
         this.isOver = isOver
         this.escortName = escortName
         this.escort_ID = escort_ID
         this.escort_time = escort_time
         this.escort_type = escort_type
+
+        timer.schedule(task1, 100, 5000)
     }
+
+    private var task1: TimerTask = object : TimerTask() {
+        override fun run() {
+            hander.sendEmptyMessage(2)
+        }
+    }
+
+    private val hander = Handler(Handler.Callback { p0 ->
+        if (p0?.what == 2) {
+            val call = SaveOrder.readFile(context)?.let { request.getOrderWithOrderNo(it) }
+            call?.enqueue(object : Callback<OrderModel> {
+                @SuppressLint("SetTextI18n")
+                override fun onResponse(call: Call<OrderModel>, response: Response<OrderModel>) {
+                    if (response.isSuccessful && response.body() != null) {
+                        if (response.body()!!.code == "200") {
+                            isOver?.text = if (response.body()!!.data?.orderStatus == 0) {
+                                escortName?.text = "无"
+                                "还没有人接单"
+                            } else {
+                                "陪护员已经接单"
+                            }
+                            escort_ID?.text = response.body()!!.data?.orderNo
+                            escort_time?.text =
+                                response.body()!!.data?.escortStart?.let { simp.format(Date(it)) }.toString() + " 到 " + response.body()!!.data?.escortEnd?.let {
+                                    simp.format(Date(it))
+                                }.toString()
+                            escort_type?.text = if (response.body()!!.data?.escortType == 0) {
+                                "临时陪护"
+                            } else {
+                                "长期陪护"
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<OrderModel>, t: Throwable) {
+                    Toast.makeText(context, "网络有问题!!!", Toast.LENGTH_SHORT).show()
+                }
+            })
+        }
+        false
+    })
 
     override fun setMapView(
         mapView1: BaseMapView,
@@ -129,7 +146,7 @@ class NowOrderPresenter(
     override fun showDetail() {
         ARouter.getInstance()
             .build("/tools/DetailActivity")
-            .withInt("key",-1)
+            .withInt("key", 100)
             .withString("orderNo", SaveOrder.readFile(context))
             .withString("nickname", nickname)
             .navigation()
@@ -190,22 +207,25 @@ class NowOrderPresenter(
     }
 
     private val handler = Handler(Handler.Callback { message ->
-        if(message.what == 1) {
+        if (message.what == 1) {
             val call = SaveOrder.readFile(context)?.let { request.getOrderWithOrderNo(it) }
             call?.enqueue(object : Callback<OrderModel> {
                 @SuppressLint("SetTextI18n")
                 override fun onResponse(call: Call<OrderModel>, response: Response<OrderModel>) {
                     if (response.isSuccessful && response.body() != null) {
                         if (response.body()!!.code == "200") {
-                            isOver?.text = if(response.body()!!.data?.orderStatus == 0) {
+                            isOver?.text = if (response.body()!!.data?.orderStatus == 0) {
                                 escortName?.text = "无"
                                 "还没有人接单"
                             } else {
                                 "陪护员已经接单"
                             }
                             escort_ID?.text = response.body()!!.data?.orderNo
-                            escort_time?.text = response.body()!!.data?.escortStart?.let { simp.format(Date(it)) } + " 到 " + response.body()!!.data?.escortEnd?.let { simp.format(Date(it)) }
-                            escort_type?.text = if(response.body()!!.data?.escortType == 0) {
+                            escort_time?.text =
+                                response.body()!!.data?.escortStart?.let { simp.format(Date(it)) } + " 到 " + response.body()!!.data?.escortEnd?.let {
+                                    simp.format(Date(it))
+                                }
+                            escort_type?.text = if (response.body()!!.data?.escortType == 0) {
                                 "临时陪护"
                             } else {
                                 "长期陪护"
