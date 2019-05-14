@@ -9,12 +9,34 @@
             android:id="@+id/isOver"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="陪护员已经接单"
+            android:text="还没有人接单"
             android:textSize="23sp"
             android:textColor="#000"
             android:textStyle="bold"
             android:gravity="center"
             android:padding="10dp"/>
+
+    <com.example.tools.view.BaseMapView
+            android:id="@+id/mapView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"/>
+
+    <TextView
+            android:id="@+id/escort_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10sp"
+            android:background="@drawable/text_bg"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:gravity="center"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:text="订单详情"
+            android:textColor="#831F1F"
+            android:textSize="18sp"/>
+
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -34,11 +56,89 @@
                 android:id="@+id/escortName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="王悦"
+                tools:text="李佳伟"
                 android:textSize="20sp"
                 android:textColor="#000"
                 android:gravity="center"
                 android:padding="10dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="订单编号:"
+                android:textSize="20sp"
+                android:textColor="#000"
+                android:gravity="center"
+                android:padding="10dp"/>
+
+        <TextView
+                android:id="@+id/escort_ID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="奥术大师多"
+                android:textSize="20sp"
+                android:textColor="#000"
+                android:gravity="center"
+                android:padding="10dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="陪护时间:"
+                android:textSize="20sp"
+                android:textColor="#000"
+                android:gravity="center"
+                android:padding="10dp"/>
+
+        <TextView
+                android:id="@+id/escort_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="奥术大师大所"
+                android:textSize="16sp"
+                android:textColor="#000"
+                android:padding="10dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="陪护类型:"
+                android:textSize="20sp"
+                android:textColor="#000"
+                android:gravity="center"
+                android:padding="10dp"/>
+
+        <TextView
+                android:id="@+id/escort_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="奥术大师大所"
+                android:textSize="20sp"
+                android:textColor="#000"
+                android:gravity="center"
+                android:padding="10dp"/>
+
     </LinearLayout>
 
     <View

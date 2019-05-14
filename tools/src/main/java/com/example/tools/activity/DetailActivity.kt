@@ -2,7 +2,6 @@ package com.example.tools.activity
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
@@ -18,6 +17,7 @@ class DetailActivity : AppCompatActivity() {
     private val adapter by lazy { MedicineRecyclerAdapter(list1,this) }
 
     var key = 0
+    var nickname: String? = null
 
     init {
         val medicineAndCount = MedicineAndCount()
@@ -35,10 +35,13 @@ class DetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_detail)
         ARouter.getInstance().inject(this)
 
-        orderMedic.layoutManager = LinearLayoutManager(this)
-        orderMedic.adapter = adapter
+//        orderMedic.layoutManager = LinearLayoutManager(this)
+//        orderMedic.adapter = adapter
 
         key = intent.getIntExtra("key", 0)
+        nickname = intent.getStringExtra("nickname")
+
+
 
         back.setOnClickListener {
             finish()
@@ -54,5 +57,9 @@ class DetailActivity : AppCompatActivity() {
         doIt.setOnClickListener {
 
         }
+    }
+
+    fun setDate() {
+
     }
 }

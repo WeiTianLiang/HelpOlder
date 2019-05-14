@@ -1,51 +1,42 @@
 package com.example.tools.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.Gravity
 import com.example.tools.R
-import com.example.tools.dialog.ReleaseDialog
+import com.example.tools.fragment.presenter.NowOrderPresenter
+import com.example.tools.view.BaseMapView
 import kotlinx.android.synthetic.main.escort_isover_fragment.*
 
 /**
  * 当前发布的订单
  * @author WeiTianLiang
  */
+@SuppressLint("ValidFragment")
 class NowOrderFragment : BaseFragment() {
 
-    private val releaseDialog by lazy { context?.let { ReleaseDialog(it) } }
+    private val presenter by lazy { context?.let { nickname?.let { it1 -> NowOrderPresenter(it, it1) } } }
+
+    private var nickname: String? = null
+
+    private val mapView by lazy { findViewById<BaseMapView>(R.id.mapView) }
 
     override fun onViewCreate(savedInstanceState: Bundle?) {
 
     }
 
     override fun onInflated(savedInstanceState: Bundle?) {
+        presenter?.setData(isOver, escortName, escort_ID, escort_time, escort_type)
+        activity?.let { presenter?.setMapView(mapView, it, savedInstanceState) }
         escort_push.setOnClickListener {
-            releaseDialog?.setCanceledOnTouchOutside(false)
-            releaseDialog?.window?.setGravity(Gravity.CENTER)
-            releaseDialog?.show()
-            releaseDialog?.setOnClick(object : ReleaseDialog.OnClick {
-                override fun cancelClick() {
-                    releaseDialog?.cancel()
-                }
-
-                override fun sureClick(
-                    location: String,
-                    manState: String,
-                    manName: String,
-                    healthy: String,
-                    state: String,
-                    startTime: String,
-                    endTime: String,
-                    other: String
-                ) {
-                    releaseDialog?.cancel()
-                    // 数据传到服务器
-                }
-            })
+            presenter?.orderPush()
         }
     }
 
     override fun getLayoutResId(): Int {
         return R.layout.escort_isover_fragment
+    }
+
+    fun setNickname(nickname: String?) {
+        this.nickname = nickname
     }
 }

@@ -63,7 +63,6 @@ class OlderHousePresenter(
 
     @SuppressLint("SimpleDateFormat")
     private val dft = SimpleDateFormat("MM月dd")
-    private val changeTime = SimpleDateFormat("MM-dd")
 
     /**
      * 地图

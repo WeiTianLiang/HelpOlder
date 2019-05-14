@@ -20,7 +20,7 @@ import com.example.tools.activity.jumpActivity
 import com.example.tools.adapter.MedicineRecyclerAdapter
 import com.example.tools.adapter.MyRecyclerViewAdapter
 import com.example.tools.dialog.BaseDialog
-import com.example.tools.dialog.createTimerDialog
+import com.example.tools.dialog.TimerDialog
 import com.example.tools.model.BaseStringModel
 import com.example.tools.model.ChildrenToOlder
 import com.example.tools.model.MedicineAndCount
@@ -354,8 +354,7 @@ class OlderMinePresenter(
      * 改变生日
      */
     override fun changeBirthday(view: View) {
-        createTimerDialog(calendar, context)
-        (view as TextView).text = format.format(calendar.time)
+        (view as TextView).text = TimerDialog().createHoursDialog(calendar, context)
 
         val map = HashMap<Any, Any>()
         map["birthday"] = format.parse(format.format(calendar.time)).time

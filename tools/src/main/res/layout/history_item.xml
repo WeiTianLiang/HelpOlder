@@ -81,7 +81,7 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="健康情况："
+                android:text="陪护类型："
                 android:textColor="#000"
                 android:textSize="16sp"
                 android:gravity="center"/>
@@ -89,7 +89,7 @@
                 android:id="@+id/orderState"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="健康"
+                tools:text="你猜"
                 android:textColor="#000"
                 android:textSize="16sp"
                 android:gravity="center"/>

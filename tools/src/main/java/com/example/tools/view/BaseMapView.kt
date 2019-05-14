@@ -76,7 +76,7 @@ class BaseMapView(
 
     }
 
-    fun onCreate(savedInstanceState: Bundle?, text: TextView) {
+    fun onCreate(savedInstanceState: Bundle?, text: TextView?) {
         baseMap.onCreate(savedInstanceState)
         locationText = text
         aMap.isTrafficEnabled = true
@@ -216,15 +216,6 @@ class BaseMapView(
                     )
                     //点击定位按钮 能够将地图的中心移动到定位点
                     mListener?.onLocationChanged(amapLocation)
-                    //获取定位信息
-//                    val buffer = StringBuffer()
-//                    buffer.append(
-//                        amapLocation.country + "" + amapLocation.province
-//                                + "" + amapLocation.city + "" + amapLocation.province
-//                                + "" + amapLocation.district + "" + amapLocation.street
-//                                + "" + amapLocation.streetNum
-//                    )
-//                    Toast.makeText(activity?.applicationContext, buffer.toString(), Toast.LENGTH_LONG).show()
                     isFirstLoc = false
                 }
             } else {

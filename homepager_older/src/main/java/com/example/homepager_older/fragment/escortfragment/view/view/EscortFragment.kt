@@ -27,6 +27,8 @@ class EscortFragment : BaseFragment() {
         addFragment(nowOrderFragment, R.id.escortFragment)
         addFragment(orderListFragment, R.id.escortFragment)
         hideFragment(orderListFragment)
+        nowOrderFragment.setNickname(nickname)
+        orderListFragment.setNickname(nickname)
     }
 
     override fun onInflated(savedInstanceState: Bundle?) {
